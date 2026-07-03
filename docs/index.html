@@ -451,10 +451,10 @@
       <h2>3. CSV 그래프</h2>
       <div class="visual-grid">
         <figure class="visual wide">
-          <a href="img/top_oref_timing_zoom.svg">
-            <img src="img/top_oref_timing_zoom.svg" alt="Oref correction timing zoom graph">
+          <a href="img/top_requested_csv_window.svg">
+            <img src="img/top_requested_csv_window.svg" alt="Requested CSV capture graph">
           </a>
-          <figcaption>`top/top_run.csv`에서 0-25 us 구간을 잘라 만든 그래프입니다. `oref` 변화폭이 보이는 구간에서 VRC, oscillator node, pulse, error를 같이 봅니다.</figcaption>
+          <figcaption>`top/top_run.csv`에서 32.5-41.5 us 구간을 잘라 만든 요청 그래프입니다. VRC1/oref, CLK_OSC와 주파수, osc1/osc2, osc11/osc22, DLF 동작, D_s17과 oref를 순서대로 봅니다.</figcaption>
         </figure>
         <figure class="visual wide">
           <a href="img/top_phase_adc_paths.svg">
@@ -468,7 +468,8 @@
     <section>
       <h2>4. 파형 뷰어</h2>
       <div class="tabs" role="tablist" aria-label="CSV waveform graphs">
-        <button class="active" type="button" data-graph="img/top_oref_timing_zoom.svg" data-label="CSV에서 0-25 us 구간을 잘라 만든 oref 보정 timing 파형입니다.">Oref timing</button>
+        <button class="active" type="button" data-graph="img/top_requested_csv_window.svg" data-label="CSV에서 32.5-41.5 us 구간을 잘라 만든 요청 그래프입니다. CLK_OSC 0/1 구간이 두 번 반복되는 창입니다.">Requested capture</button>
+        <button type="button" data-graph="img/top_oref_timing_zoom.svg" data-label="CSV에서 0-25 us 구간을 잘라 만든 oref 보정 timing 파형입니다.">Oref timing</button>
         <button type="button" data-graph="img/top_phase_adc_paths.svg" data-label="CSV에서 osc1/osc2와 DD2, osc11/osc22와 DD1을 함께 그린 그래프입니다.">Phase ADC paths</button>
         <button type="button" data-graph="img/top_lock_summary.svg" data-label="CSV에서 뽑은 error convergence 요약입니다. error가 0으로 수렴하는지가 핵심입니다.">Error convergence</button>
         <button type="button" data-graph="img/top_cp_hold_codes.svg" data-label="DATA_OUT edge 기준으로 복원한 CP hold digital code입니다.">CP hold</button>
@@ -476,12 +477,12 @@
         <button type="button" data-graph="img/top_late_loop_zoom.svg" data-label="후반부 170-180 us 구간에서 VRC, oref, oscillator node를 다시 확대해서 보는 CSV 그래프입니다.">Late zoom</button>
       </div>
       <div class="viewer">
-        <a id="graphLink" href="img/top_oref_timing_zoom.svg">
-          <img id="graphImage" src="img/top_oref_timing_zoom.svg" alt="Selected RC oscillator CSV graph">
+        <a id="graphLink" href="img/top_requested_csv_window.svg">
+          <img id="graphImage" src="img/top_requested_csv_window.svg" alt="Selected RC oscillator CSV graph">
         </a>
         <div class="caption">
-          <span id="graphCaption">CSV에서 0-25 us 구간을 잘라 만든 oref 보정 timing 파형입니다.</span>
-          <a id="openGraph" href="img/top_oref_timing_zoom.svg">원본 열기</a>
+          <span id="graphCaption">CSV에서 32.5-41.5 us 구간을 잘라 만든 요청 그래프입니다. CLK_OSC 0/1 구간이 두 번 반복되는 창입니다.</span>
+          <a id="openGraph" href="img/top_requested_csv_window.svg">원본 열기</a>
         </div>
       </div>
     </section>
@@ -540,6 +541,7 @@
       <div class="note-row">
         <a class="note" href="top_loop.md"><strong>Top loop note</strong>처음부터 끝까지 글로 따라가는 설명입니다.</a>
         <a class="note" href="top_run_summary.md"><strong>Run summary</strong>top CSV에서 추출한 실행 요약입니다.</a>
+        <a class="note" href="top_requested_window_table.md"><strong>Requested table</strong>요청 구간의 CP/DD/DIFF/D/oref 숫자 표입니다.</a>
         <a class="note" href="top_numeric_analysis.md"><strong>Numeric table</strong>CP/DD는 unsigned, DIFF 계열은 signed로 해석한 표입니다.</a>
       </div>
     </section>

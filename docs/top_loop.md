@@ -49,6 +49,14 @@ flowchart LR
 
 아래 그래프들은 모두 `top/top_run.csv`에서 직접 생성했습니다.
 
+### Requested CSV Capture
+
+[![Requested CSV capture](img/top_requested_csv_window.svg)](img/top_requested_csv_window.svg)
+
+`CLK_OSC` 0/1 구간이 두 번 정도 반복되는 32.5-41.5 us 구간입니다. 요청한 순서대로 `VRC1/oref`, `CLK_OSC`와 주파수, `osc1/osc2`, `osc11/osc22`, DLF 동작, `D_s17`과 대응되는 `oref` 전압을 봅니다.
+
+숫자 표는 [top_requested_window_table.md](top_requested_window_table.md)에 따로 정리했습니다.
+
 ### Oref Correction Timing Zoom
 
 [![Oref correction timing zoom](img/top_oref_timing_zoom.svg)](img/top_oref_timing_zoom.svg)
@@ -104,6 +112,7 @@ DLF가 error를 보고 `oref`를 보정하면서 error가 줄어드는지 확인
 ## 숫자 자료
 
 - [top_run_summary.md](top_run_summary.md)
+- [top_requested_window_table.md](top_requested_window_table.md)
 - [top_numeric_analysis.md](top_numeric_analysis.md)
 - [top_event_analysis.csv](top_event_analysis.csv)
 

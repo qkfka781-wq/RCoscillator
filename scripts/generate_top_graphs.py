@@ -92,6 +92,7 @@ def row_from_parts(cols: list[str], index: dict[str, int], parts: list[str]) -> 
         "diff": signed(bus_value(cols, parts, "I3.DIFF"), 12),
         "diff_out": signed(bus_value(cols, parts, "I3.DIFF_OUT1"), 17),
         "d_code": bus_value(cols, parts, "D"),
+        "d_signed": signed(bus_value(cols, parts, "D"), 17),
         "oref": float(parts[index["oref"]]),
         "osc1": float(parts[index["I0.osc1"]]),
         "osc2": float(parts[index["I0.osc2"]]),
@@ -196,6 +197,27 @@ def filter_window(rows: list[dict[str, float]], start_us: float, stop_us: float)
 
 def values(rows: list[dict[str, float]], key: str) -> list[float]:
     return [float(row[key]) for row in rows]
+
+
+def clk_frequency_events(rows: list[dict[str, float]]) -> list[dict[str, float]]:
+    events: list[dict[str, float]] = []
+    prev_logic = 1 if rows[0]["clk_osc"] > 0.5 else 0
+    prev_edge_time: float | None = None
+    for row in rows[1:]:
+        logic = 1 if row["clk_osc"] > 0.5 else 0
+        if logic and not prev_logic:
+            event = dict(row)
+            if prev_edge_time is None:
+                event["clk_period_us"] = math.nan
+                event["clk_freq_khz"] = math.nan
+            else:
+                period_us = row["t_us"] - prev_edge_time
+                event["clk_period_us"] = period_us
+                event["clk_freq_khz"] = 1000.0 / period_us if period_us else math.nan
+            events.append(event)
+            prev_edge_time = row["t_us"]
+        prev_logic = logic
+    return events
 
 
 def make_series(rows: list[dict[str, float]], xkey: str, ykey: str, label: str, color_index: int, width: float = 1.7) -> Series:
@@ -431,6 +453,86 @@ def write_numeric_markdown(path: Path, dlf_events: list[dict[str, float]], hold_
     path.write_text("\n".join(lines), encoding="utf-8")
 
 
+def write_requested_window_table(
+    path: Path,
+    dlf_events: list[dict[str, float]],
+    hold_events: list[dict[str, float]],
+    clk_events: list[dict[str, float]],
+    start_us: float,
+    stop_us: float,
+) -> None:
+    dlf_window = filter_window(dlf_events, start_us, stop_us)
+    hold_window = filter_window(hold_events, start_us, stop_us)
+    clk_window = filter_window(clk_events, start_us, stop_us)
+
+    lines = [
+        "# Requested CSV Window Numeric Table",
+        "",
+        f"Window: `{start_us:.1f} us` to `{stop_us:.1f} us` from `top/top_run.csv`.",
+        "",
+        "## Interpretation",
+        "",
+        "| Signal | Interpretation |",
+        "|---|---|",
+        "| `CP1_u12`, `CP2_u12` | unsigned 12-bit digital CP hold codes |",
+        "| `DD1_u12`, `DD2_u12` | unsigned 12-bit sampled ADC/DLF codes |",
+        "| `DIFF_SAMPLE_s12`, `DIFF_s12` | signed 12-bit two's-complement values |",
+        "| `D_s17` | signed 17-bit D code interpretation |",
+        "| `oref_V` | analog voltage corresponding to the D/oref actuator state |",
+        "",
+        "## DLF Update Samples",
+        "",
+    ]
+    dlf_headers = ["event", "t_us", "CP1_u12", "CP2_u12", "DD1_u12", "DD2_u12", "DD2-DD1", "DIFF_SAMPLE_s12", "DIFF_s12", "D_s17", "oref_V"]
+    dlf_rows = [
+        [
+            str(int(row["event"])),
+            f"{row['sample_t_us']:.3f}",
+            str(int(row["cp1"])),
+            str(int(row["cp2"])),
+            str(int(row["dd1"])),
+            str(int(row["dd2"])),
+            str(int(row["dd_delta"])),
+            str(int(row["diff_sample"])),
+            str(int(row["diff"])),
+            str(int(row["d_signed"])),
+            f"{row['oref']:.6f}",
+        ]
+        for row in dlf_window
+    ]
+    lines.extend(markdown_table(dlf_headers, dlf_rows))
+    lines.extend(["", "## DATA_OUT Hold Samples", ""])
+    hold_headers = ["event", "t_us", "CP1_u12", "CP2_u12", "CP2-CP1", "DD1_u12", "DD2_u12", "oref_V"]
+    hold_rows = [
+        [
+            str(int(row["event"])),
+            f"{row['t_us']:.3f}",
+            str(int(row["cp1"])),
+            str(int(row["cp2"])),
+            str(int(row["cp_delta"])),
+            str(int(row["dd1"])),
+            str(int(row["dd2"])),
+            f"{row['oref']:.6f}",
+        ]
+        for row in hold_window
+    ]
+    lines.extend(markdown_table(hold_headers, hold_rows))
+    lines.extend(["", "## CLK_OSC Rising Edge Frequency", ""])
+    clk_headers = ["edge", "t_us", "period_us", "freq_kHz"]
+    clk_rows = [
+        [
+            str(n),
+            f"{row['t_us']:.3f}",
+            "" if math.isnan(row["clk_period_us"]) else f"{row['clk_period_us']:.3f}",
+            "" if math.isnan(row["clk_freq_khz"]) else f"{row['clk_freq_khz']:.3f}",
+        ]
+        for n, row in enumerate(clk_window)
+    ]
+    lines.extend(markdown_table(clk_headers, clk_rows))
+    lines.append("")
+    path.write_text("\n".join(lines), encoding="utf-8")
+
+
 def write_markdown_summary(path: Path, rows: list[dict[str, float]], dlf_events: list[dict[str, float]], hold_events: list[dict[str, float]]) -> None:
     last_dlf = dlf_events[-1]
     late_dlf = dlf_events[-12:]
@@ -484,9 +586,14 @@ def main() -> int:
         print("missing parsed waveform/events", file=sys.stderr)
         return 1
 
+    requested_start_us = 32.5
+    requested_stop_us = 41.5
     overview_rows = downsample(rows)
     oref_zoom_rows = downsample(filter_window(rows, 0.0, 25.0), 1800)
     oref_zoom_dlf_events = filter_window(dlf_events, 0.0, 25.0)
+    requested_rows = downsample(filter_window(rows, requested_start_us, requested_stop_us), 1800)
+    requested_dlf_events = filter_window(dlf_events, requested_start_us, requested_stop_us)
+    requested_clk_events = filter_window(clk_frequency_events(rows), requested_start_us, requested_stop_us)
     zoom_rows = downsample(filter_window(rows, 170.0, 180.0), 1800)
 
     svg_plot(
@@ -628,6 +735,49 @@ def main() -> int:
     )
 
     svg_plot(
+        OUT_DIR / "top_requested_csv_window.svg",
+        "Requested CSV Capture: CLK_OSC Two-Cycle Window",
+        [
+            Panel("1. VRC1 and oref", "V", [
+                make_series(requested_rows, "t_us", "vrc1", "VRC1", 0),
+                make_series(requested_rows, "t_us", "oref", "oref", 2),
+            ]),
+            Panel("2a. CLK_OSC logic", "logic", [
+                make_series(requested_rows, "t_us", "clk_osc", "CLK_OSC", 6),
+            ], (-0.1, 1.1)),
+            Panel("2b. CLK_OSC frequency from rising edges", "kHz", [
+                make_series(requested_clk_events, "t_us", "clk_freq_khz", "CLK_OSC freq", 1),
+            ]),
+            Panel("3. osc1 / osc2", "V", [
+                make_series(requested_rows, "t_us", "osc1", "osc1", 0),
+                make_series(requested_rows, "t_us", "osc2", "osc2", 1),
+            ]),
+            Panel("4. osc11 / osc22", "V", [
+                make_series(requested_rows, "t_us", "osc11", "osc11", 3),
+                make_series(requested_rows, "t_us", "osc22", "osc22", 4),
+            ]),
+            Panel("5a. DLF unsigned ADC codes", "unsigned 12b", [
+                make_series(requested_dlf_events, "sample_t_us", "cp1", "CP1_u12", 0),
+                make_series(requested_dlf_events, "sample_t_us", "cp2", "CP2_u12", 1),
+                make_series(requested_dlf_events, "sample_t_us", "dd2", "DD2_u12", 2),
+                make_series(requested_dlf_events, "sample_t_us", "dd1", "DD1_u12", 3),
+            ]),
+            Panel("5b. DLF signed error values", "signed code", [
+                make_series(requested_dlf_events, "sample_t_us", "diff_sample", "DIFF_SAMPLE_s12", 3),
+                make_series(requested_dlf_events, "sample_t_us", "diff", "DIFF_s12", 4),
+            ]),
+            Panel("6a. D code signed 17b", "signed 17b", [
+                make_series(requested_dlf_events, "sample_t_us", "d_signed", "D_s17", 5),
+            ]),
+            Panel("6b. Corresponding oref analog voltage", "V", [
+                make_series(requested_dlf_events, "sample_t_us", "oref", "oref", 2),
+            ]),
+        ],
+        "time (us)",
+        panel_height=180,
+    )
+
+    svg_plot(
         OUT_DIR / "top_late_loop_zoom.svg",
         "Late Loop Zoom: 170-180 us",
         [
@@ -653,6 +803,14 @@ def main() -> int:
 
     write_event_csv(ROOT / "docs" / "top_event_analysis.csv", dlf_events, hold_events)
     write_numeric_markdown(ROOT / "docs" / "top_numeric_analysis.md", dlf_events, hold_events)
+    write_requested_window_table(
+        ROOT / "docs" / "top_requested_window_table.md",
+        dlf_events,
+        hold_events,
+        clk_frequency_events(rows),
+        requested_start_us,
+        requested_stop_us,
+    )
     write_markdown_summary(ROOT / "docs" / "top_run_summary.md", rows, dlf_events, hold_events)
     print(f"parsed {len(rows)} rows")
     print(f"hold events: {len(hold_events)} at DATA_OUT rising edges")

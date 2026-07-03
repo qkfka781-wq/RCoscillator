@@ -45,9 +45,11 @@ flowchart LR
 
 ## 3. CSV 그래프
 
-[![Oref correction timing zoom](docs/img/top_oref_timing_zoom.svg)](docs/img/top_oref_timing_zoom.svg)
+[![Requested CSV capture](docs/img/top_requested_csv_window.svg)](docs/img/top_requested_csv_window.svg)
 
 [![Oscillator phase nodes and ADC codes](docs/img/top_phase_adc_paths.svg)](docs/img/top_phase_adc_paths.svg)
+
+[![Oref correction timing zoom](docs/img/top_oref_timing_zoom.svg)](docs/img/top_oref_timing_zoom.svg)
 
 [![Error convergence summary](docs/img/top_lock_summary.svg)](docs/img/top_lock_summary.svg)
 
@@ -66,6 +68,7 @@ flowchart LR
 ## 숫자 자료
 
 - [docs/top_run_summary.md](docs/top_run_summary.md)
+- [docs/top_requested_window_table.md](docs/top_requested_window_table.md)
 - [docs/top_numeric_analysis.md](docs/top_numeric_analysis.md)
 - [docs/top_event_analysis.csv](docs/top_event_analysis.csv)
 
