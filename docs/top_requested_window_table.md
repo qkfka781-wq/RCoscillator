@@ -47,6 +47,7 @@ Each active CP hold is checked against the following DLF sample register value.
 
 | event | time (us) | CP1 code | CP2 code | DD1 code | DD2 code | DD2-DD1 | DIFF_SAMPLE | DIFF | D code | D - 65536 | oref (V) |
 | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 7 | 30.532 | 2048 | 2048 | 1958 | 2122 | 164 | 164 | -164 | 64097 | -1439 | 0.506312 |
 | 8 | 35.129 | 2048 | 2048 | 1970 | 2112 | 142 | 142 | -142 | 64405 | -1131 | 0.504597 |
 | 9 | 39.709 | 2048 | 2048 | 1982 | 2105 | 123 | 123 | -123 | 64675 | -861 | 0.503193 |
 

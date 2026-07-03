@@ -487,6 +487,9 @@ def write_requested_window_table(
     stop_us: float,
 ) -> None:
     dlf_window = filter_window(dlf_events, start_us, stop_us)
+    prev_dlf = [row for row in dlf_events if row["sample_t_us"] < start_us]
+    if prev_dlf:
+        dlf_window = [prev_dlf[-1], *dlf_window]
     hold_window = filter_window(hold_events, start_us, stop_us)
     clk_window = filter_window(clk_events, start_us, stop_us)
 
