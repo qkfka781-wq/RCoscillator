@@ -53,9 +53,9 @@ flowchart LR
 
 [![Requested CSV capture](img/top_requested_csv_window.svg)](img/top_requested_csv_window.svg)
 
-`CLK_OSC` 0/1 구간이 두 번 정도 반복되는 32.5-41.5 us 구간입니다. 요청한 순서대로 `VRC1/oref`, `CLK_OSC`와 주파수, `osc1/osc2`, `osc11/osc22`, DLF 동작, `D_s17`과 대응되는 `oref` 전압을 봅니다.
+`CLK_OSC` 0/1 구간이 두 번 정도 반복되는 32.5-41.5 us 구간입니다. 그래프에는 `VRC1/oref`, `CLK_OSC`와 주파수, `osc1/osc2`, `osc11/osc22`만 남겼습니다.
 
-숫자 표는 [top_requested_window_table.md](top_requested_window_table.md)에 따로 정리했습니다.
+CP/DD/DIFF/D/oref 숫자 매핑은 [top_requested_window_table.md](top_requested_window_table.md)에 따로 정리했습니다.
 
 ### Oref Correction Timing Zoom
 

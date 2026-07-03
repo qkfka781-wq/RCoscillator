@@ -820,22 +820,6 @@ def main() -> int:
                 make_series(requested_rows, "t_us", "osc11", "osc11", 3),
                 make_series(requested_rows, "t_us", "osc22", "osc22", 4),
             ]),
-            Panel("5a. DLF unsigned ADC codes", "unsigned 12b", [
-                make_series(requested_dlf_events, "sample_t_us", "cp1", "CP1_u12", 0),
-                make_series(requested_dlf_events, "sample_t_us", "cp2", "CP2_u12", 1),
-                make_series(requested_dlf_events, "sample_t_us", "dd2", "DD2_u12", 2),
-                make_series(requested_dlf_events, "sample_t_us", "dd1", "DD1_u12", 3),
-            ]),
-            Panel("5b. DLF signed error values", "signed code", [
-                make_series(requested_dlf_events, "sample_t_us", "diff_sample", "DIFF_SAMPLE_s12", 3),
-                make_series(requested_dlf_events, "sample_t_us", "diff", "DIFF_s12", 4),
-            ]),
-            Panel("6a. D code signed 17b", "signed 17b", [
-                make_series(requested_dlf_events, "sample_t_us", "d_signed", "D_s17", 5),
-            ]),
-            Panel("6b. Corresponding oref analog voltage", "V", [
-                make_series(requested_dlf_events, "sample_t_us", "oref", "oref", 2),
-            ]),
         ],
         "time (us)",
         panel_height=180,
