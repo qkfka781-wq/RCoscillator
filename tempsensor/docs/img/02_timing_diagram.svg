@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Arial, sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#333"/>
+    </marker>
+  </defs>
+
+  <rect width="960" height="560" fill="#fafafa" rx="8"/>
+  <text x="480" y="28" text-anchor="middle" font-size="18" font-weight="bold" fill="#222">매 Phase 타이밍 시퀀스 (Phase A, B 동일)</text>
+
+  <!-- Phase region labels -->
+  <rect x="140" y="42" width="300" height="20" rx="3" fill="#4a9eff" opacity="0.15"/>
+  <text x="290" y="56" text-anchor="middle" font-size="10" font-weight="bold" fill="#2980b9">충전 + Cal SAR</text>
+  <rect x="440" y="42" width="140" height="20" rx="3" fill="#e74c3c" opacity="0.12"/>
+  <text x="510" y="56" text-anchor="middle" font-size="10" font-weight="bold" fill="#c0392b">Temp ADC</text>
+  <rect x="580" y="42" width="50" height="20" rx="3" fill="#8e44ad" opacity="0.15"/>
+  <text x="605" y="56" text-anchor="middle" font-size="10" font-weight="bold" fill="#8e44ad">RST</text>
+  <rect x="630" y="42" width="140" height="20" rx="3" fill="#95a5a6" opacity="0.15"/>
+  <text x="700" y="56" text-anchor="middle" font-size="10" font-weight="bold" fill="#7f8c8d">Idle (0V)</text>
+  <rect x="770" y="42" width="140" height="20" rx="3" fill="#4a9eff" opacity="0.15"/>
+  <text x="840" y="56" text-anchor="middle" font-size="10" font-weight="bold" fill="#2980b9">다음 phase...</text>
+
+  <!-- Vertical markers -->
+  <line x1="140" y1="62" x2="140" y2="480" stroke="#ccc" stroke-width="1" stroke-dasharray="4,4"/>
+  <line x1="440" y1="62" x2="440" y2="480" stroke="#e74c3c" stroke-width="1" stroke-dasharray="4,4"/>
+  <line x1="580" y1="62" x2="580" y2="480" stroke="#8e44ad" stroke-width="1" stroke-dasharray="4,4"/>
+  <line x1="770" y1="62" x2="770" y2="480" stroke="#ccc" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="140" y="74" text-anchor="middle" font-size="9" fill="#888">CLK_OSC edge</text>
+  <text x="440" y="74" text-anchor="middle" font-size="9" fill="#888">D[30] temp_en</text>
+  <text x="580" y="74" text-anchor="middle" font-size="9" fill="#888">SAR 완료</text>
+  <text x="770" y="74" text-anchor="middle" font-size="9" fill="#888">다음 edge</text>
+
+  <!-- 1. temp_en -->
+  <text x="25" y="108" font-size="12" font-weight="bold" fill="#e67e22">temp_en</text>
+  <polyline points="80,118 140,118 440,118 440,95 580,95 580,118 770,118 920,118" fill="none" stroke="#e67e22" stroke-width="2.5"/>
+  <text x="290" y="114" text-anchor="middle" font-size="9" fill="#e67e22">0 (cal)</text>
+  <text x="510" y="92" text-anchor="middle" font-size="9" fill="#e67e22">1 (temp)</text>
+
+  <!-- 2. TG (temp_sw) -->
+  <text x="25" y="170" font-size="12" font-weight="bold" fill="#27ae60">TG</text>
+  <text x="25" y="182" font-size="9" fill="#888">(latch)</text>
+  <polyline points="80,168 140,168 440,168 440,188 580,188 580,168 770,168 920,168" fill="none" stroke="#27ae60" stroke-width="2.5"/>
+  <text x="290" y="164" font-size="9" fill="#27ae60">ON (추종)</text>
+  <text x="510" y="185" text-anchor="middle" font-size="9" fill="#27ae60">OFF (hold)</text>
+  <text x="675" y="164" font-size="9" fill="#27ae60">ON (리셋)</text>
+
+  <!-- 3. RST (= temp_data_out) -->
+  <text x="25" y="238" font-size="12" font-weight="bold" fill="#c0392b">RST</text>
+  <polyline points="80,238 580,238 580,218 600,218 600,238 920,238" fill="none" stroke="#c0392b" stroke-width="2.5"/>
+  <text x="590" y="215" text-anchor="middle" font-size="8" fill="#c0392b">pulse</text>
+
+  <!-- 5. VRC_temp + temps -->
+  <text x="25" y="345" font-size="12" font-weight="bold" fill="#c0392b">VRC_temp</text>
+  <text x="25" y="430" font-size="12" font-weight="bold" fill="#27ae60">temps</text>
+
+  <!-- Charge fill -->
+  <path d="M140,440 Q290,438 380,380 Q420,360 440,348 L440,440 Z" fill="#27ae60" opacity="0.08"/>
+
+  <!-- VRC_temp: charging curve -->
+  <path d="M80,440 L140,440 Q220,437 310,400 Q380,370 430,355 L440,352" fill="none" stroke="#c0392b" stroke-width="2.5"/>
+  <!-- VRC_temp: continues during SAR (slowly) -->
+  <path d="M440,352 Q500,342 560,336 L580,334" fill="none" stroke="#c0392b" stroke-width="2.5"/>
+  <!-- Reset -->
+  <line x1="580" y1="334" x2="600" y2="440" stroke="#c0392b" stroke-width="2.5"/>
+  <line x1="600" y1="440" x2="770" y2="440" stroke="#c0392b" stroke-width="2.5"/>
+  <!-- Next phase -->
+  <path d="M770,440 Q830,437 880,415 Q910,400 920,390" fill="none" stroke="#c0392b" stroke-width="2.5"/>
+
+  <!-- temps: follows VRC_temp -->
+  <path d="M80,440 L140,440 Q220,437 310,400 Q380,370 430,355 L440,352" fill="none" stroke="#27ae60" stroke-width="2" stroke-dasharray="5,3"/>
+  <!-- temps: HOLD -->
+  <line x1="440" y1="352" x2="580" y2="352" stroke="#27ae60" stroke-width="2.5"/>
+  <!-- Reset -->
+  <line x1="580" y1="352" x2="600" y2="440" stroke="#27ae60" stroke-width="2"/>
+  <line x1="600" y1="440" x2="770" y2="440" stroke="#27ae60" stroke-width="2"/>
+  <!-- Next -->
+  <path d="M770,440 Q830,437 880,415 Q910,400 920,390" fill="none" stroke="#27ae60" stroke-width="2" stroke-dasharray="5,3"/>
+
+  <!-- Voltage labels -->
+  <text x="72" y="444" font-size="9" fill="#888">0V</text>
+  <text x="62" y="340" font-size="9" fill="#888">~0.83V</text>
+
+  <!-- Annotations -->
+  <circle cx="440" cy="352" r="5" fill="#e74c3c"/>
+  <text x="440" y="332" text-anchor="middle" font-size="10" font-weight="bold" fill="#e74c3c">TG OFF</text>
+  <text x="440" y="320" text-anchor="middle" font-size="9" fill="#e74c3c">ADC</text>
+
+  <circle cx="590" cy="334" r="5" fill="#8e44ad"/>
+  <text x="590" y="316" text-anchor="middle" font-size="10" font-weight="bold" fill="#8e44ad">RST pulse</text>
+
+  <!-- Charging time annotation -->
+  <line x1="140" y1="465" x2="580" y2="465" stroke="#333" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="580" y1="465" x2="140" y2="465" stroke="#333" stroke-width="1.5" marker-end="url(#arr)"/>
+  <rect x="290" y="455" width="160" height="18" rx="3" fill="#fff" stroke="#333"/>
+  <text x="370" y="468" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">CLK_OSC 반주기 (충전)</text>
+
+  <!-- Legend -->
+  <rect x="40" y="495" width="880" height="55" rx="8" fill="#f8f9fa" stroke="#dee2e6"/>
+  <text x="60" y="515" font-size="12" font-weight="bold" fill="#333">핵심</text>
+  <circle cx="110" cy="533" r="4" fill="#27ae60"/>
+  <text x="122" y="537" font-size="11" fill="#555">TG latch: temp_en→OFF(hold), temp_data_out→ON(추종/리셋)</text>
+  <circle cx="560" cy="533" r="4" fill="#e74c3c"/>
+  <text x="572" y="537" font-size="11" fill="#555">RST = temp_data_out 직결 (3노드 0V)</text>
+</svg>

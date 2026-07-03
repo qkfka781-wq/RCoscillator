@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 420" font-family="Arial, sans-serif">
+  <rect width="900" height="420" fill="#fafafa" rx="8"/>
+  <text x="450" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#222">온도별 측정 데이터 요약</text>
+
+  <!-- Table header -->
+  <rect x="40" y="50" width="820" height="35" rx="6" fill="#34495e"/>
+  <text x="100" y="73" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">온도</text>
+  <text x="210" y="73" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">CLK_OSC</text>
+  <text x="330" y="73" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">반주기</text>
+  <text x="450" y="73" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">CKR_ASYN (A/B)</text>
+  <text x="600" y="73" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff"> </text>
+  <text x="740" y="73" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff">ADC (A / B)</text>
+
+  <!-- Row -30 -->
+  <rect x="40" y="85" width="820" height="32" fill="#e8f4fd"/>
+  <text x="100" y="106" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">-30°C</text>
+  <text x="210" y="106" text-anchor="middle" font-size="11" fill="#333">248 kHz</text>
+  <text x="330" y="106" text-anchor="middle" font-size="11" fill="#333">2.016 μs</text>
+  <text x="450" y="106" text-anchor="middle" font-size="11" fill="#333">48.3M (20.7ns) / 40.0M (25.0ns)</text>
+  <text x="600" y="106" text-anchor="middle" font-size="11" fill="#333"> </text>
+  <text x="740" y="106" text-anchor="middle" font-size="11" font-weight="bold" fill="#4a9eff">3583 / 3456</text>
+
+  <!-- Row 9 -->
+  <rect x="40" y="117" width="820" height="32" fill="#fff"/>
+  <text x="100" y="138" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">9°C</text>
+  <text x="210" y="138" text-anchor="middle" font-size="11" fill="#333">246 kHz</text>
+  <text x="330" y="138" text-anchor="middle" font-size="11" fill="#333">2.033 μs</text>
+  <text x="450" y="138" text-anchor="middle" font-size="11" fill="#333">58.8M (17.0ns) / 50.1M (20.0ns)</text>
+  <text x="600" y="138" text-anchor="middle" font-size="11" fill="#333"> </text>
+  <text x="740" y="138" text-anchor="middle" font-size="11" font-weight="bold" fill="#4a9eff">3583 / 3472</text>
+
+  <!-- Row 30 -->
+  <rect x="40" y="149" width="820" height="32" fill="#e8f4fd"/>
+  <text x="100" y="170" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">30°C</text>
+  <text x="210" y="170" text-anchor="middle" font-size="11" fill="#333">241 kHz</text>
+  <text x="330" y="170" text-anchor="middle" font-size="11" fill="#333">2.075 μs</text>
+  <text x="450" y="170" text-anchor="middle" font-size="11" fill="#333">82.8M (12.1ns) / 76.0M (13.2ns)</text>
+  <text x="600" y="170" text-anchor="middle" font-size="11" fill="#333"> </text>
+  <text x="740" y="170" text-anchor="middle" font-size="11" font-weight="bold" fill="#4a9eff">3736 / 3682</text>
+
+  <!-- Row 60 -->
+  <rect x="40" y="181" width="820" height="32" fill="#fff"/>
+  <text x="100" y="202" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">60°C</text>
+  <text x="210" y="202" text-anchor="middle" font-size="11" fill="#333">239 kHz</text>
+  <text x="330" y="202" text-anchor="middle" font-size="11" fill="#333">2.092 μs</text>
+  <text x="450" y="202" text-anchor="middle" font-size="11" fill="#333">104M (9.6ns) / 98.3M (10.2ns)</text>
+  <text x="600" y="202" text-anchor="middle" font-size="11" fill="#333"> </text>
+  <text x="740" y="202" text-anchor="middle" font-size="11" font-weight="bold" fill="#4a9eff">3789 / 3767</text>
+
+  <!-- Row 90 -->
+  <rect x="40" y="213" width="820" height="32" fill="#e8f4fd"/>
+  <text x="100" y="234" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">90°C</text>
+  <text x="210" y="234" text-anchor="middle" font-size="11" fill="#333">236 kHz</text>
+  <text x="330" y="234" text-anchor="middle" font-size="11" fill="#333">2.119 μs</text>
+  <text x="450" y="234" text-anchor="middle" font-size="11" fill="#333">142M (7.0ns) / 141M (7.1ns)</text>
+  <text x="600" y="234" text-anchor="middle" font-size="11" fill="#333"> </text>
+  <text x="740" y="234" text-anchor="middle" font-size="11" font-weight="bold" fill="#4a9eff">3851 / 3843</text>
+
+  <!-- Row 120 -->
+  <rect x="40" y="245" width="820" height="32" fill="#fff"/>
+  <text x="100" y="266" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">120°C</text>
+  <text x="210" y="266" text-anchor="middle" font-size="11" fill="#888">-</text>
+  <text x="330" y="266" text-anchor="middle" font-size="11" fill="#888">-</text>
+  <text x="450" y="266" text-anchor="middle" font-size="11" fill="#888">-</text>
+  <text x="600" y="266" text-anchor="middle" font-size="11" fill="#888"> </text>
+  <text x="740" y="266" text-anchor="middle" font-size="11" font-weight="bold" fill="#4a9eff">3927 / 3925</text>
+
+  <!-- Summary boxes -->
+  <rect x="40" y="300" width="260" height="55" rx="8" fill="#e8f4fd" stroke="#4a9eff" stroke-width="1.5"/>
+  <text x="170" y="322" text-anchor="middle" font-size="12" font-weight="bold" fill="#2980b9">CLK_OSC 반주기</text>
+  <text x="170" y="342" text-anchor="middle" font-size="12" fill="#333">2.016 → 2.119 μs (+5%)</text>
+
+  <rect x="320" y="300" width="260" height="55" rx="8" fill="#fde8e8" stroke="#e74c3c" stroke-width="1.5"/>
+  <text x="450" y="322" text-anchor="middle" font-size="12" font-weight="bold" fill="#c0392b">Gate delay</text>
+  <text x="450" y="342" text-anchor="middle" font-size="12" fill="#333">3배 빨라짐 (48M → 142M)</text>
+
+  <rect x="600" y="300" width="260" height="55" rx="8" fill="#e8f8f0" stroke="#27ae60" stroke-width="1.5"/>
+  <text x="730" y="322" text-anchor="middle" font-size="12" font-weight="bold" fill="#27ae60">ADC 감도</text>
+  <text x="730" y="342" text-anchor="middle" font-size="12" fill="#333">~2.7 LSB/°C (단조 증가)</text>
+
+  <!-- Bottom note -->
+  <rect x="40" y="375" width="820" height="35" rx="8" fill="#fff3e0" stroke="#f39c12"/>
+  <text x="450" y="397" text-anchor="middle" font-size="12" fill="#333">T ↑ → gate delay ↓ → SAR 빨리 끝남 → idle 늘어남 → 충전 시간 ↑ → 전압 ↑ → ADC 코드 ↑</text>
+</svg>

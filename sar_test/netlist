@@ -1,0 +1,1307 @@
+// Generated for: spectre
+// Generated on: Jul  1 17:11:38 2026
+// Design library name: 0_BARAM
+// Design cell name: test_StrongARMfull
+// Design view name: schematic
+simulator lang=spectre
+global 0
+include "/SF28_dk/SF28_LNR/analog/pdk_analog/LNR28FDS_Spectre_S00-V1.3.5.1/Spectre/LNR28FDS_Spectre_STD.lib" section=tt
+
+// Library name: 0_BARAM
+// Cell name: INV
+// View name: schematic
+subckt INV A net2 net4 net3 net6 net7
+    MN0 (net2 A net4 net3) nfet w=100n l=30n nf=1 sa=76n sb=76n sd=96n \
+        ptwell=0 par=1 p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 \
+        pre_layout_local=-1 p_la=0 lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 \
+        nsig_delvto_uo1=0 nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 \
+        swacc=-1 mismatch=1 numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 \
+        sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 \
+        lle_pcrxn=0 lle_pcrxs=0
+    MP0 (net2 A net6 net7) pfet w=164n l=30n nf=1 sa=76n sb=76n sd=96n \
+        ptwell=0 par=1 p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 \
+        pre_layout_local=-1 p_la=0 lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 \
+        nsig_delvto_uo1=0 nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 \
+        swacc=-1 mismatch=1 numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 \
+        sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 \
+        lle_pcrxn=0 lle_pcrxs=0
+ends INV
+// End of subcircuit definition.
+
+// Library name: 0_BARAM
+// Cell name: NOR2
+// View name: schematic
+subckt NOR2 net14 net10 net15 net7 net8 net9 net16
+    M_I0_MXPA2 (net9 net10 net13 net16) pfet w=1.58E-07 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I0_MXPA1 (net13 net14 net15 net16) pfet w=1.58E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I0_MXNA2 (net7 net10 net15 net8) nfet w=1E-07 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I0_MXNA1 (net15 net14 net7 net8) nfet w=1E-07 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+ends NOR2
+// End of subcircuit definition.
+
+// Library name: 0_BARAM
+// Cell name: StrongARM
+// View name: schematic
+subckt StrongARM CLK OUT OUTB VDD VINN VINP VSS
+    N7 (outp outn net9 VSS) lvtnfet w=160n l=80n as=12.16f ad=12.16f \
+        nf=(1)*(1) sa=(76n)+(0) sb=(76n)+(0) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    N6 (outn outp net8 VSS) lvtnfet w=160n l=80n as=12.16f ad=12.16f \
+        nf=(1)*(1) sa=(76n)+(0) sb=(76n)+(0) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    N5 (input1 VDD input2 VSS) lvtnfet w=80n l=30n as=6.08f ad=6.08f \
+        nf=(1)*(1) sa=(76n)+(0) sb=(76n)+(0) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    N4 (net9 CLK input2 VSS) lvtnfet w=80n l=30n as=6.08f ad=6.08f \
+        nf=(1)*(1) sa=(76n)+(0) sb=(76n)+(0) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    N3 (input2 VINN tail VSS) lvtnfet w=160n l=80n as=12.16f ad=12.16f \
+        nf=(1)*(1) sa=(76n)+(0) sb=(76n)+(0) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    N2 (net8 CLK input1 VSS) lvtnfet w=80n l=30n as=6.08f ad=6.08f \
+        nf=(1)*(1) sa=(76n)+(0) sb=(76n)+(0) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    N0 (input1 VINP tail VSS) lvtnfet w=160n l=80n as=12.16f ad=12.16f \
+        nf=(1)*(1) sa=(76n)+(0) sb=(76n)+(0) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    N1 (tail CLK VSS VSS) lvtnfet w=80n l=30n as=6.08f ad=6.08f nf=(1)*(1) \
+        sa=(76n)+(0) sb=(76n)+(0) sd=96n ptwell=0 par=1 p_vta=0 sca=-1 \
+        scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    P6 (outp CLK VDD VDD) lvtpfet w=80n l=30n as=6.08f ad=6.08f nf=(1)*(1) \
+        sa=(76n)+(0) sb=(76n)+(0) sd=96n ptwell=0 par=1 p_vta=0 sca=-1 \
+        scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    P5 (net9 CLK VDD VDD) lvtpfet w=80n l=30n as=6.08f ad=6.08f nf=(1)*(1) \
+        sa=(76n)+(0) sb=(76n)+(0) sd=96n ptwell=0 par=1 p_vta=0 sca=-1 \
+        scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    P4 (outn CLK VDD VDD) lvtpfet w=80n l=30n as=6.08f ad=6.08f nf=(1)*(1) \
+        sa=(76n)+(0) sb=(76n)+(0) sd=96n ptwell=0 par=1 p_vta=0 sca=-1 \
+        scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    P1 (net8 CLK VDD VDD) lvtpfet w=80n l=30n as=6.08f ad=6.08f nf=(1)*(1) \
+        sa=(76n)+(0) sb=(76n)+(0) sd=96n ptwell=0 par=1 p_vta=0 sca=-1 \
+        scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    P0 (outp outn VDD VDD) lvtpfet w=320n l=80n as=24.32f ad=24.32f \
+        nf=(1)*(1) sa=(76n)+(0) sb=(76n)+(0) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    P2 (outn outp VDD VDD) lvtpfet w=320n l=80n as=24.32f ad=24.32f \
+        nf=(1)*(1) sa=(76n)+(0) sb=(76n)+(0) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    I3 (nn2 OUTB VSS VSS VDD VDD) INV
+    I2 (nn1 OUT VSS VSS VDD VDD) INV
+    I0 (outp net6 VSS VSS VDD VDD) INV
+    I15 (outn net4 VSS VSS VDD VDD) INV
+    I1 (nn1 net6 nn2 VSS VSS VDD VDD) NOR2
+    I10 (nn2 net4 nn1 VSS VSS VDD VDD) NOR2
+ends StrongARM
+// End of subcircuit definition.
+
+// Library name: 0_BARAM
+// Cell name: TG
+// View name: schematic
+subckt TG ON ONB VDD VSS X Y
+    N0 (Y ON X VDD) lvtnfet w=2.4u l=30.00n as=119.68f ad=115.2f \
+        nf=(30)*(1) sa=(76n)+(0) sb=(76n)+(0) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    P0 (Y ONB X VSS) lvtpfet w=3.6u l=30.00n as=175.04f ad=175.04f \
+        nf=(45)*(1) sa=(76n)+(0) sb=(76n)+(0) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+ends TG
+// End of subcircuit definition.
+
+// Library name: 0_BARAM
+// Cell name: CDAC_12b
+// View name: schematic
+subckt CDAC_12b IN\<11\> IN\<10\> IN\<9\> IN\<8\> IN\<7\> IN\<6\> IN\<5\> \
+        IN\<4\> IN\<3\> IN\<2\> IN\<1\> IN\<0\> VDD VOUT VSS VX
+C2 (OUT\<2\> VX VSS VSS) cmom_6U1x_2U2x_2T8x_LB_sh c=4.436e-15 \
+        nf_dirx=10.0 nf_diry=10.0 mtlfrbot=2 mtlfrtop=6 mtlconbot=2 \
+        mtlcontop=5 spacefinger_mx=1e-07 wfinger_mx=1e-07 mismatch=1 \
+        mult=4 pre_layout_local=-1 fr_big_finger=0
+C13 (VSS VX VSS VSS) cmom_6U1x_2U2x_2T8x_LB_sh c=4.436e-15 nf_dirx=10.0 \
+        nf_diry=10.0 mtlfrbot=2 mtlfrtop=6 mtlconbot=2 mtlcontop=5 \
+        spacefinger_mx=1e-07 wfinger_mx=1e-07 mismatch=1 mult=143 \
+        pre_layout_local=-1 fr_big_finger=0
+C12 (VOUT VX VSS VSS) cmom_6U1x_2U2x_2T8x_LB_sh c=4.436e-15 nf_dirx=10.0 \
+        nf_diry=10.0 mtlfrbot=2 mtlfrtop=6 mtlconbot=2 mtlcontop=5 \
+        spacefinger_mx=1e-07 wfinger_mx=1e-07 mismatch=1 mult=6 \
+        pre_layout_local=-1 fr_big_finger=0
+C11 (OUT\<10\> VOUT VSS VSS) cmom_6U1x_2U2x_2T8x_LB_sh c=4.436e-15 \
+        nf_dirx=10.0 nf_diry=10.0 mtlfrbot=2 mtlfrtop=6 mtlconbot=2 \
+        mtlcontop=5 spacefinger_mx=1e-07 wfinger_mx=1e-07 mismatch=1 \
+        mult=32 pre_layout_local=-1 fr_big_finger=0
+C10 (OUT\<11\> VOUT VSS VSS) cmom_6U1x_2U2x_2T8x_LB_sh c=4.436e-15 \
+        nf_dirx=10.0 nf_diry=10.0 mtlfrbot=2 mtlfrtop=6 mtlconbot=2 \
+        mtlcontop=5 spacefinger_mx=1e-07 wfinger_mx=1e-07 mismatch=1 \
+        mult=64 pre_layout_local=-1 fr_big_finger=0
+C9 (OUT\<9\> VOUT VSS VSS) cmom_6U1x_2U2x_2T8x_LB_sh c=4.436e-15 \
+        nf_dirx=10.0 nf_diry=10.0 mtlfrbot=2 mtlfrtop=6 mtlconbot=2 \
+        mtlcontop=5 spacefinger_mx=1e-07 wfinger_mx=1e-07 mismatch=1 \
+        mult=16 pre_layout_local=-1 fr_big_finger=0
+C8 (OUT\<8\> VOUT VSS VSS) cmom_6U1x_2U2x_2T8x_LB_sh c=4.436e-15 \
+        nf_dirx=10.0 nf_diry=10.0 mtlfrbot=2 mtlfrtop=6 mtlconbot=2 \
+        mtlcontop=5 spacefinger_mx=1e-07 wfinger_mx=1e-07 mismatch=1 \
+        mult=8 pre_layout_local=-1 fr_big_finger=0
+C7 (OUT\<4\> VX VSS VSS) cmom_6U1x_2U2x_2T8x_LB_sh c=4.436e-15 \
+        nf_dirx=10.0 nf_diry=10.0 mtlfrbot=2 mtlfrtop=6 mtlconbot=2 \
+        mtlcontop=5 spacefinger_mx=1e-07 wfinger_mx=1e-07 mismatch=1 \
+        mult=16 pre_layout_local=-1 fr_big_finger=0
+C6 (OUT\<5\> VOUT VSS VSS) cmom_6U1x_2U2x_2T8x_LB_sh c=4.436e-15 \
+        nf_dirx=10.0 nf_diry=10.0 mtlfrbot=2 mtlfrtop=6 mtlconbot=2 \
+        mtlcontop=5 spacefinger_mx=1e-07 wfinger_mx=1e-07 mismatch=1 \
+        mult=1 pre_layout_local=-1 fr_big_finger=0
+C5 (OUT\<7\> VOUT VSS VSS) cmom_6U1x_2U2x_2T8x_LB_sh c=4.436e-15 \
+        nf_dirx=10.0 nf_diry=10.0 mtlfrbot=2 mtlfrtop=6 mtlconbot=2 \
+        mtlcontop=5 spacefinger_mx=1e-07 wfinger_mx=1e-07 mismatch=1 \
+        mult=4 pre_layout_local=-1 fr_big_finger=0
+C4 (OUT\<6\> VOUT VSS VSS) cmom_6U1x_2U2x_2T8x_LB_sh c=4.436e-15 \
+        nf_dirx=10.0 nf_diry=10.0 mtlfrbot=2 mtlfrtop=6 mtlconbot=2 \
+        mtlcontop=5 spacefinger_mx=1e-07 wfinger_mx=1e-07 mismatch=1 \
+        mult=2 pre_layout_local=-1 fr_big_finger=0
+C3 (OUT\<3\> VX VSS VSS) cmom_6U1x_2U2x_2T8x_LB_sh c=4.436e-15 \
+        nf_dirx=10.0 nf_diry=10.0 mtlfrbot=2 mtlfrtop=6 mtlconbot=2 \
+        mtlcontop=5 spacefinger_mx=1e-07 wfinger_mx=1e-07 mismatch=1 \
+        mult=8 pre_layout_local=-1 fr_big_finger=0
+C1 (OUT\<1\> VX VSS VSS) cmom_6U1x_2U2x_2T8x_LB_sh c=4.436e-15 \
+        nf_dirx=10.0 nf_diry=10.0 mtlfrbot=2 mtlfrtop=6 mtlconbot=2 \
+        mtlcontop=5 spacefinger_mx=1e-07 wfinger_mx=1e-07 mismatch=1 \
+        mult=2 pre_layout_local=-1 fr_big_finger=0
+C0 (OUT\<0\> VX VSS VSS) cmom_6U1x_2U2x_2T8x_LB_sh c=4.436e-15 \
+        nf_dirx=10.0 nf_diry=10.0 mtlfrbot=2 mtlfrtop=6 mtlconbot=2 \
+        mtlcontop=5 spacefinger_mx=1e-07 wfinger_mx=1e-07 mismatch=1 \
+        mult=1 pre_layout_local=-1 fr_big_finger=0
+    I0\<4\> (IN\<4\> OUT\<4\> VSS VSS VDD VDD) INV
+    I0\<3\> (IN\<3\> OUT\<3\> VSS VSS VDD VDD) INV
+    I0\<2\> (IN\<2\> OUT\<2\> VSS VSS VDD VDD) INV
+    I0\<1\> (IN\<1\> OUT\<1\> VSS VSS VDD VDD) INV
+    I0\<0\> (IN\<0\> OUT\<0\> VSS VSS VDD VDD) INV
+    I1\<11\> (IN\<11\> OUT\<11\> VSS VSS VDD VDD) INV
+    I1\<10\> (IN\<10\> OUT\<10\> VSS VSS VDD VDD) INV
+    I1\<9\> (IN\<9\> OUT\<9\> VSS VSS VDD VDD) INV
+    I1\<8\> (IN\<8\> OUT\<8\> VSS VSS VDD VDD) INV
+    I1\<7\> (IN\<7\> OUT\<7\> VSS VSS VDD VDD) INV
+    I1\<6\> (IN\<6\> OUT\<6\> VSS VSS VDD VDD) INV
+    I1\<5\> (IN\<5\> OUT\<5\> VSS VSS VDD VDD) INV
+ends CDAC_12b
+// End of subcircuit definition.
+
+// Library name: 0_BARAM
+// Cell name: DFFRPQ
+// View name: schematic
+subckt DFFRPQ net82 net86 net107 net102 net22 net19 net74 net66
+    M_I33_MXNOE (net63 net68 net65 net19) nfet w=1E-07 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I0_MXNA2 (net67 net65 net22 net19) nfet w=1.8E-07 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I0_MXNA1 (net67 net102 net22 net19) nfet w=1.8E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I20_MXNOE (net67 net64 net69 net19) nfet w=1.4E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I23_MXNA1 (net64 net68 net22 net19) nfet w=1E-07 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_MXN1 (net22 net102 net69 net19) nfet w=8E-08 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I28_MXNA1 (net22 net69 net76 net19) nfet w=1.4E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I22_MXNA1 (net22 net82 net68 net19) nfet w=1E-07 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I78_MXNA1 (net22 net86 net63 net19) nfet w=1.2E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I31_MXNOE (net53 net64 net65 net19) nfet w=8E-08 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I31_MXNA1 (net53 net67 net22 net19) nfet w=8E-08 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_MXN4 (net61 net68 net69 net19) nfet w=8E-08 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_MXN0 (net61 net76 net22 net19) nfet w=8E-08 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I8_MXNA1 (net22 net76 net107 net19) nfet w=1.58E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I33_MXPOEN (net63 net64 net65 net66) pfet w=1E-07 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I20_MXPOEN (net67 net68 net69 net66) pfet w=1.4E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I23_MXPA1 (net64 net68 net74 net66) pfet w=1.8E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I28_MXPA1 (net76 net69 net74 net66) pfet w=2.7E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I22_MXPA1 (net68 net82 net74 net66) pfet w=1E-07 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I78_MXPA1 (net74 net86 net63 net66) pfet w=1E-07 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I31_MXPOEN (net89 net68 net65 net66) pfet w=8E-08 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I31_MXPA1 (net89 net67 net74 net66) pfet w=8E-08 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I0_MXPA2 (net97 net65 net74 net66) pfet w=3.1E-07 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I0_MXPA1 (net97 net102 net67 net66) pfet w=3.1E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I8_MXPA1 (net74 net76 net107 net66) pfet w=1.58E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_MXP1 (net109 net64 net69 net66) pfet w=1.2E-07 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_MXP0 (net113 net76 net109 net66) pfet w=1.2E-07 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_MXP5 (net113 net102 net74 net66) pfet w=1.2E-07 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+ends DFFRPQ
+// End of subcircuit definition.
+
+// Library name: 0_BARAM
+// Cell name: DFFSQ
+// View name: schematic
+subckt DFFSQ net84 net80 net60 net104 net58 net61 net109 net114
+    M_I33_MXNOE (net115 net100 net113 net61) nfet w=1E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I20_MXNOE (net111 net112 net101 net61) nfet w=1.5E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I23_MXNA1 (net112 net100 net58 net61) nfet w=1E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I28_MXNA1 (net58 net101 net89 net61) nfet w=1.3E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I22_MXNA1 (net58 net84 net100 net61) nfet w=1E-07 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I79_MXNA1 (net58 net80 net115 net61) nfet w=1.2E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I31_MXNOE (net44 net112 net113 net61) nfet w=8E-08 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I31_MXNA1 (net44 net111 net58 net61) nfet w=8E-08 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I0_MXNA2 (net53 net113 net58 net61) nfet w=2.1E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I0_MXNA1 (net53 net104 net111 net61) nfet w=2.1E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I8_MXNA1 (net58 net89 net60 net61) nfet w=1.5E-07 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_MXN1 (net62 net104 net58 net61) nfet w=1E-07 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_MXN4 (net7 net100 net101 net61) nfet w=1E-07 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_MXN0 (net7 net89 net62 net61) nfet w=1E-07 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I33_MXPOEN (net115 net112 net113 net114) pfet w=1E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I0_MXPA2 (net111 net113 net109 net114) pfet w=2.8E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I0_MXPA1 (net111 net104 net109 net114) pfet w=2.8E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I20_MXPOEN (net111 net100 net101 net114) pfet w=1.5E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I23_MXPA1 (net112 net100 net109 net114) pfet w=1.7E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_MXP4 (net101 net104 net109 net114) pfet w=8E-08 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I28_MXPA1 (net109 net101 net89 net114) pfet w=3.15E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I22_MXPA1 (net100 net84 net109 net114) pfet w=1E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I79_MXPA1 (net109 net80 net115 net114) pfet w=1E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I31_MXPOEN (net79 net100 net113 net114) pfet w=8E-08 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I31_MXPA1 (net79 net111 net109 net114) pfet w=8E-08 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_MXP0 (net70 net112 net101 net114) pfet w=8E-08 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_MXP1 (net70 net89 net109 net114) pfet w=8E-08 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I8_MXPA1 (net109 net89 net60 net114) pfet w=1.58E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+ends DFFSQ
+// End of subcircuit definition.
+
+// Library name: 0_BARAM
+// Cell name: DFFSRPQ
+// View name: schematic
+subckt DFFSRPQ net114 net118 net139 net134 net106 net80 net83 net137 \
+        net136
+    M_I33_MXNOE (net119 net122 net130 net83) nfet w=1.3E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_MXN7 (net135 net130 net59 net83) nfet w=3.15E-07 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_MXN9 (net135 net134 net59 net83) nfet w=3.15E-07 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_MXN8 (net59 net106 net80 net83) nfet w=3.15E-07 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I20_MXNOE (net135 net100 net110 net83) nfet w=2.3E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I23_MXNA1 (net100 net122 net80 net83) nfet w=1E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I28_MXNA1 (net80 net110 net138 net83) nfet w=2.2E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I22_MXNA1 (net122 net114 net80 net83) nfet w=1.4E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I80_MXNA1 (net80 net118 net119 net83) nfet w=1.8E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I31_MXNOE (net84 net100 net130 net83) nfet w=8E-08 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I31_MXNA1 (net84 net135 net80 net83) nfet w=8E-08 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_MXN6 (net80 net134 net11 net83) nfet w=1E-07 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_MXN0 (net11 net106 net110 net83) nfet w=1E-07 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I8_MXNA1 (net80 net138 net139 net83) nfet w=3.15E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_MXN5 (net80 net106 net27 net83) nfet w=1E-07 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_MXN4 (net29 net122 net110 net83) nfet w=1E-07 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_MXN1 (net27 net138 net29 net83) nfet w=1E-07 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I33_MXPOEN (net119 net100 net130 net136) pfet w=1.3E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_MXP9 (net135 net106 net137 net136) pfet w=3.15E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I20_MXPOEN (net135 net122 net110 net136) pfet w=2.38E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I23_MXPA1 (net100 net122 net137 net136) pfet w=2.6E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_MXP6 (net110 net106 net137 net136) pfet w=1.2E-07 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I28_MXPA1 (net138 net110 net137 net136) pfet w=3.15E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I22_MXPA1 (net122 net114 net137 net136) pfet w=1.4E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I80_MXPA1 (net137 net118 net119 net136) pfet w=1.5E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I31_MXPOEN (net125 net122 net130 net136) pfet w=8E-08 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I31_MXPA1 (net125 net135 net137 net136) pfet w=8E-08 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_MXP8 (net133 net130 net137 net136) pfet w=3.15E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_MXP7 (net133 net134 net135 net136) pfet w=3.15E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I8_MXPA1 (net137 net138 net139 net136) pfet w=3.15E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_MXP0 (net36 net100 net110 net136) pfet w=1.2E-07 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_MXP1 (net36 net138 net40 net136) pfet w=1.2E-07 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_MXP5 (net40 net134 net137 net136) pfet w=1.2E-07 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+ends DFFSRPQ
+// End of subcircuit definition.
+
+// Library name: 0_BARAM
+// Cell name: BUF
+// View name: schematic
+subckt BUF net10 net13 net7 net8 net15 net16
+    M_I0_MXPA1 (net14 net10 net15 net16) pfet w=1.83E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I1_MXPA1 (net13 net14 net15 net16) pfet w=2.23E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I0_MXNA1 (net14 net10 net7 net8) nfet w=1E-07 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I1_MXNA1 (net13 net14 net7 net8) nfet w=1.22E-07 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+ends BUF
+// End of subcircuit definition.
+
+// Library name: 0_BARAM
+// Cell name: NAND2
+// View name: schematic
+subckt NAND2 net14 net10 net13 net3 net8 net15 net16
+    M_I0_MXPA2 (net13 net10 net15 net16) pfet w=1.58E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I0_MXPA1 (net13 net14 net15 net16) pfet w=1.58E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I0_MXNA2 (net7 net10 net3 net8) nfet w=1.58E-07 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I0_MXNA1 (net13 net14 net7 net8) nfet w=1.58E-07 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+ends NAND2
+// End of subcircuit definition.
+
+// Library name: 0_BARAM
+// Cell name: 0_SAR_12b
+// View name: schematic
+subckt _sub0 ADC_RST CLK_EXT CN\<11\> CN\<10\> CN\<9\> CN\<8\> CN\<7\> \
+        CN\<6\> CN\<5\> CN\<4\> CN\<3\> CN\<2\> CN\<1\> CN\<0\> COMP \
+        CP\<11\> CP\<10\> CP\<9\> CP\<8\> CP\<7\> CP\<6\> CP\<5\> CP\<4\> \
+        CP\<3\> CP\<2\> CP\<1\> CP\<0\> DATA_OUT EOC VDD VSS
+    I5 (EOC VDD EOC_RST RESET2 VSS VSS VDD VDD) DFFRPQ
+    I3\<13\> (CKR1 CLK\<12\> CLK\<11\> RESET2 VSS VSS VDD VDD) DFFRPQ
+    I3\<12\> (CKR1 CLK\<11\> CLK\<10\> RESET2 VSS VSS VDD VDD) DFFRPQ
+    I3\<11\> (CKR1 CLK\<10\> CLK\<9\> RESET2 VSS VSS VDD VDD) DFFRPQ
+    I3\<10\> (CKR1 CLK\<9\> CLK\<8\> RESET2 VSS VSS VDD VDD) DFFRPQ
+    I3\<9\> (CKR1 CLK\<8\> CLK\<7\> RESET2 VSS VSS VDD VDD) DFFRPQ
+    I3\<8\> (CKR1 CLK\<7\> CLK\<6\> RESET2 VSS VSS VDD VDD) DFFRPQ
+    I3\<7\> (CKR1 CLK\<6\> CLK\<5\> RESET2 VSS VSS VDD VDD) DFFRPQ
+    I3\<6\> (CKR1 CLK\<5\> CLK\<4\> RESET2 VSS VSS VDD VDD) DFFRPQ
+    I3\<5\> (CKR1 CLK\<4\> CLK\<3\> RESET2 VSS VSS VDD VDD) DFFRPQ
+    I3\<4\> (CKR1 CLK\<3\> CLK\<2\> RESET2 VSS VSS VDD VDD) DFFRPQ
+    I3\<3\> (CKR1 CLK\<2\> CLK\<1\> RESET2 VSS VSS VDD VDD) DFFRPQ
+    I3\<2\> (CKR1 CLK\<1\> CLK\<0\> RESET2 VSS VSS VDD VDD) DFFRPQ
+    I3\<1\> (CKR1 CLK\<0\> DATA_OUT RESET2 VSS VSS VDD VDD) DFFRPQ
+    I3\<0\> (CKR1 DATA_OUT EOC RESET2 VSS VSS VDD VDD) DFFRPQ
+    I0 (CKR1 VDD CLK\<12\> RESET2 VSS VSS VDD VDD) DFFRPQ
+    I1 (net4 COMPP CP\<11\> RSTB VSS VSS VDD VDD) DFFSQ
+    I2\<10\> (nn\<10\> COMPP CP\<10\> RST1 n\<10\> VSS VSS VDD VDD) \
+        DFFSRPQ
+    I2\<9\> (nn\<9\> COMPP CP\<9\> RST1 n\<9\> VSS VSS VDD VDD) DFFSRPQ
+    I2\<8\> (nn\<8\> COMPP CP\<8\> RST1 n\<8\> VSS VSS VDD VDD) DFFSRPQ
+    I2\<7\> (nn\<7\> COMPP CP\<7\> RST1 n\<7\> VSS VSS VDD VDD) DFFSRPQ
+    I2\<6\> (nn\<6\> COMPP CP\<6\> RST1 n\<6\> VSS VSS VDD VDD) DFFSRPQ
+    I2\<5\> (nn\<5\> COMPP CP\<5\> RST1 n\<5\> VSS VSS VDD VDD) DFFSRPQ
+    I2\<4\> (nn\<4\> COMPP CP\<4\> RST1 n\<4\> VSS VSS VDD VDD) DFFSRPQ
+    I2\<3\> (nn\<3\> COMPP CP\<3\> RST1 n\<3\> VSS VSS VDD VDD) DFFSRPQ
+    I2\<2\> (nn\<2\> COMPP CP\<2\> RST1 n\<2\> VSS VSS VDD VDD) DFFSRPQ
+    I2\<1\> (nn\<1\> COMPP CP\<1\> RST1 n\<1\> VSS VSS VDD VDD) DFFSRPQ
+    I2\<0\> (nn\<0\> COMPP CP\<0\> RST1 n\<0\> VSS VSS VDD VDD) DFFSRPQ
+    I6 (EOC_RST ADC_RST net18 VSS VSS VDD VDD) NOR2
+    I18\<10\> (n\<10\> net2\<0\> VSS VSS VDD VDD) BUF
+    I18\<9\> (n\<9\> net2\<1\> VSS VSS VDD VDD) BUF
+    I18\<8\> (n\<8\> net2\<2\> VSS VSS VDD VDD) BUF
+    I18\<7\> (n\<7\> net2\<3\> VSS VSS VDD VDD) BUF
+    I18\<6\> (n\<6\> net2\<4\> VSS VSS VDD VDD) BUF
+    I18\<5\> (n\<5\> net2\<5\> VSS VSS VDD VDD) BUF
+    I18\<4\> (n\<4\> net2\<6\> VSS VSS VDD VDD) BUF
+    I18\<3\> (n\<3\> net2\<7\> VSS VSS VDD VDD) BUF
+    I18\<2\> (n\<2\> net2\<8\> VSS VSS VDD VDD) BUF
+    I18\<1\> (n\<1\> net2\<9\> VSS VSS VDD VDD) BUF
+    I18\<0\> (n\<0\> net2\<10\> VSS VSS VDD VDD) BUF
+    I19\<10\> (net2\<0\> nn\<10\> VSS VSS VDD VDD) BUF
+    I19\<9\> (net2\<1\> nn\<9\> VSS VSS VDD VDD) BUF
+    I19\<8\> (net2\<2\> nn\<8\> VSS VSS VDD VDD) BUF
+    I19\<7\> (net2\<3\> nn\<7\> VSS VSS VDD VDD) BUF
+    I19\<6\> (net2\<4\> nn\<6\> VSS VSS VDD VDD) BUF
+    I19\<5\> (net2\<5\> nn\<5\> VSS VSS VDD VDD) BUF
+    I19\<4\> (net2\<6\> nn\<4\> VSS VSS VDD VDD) BUF
+    I19\<3\> (net2\<7\> nn\<3\> VSS VSS VDD VDD) BUF
+    I19\<2\> (net2\<8\> nn\<2\> VSS VSS VDD VDD) BUF
+    I19\<1\> (net2\<9\> nn\<1\> VSS VSS VDD VDD) BUF
+    I19\<0\> (net2\<10\> nn\<0\> VSS VSS VDD VDD) BUF
+    I14 (CLK\<11\> net4 VSS VSS VDD VDD) BUF
+    I4 (CLK_EXT CKR1 VSS VSS VDD VDD) BUF
+    I17\<10\> (CLK\<10\> net1\<0\> VDD VDD VSS VSS) INV
+    I17\<9\> (CLK\<9\> net1\<1\> VDD VDD VSS VSS) INV
+    I17\<8\> (CLK\<8\> net1\<2\> VDD VDD VSS VSS) INV
+    I17\<7\> (CLK\<7\> net1\<3\> VDD VDD VSS VSS) INV
+    I17\<6\> (CLK\<6\> net1\<4\> VDD VDD VSS VSS) INV
+    I17\<5\> (CLK\<5\> net1\<5\> VDD VDD VSS VSS) INV
+    I17\<4\> (CLK\<4\> net1\<6\> VDD VDD VSS VSS) INV
+    I17\<3\> (CLK\<3\> net1\<7\> VDD VDD VSS VSS) INV
+    I17\<2\> (CLK\<2\> net1\<8\> VDD VDD VSS VSS) INV
+    I17\<1\> (CLK\<1\> net1\<9\> VDD VDD VSS VSS) INV
+    I17\<0\> (CLK\<0\> net1\<10\> VDD VDD VSS VSS) INV
+    I15 (CP\<11\> CN\<11\> VSS VSS VDD VDD) INV
+    I13 (net23 COMPP VSS VSS VDD VDD) INV
+    I12 (COMP net23 VSS VSS VDD VDD) INV
+    I11 (RSTB RST1 VSS VSS VDD VDD) INV
+    I10 (RESET2 RSTB VSS VSS VDD VDD) INV
+    I9 (net20 RESET2 VSS VSS VDD VDD) INV
+    I8 (net19 net20 VSS VSS VDD VDD) INV
+    I7 (net18 net19 VSS VSS VDD VDD) INV
+    I20\<10\> (CP\<10\> CN\<10\> VSS VSS VDD VDD) INV
+    I20\<9\> (CP\<9\> CN\<9\> VSS VSS VDD VDD) INV
+    I20\<8\> (CP\<8\> CN\<8\> VSS VSS VDD VDD) INV
+    I20\<7\> (CP\<7\> CN\<7\> VSS VSS VDD VDD) INV
+    I20\<6\> (CP\<6\> CN\<6\> VSS VSS VDD VDD) INV
+    I20\<5\> (CP\<5\> CN\<5\> VSS VSS VDD VDD) INV
+    I20\<4\> (CP\<4\> CN\<4\> VSS VSS VDD VDD) INV
+    I20\<3\> (CP\<3\> CN\<3\> VSS VSS VDD VDD) INV
+    I20\<2\> (CP\<2\> CN\<2\> VSS VSS VDD VDD) INV
+    I20\<1\> (CP\<1\> CN\<1\> VSS VSS VDD VDD) INV
+    I20\<0\> (CP\<0\> CN\<0\> VSS VSS VDD VDD) INV
+    I16\<10\> (net1\<0\> CLK\<11\> n\<10\> VSS VSS VDD VDD) NAND2
+    I16\<9\> (net1\<1\> CLK\<10\> n\<9\> VSS VSS VDD VDD) NAND2
+    I16\<8\> (net1\<2\> CLK\<9\> n\<8\> VSS VSS VDD VDD) NAND2
+    I16\<7\> (net1\<3\> CLK\<8\> n\<7\> VSS VSS VDD VDD) NAND2
+    I16\<6\> (net1\<4\> CLK\<7\> n\<6\> VSS VSS VDD VDD) NAND2
+    I16\<5\> (net1\<5\> CLK\<6\> n\<5\> VSS VSS VDD VDD) NAND2
+    I16\<4\> (net1\<6\> CLK\<5\> n\<4\> VSS VSS VDD VDD) NAND2
+    I16\<3\> (net1\<7\> CLK\<4\> n\<3\> VSS VSS VDD VDD) NAND2
+    I16\<2\> (net1\<8\> CLK\<3\> n\<2\> VSS VSS VDD VDD) NAND2
+    I16\<1\> (net1\<9\> CLK\<2\> n\<1\> VSS VSS VDD VDD) NAND2
+    I16\<0\> (net1\<10\> CLK\<1\> n\<0\> VSS VSS VDD VDD) NAND2
+ends _sub0
+// End of subcircuit definition.
+
+// Library name: 0_BARAM
+// Cell name: MUX21
+// View name: schematic
+subckt MUX21 D0 D1 net53 net48 net56 net55 net26 net27
+    M_I5_MXPA2 (net49 net53 net26 net27) pfet w=1.17E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I2_MXPA1 (net54 net53 net26 net27) pfet w=1.33E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I4_MXPA2 (net26 net54 net45 net27) pfet w=1.17E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I3_MXPA2 (net26 net49 net48 net27) pfet w=1.58E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I3_MXPA1 (net48 net45 net26 net27) pfet w=1.58E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I5_MXPA1 (net49 D1 net26 net27) pfet w=1.17E-07 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I4_MXPA1 (net45 D0 net26 net27) pfet w=1.17E-07 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I2_MXNA1 (net54 net53 net56 net55) nfet w=1E-07 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I3_MXNA2 (net56 net49 net52 net55) nfet w=1.49E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I3_MXNA1 (net52 net45 net48 net55) nfet w=1.49E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I5_MXNA2 (net42 net53 net56 net55) nfet w=1.11E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I5_MXNA1 (net42 D1 net49 net55) nfet w=1.11E-07 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I4_MXNA1 (net34 D0 net45 net55) nfet w=1.11E-07 l=3E-08 nf=(1)*(1) \
+        sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 p_vta=0 \
+        sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 lpccnr=0 \
+        covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 nsig_delvto_uo2=0 \
+        swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 numcos=-1 pocos=-1 \
+        numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 nsig_dnoise=0 rthu=-1 \
+        cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+    M_I4_MXNA2 (net56 net54 net34 net55) nfet w=1.11E-07 l=3E-08 \
+        nf=(1)*(1) sa=(0.076u)+(0u) sb=(0.076u)+(0u) sd=96n ptwell=0 par=1 \
+        p_vta=0 sca=-1 scb=-1 scc=-1 u0_mult=1 pre_layout_local=-1 p_la=0 \
+        lpccnr=0 covpccnr=0 ngcon=1 wrxcnr=0 nsig_delvto_uo1=0 \
+        nsig_delvto_uo2=0 swshe=0 swrg=1 swrsub=-1 swacc=-1 mismatch=1 \
+        numcos=-1 pocos=-1 numcod=-1 pocod=-1 m=1 sc=-1 d0=-1 d1=-1 \
+        nsig_dnoise=0 rthu=-1 cthu=-1 plorient=1 lle_pcrxn=0 lle_pcrxs=0
+ends MUX21
+// End of subcircuit definition.
+
+// Library name: 0_BARAM
+// Cell name: test_StrongARMfull
+// View name: schematic
+I29 (CLK_ASYN1 COMP1 net12 VDD osc2 osc1 VSS) StrongARM
+I30 (CLK_ASYN2 COMP2 net11 VDD osc22 osc11 VSS) StrongARM
+V0 (VSS 0) vsource dc=0 type=dc
+V1 (VDD 0) vsource dc=1 type=dc
+V2 (CLK_OSC 0) vsource dc=0 type=pulse val0=0 val1=1 period=4u rise=50p \
+        fall=50p width=2u
+I26 (SW2 SW1 VDD VSS VRC2 osc22) TG
+I25 (SW1 SW2 VDD VSS VRC1 osc1) TG
+I28 (SW1 SW2 VDD VSS VRC2 osc2) TG
+I27 (SW2 SW1 VDD VSS VRC1 osc11) TG
+I20 (CP1\<11\> CP1\<10\> CP1\<9\> CP1\<8\> CP1\<7\> CP1\<6\> CP1\<5\> \
+        CP1\<4\> CP1\<3\> CP1\<2\> CP1\<1\> CP1\<0\> VDD osc1 VSS VX1) \
+        CDAC_12b
+I22 (CN1\<11\> CN1\<10\> CN1\<9\> CN1\<8\> CN1\<7\> CN1\<6\> CN1\<5\> \
+        CN1\<4\> CN1\<3\> CN1\<2\> CN1\<1\> CN1\<0\> VDD osc2 VSS VX2) \
+        CDAC_12b
+I23 (CP2\<11\> CP2\<10\> CP2\<9\> CP2\<8\> CP2\<7\> CP2\<6\> CP2\<5\> \
+        CP2\<4\> CP2\<3\> CP2\<2\> CP2\<1\> CP2\<0\> VDD osc11 VSS VX11) \
+        CDAC_12b
+I24 (CN2\<11\> CN2\<10\> CN2\<9\> CN2\<8\> CN2\<7\> CN2\<6\> CN2\<5\> \
+        CN2\<4\> CN2\<3\> CN2\<2\> CN2\<1\> CN2\<0\> VDD osc22 VSS VX22) \
+        CDAC_12b
+I6 (ADC_RST CKR_ASYN CN\<11\> CN\<10\> CN\<9\> CN\<8\> CN\<7\> CN\<6\> \
+        CN\<5\> CN\<4\> CN\<3\> CN\<2\> CN\<1\> CN\<0\> COMP CP\<11\> \
+        CP\<10\> CP\<9\> CP\<8\> CP\<7\> CP\<6\> CP\<5\> CP\<4\> CP\<3\> \
+        CP\<2\> CP\<1\> CP\<0\> DATA_OUT EOC VDD VSS) _sub0
+I7 (COMP1 COMP2 MUX_SEL COMP VSS VSS VDD VDD) MUX21
+I8\<11\> (CN\<11\> VSS MUX_SEL CN1\<11\> VSS VSS VDD VDD) MUX21
+I8\<10\> (CN\<10\> VDD MUX_SEL CN1\<10\> VSS VSS VDD VDD) MUX21
+I8\<9\> (CN\<9\> VDD MUX_SEL CN1\<9\> VSS VSS VDD VDD) MUX21
+I8\<8\> (CN\<8\> VDD MUX_SEL CN1\<8\> VSS VSS VDD VDD) MUX21
+I8\<7\> (CN\<7\> VDD MUX_SEL CN1\<7\> VSS VSS VDD VDD) MUX21
+I8\<6\> (CN\<6\> VDD MUX_SEL CN1\<6\> VSS VSS VDD VDD) MUX21
+I8\<5\> (CN\<5\> VDD MUX_SEL CN1\<5\> VSS VSS VDD VDD) MUX21
+I8\<4\> (CN\<4\> VDD MUX_SEL CN1\<4\> VSS VSS VDD VDD) MUX21
+I8\<3\> (CN\<3\> VDD MUX_SEL CN1\<3\> VSS VSS VDD VDD) MUX21
+I8\<2\> (CN\<2\> VDD MUX_SEL CN1\<2\> VSS VSS VDD VDD) MUX21
+I8\<1\> (CN\<1\> VDD MUX_SEL CN1\<1\> VSS VSS VDD VDD) MUX21
+I8\<0\> (CN\<0\> VDD MUX_SEL CN1\<0\> VSS VSS VDD VDD) MUX21
+I9\<11\> (VSS CN\<11\> MUX_SEL CN2\<11\> VSS VSS VDD VDD) MUX21
+I9\<10\> (VDD CN\<10\> MUX_SEL CN2\<10\> VSS VSS VDD VDD) MUX21
+I9\<9\> (VDD CN\<9\> MUX_SEL CN2\<9\> VSS VSS VDD VDD) MUX21
+I9\<8\> (VDD CN\<8\> MUX_SEL CN2\<8\> VSS VSS VDD VDD) MUX21
+I9\<7\> (VDD CN\<7\> MUX_SEL CN2\<7\> VSS VSS VDD VDD) MUX21
+I9\<6\> (VDD CN\<6\> MUX_SEL CN2\<6\> VSS VSS VDD VDD) MUX21
+I9\<5\> (VDD CN\<5\> MUX_SEL CN2\<5\> VSS VSS VDD VDD) MUX21
+I9\<4\> (VDD CN\<4\> MUX_SEL CN2\<4\> VSS VSS VDD VDD) MUX21
+I9\<3\> (VDD CN\<3\> MUX_SEL CN2\<3\> VSS VSS VDD VDD) MUX21
+I9\<2\> (VDD CN\<2\> MUX_SEL CN2\<2\> VSS VSS VDD VDD) MUX21
+I9\<1\> (VDD CN\<1\> MUX_SEL CN2\<1\> VSS VSS VDD VDD) MUX21
+I9\<0\> (VDD CN\<0\> MUX_SEL CN2\<0\> VSS VSS VDD VDD) MUX21
+I10\<11\> (CP\<11\> VDD MUX_SEL CP1\<11\> VSS VSS VDD VDD) MUX21
+I10\<10\> (CP\<10\> VSS MUX_SEL CP1\<10\> VSS VSS VDD VDD) MUX21
+I10\<9\> (CP\<9\> VSS MUX_SEL CP1\<9\> VSS VSS VDD VDD) MUX21
+I10\<8\> (CP\<8\> VSS MUX_SEL CP1\<8\> VSS VSS VDD VDD) MUX21
+I10\<7\> (CP\<7\> VSS MUX_SEL CP1\<7\> VSS VSS VDD VDD) MUX21
+I10\<6\> (CP\<6\> VSS MUX_SEL CP1\<6\> VSS VSS VDD VDD) MUX21
+I10\<5\> (CP\<5\> VSS MUX_SEL CP1\<5\> VSS VSS VDD VDD) MUX21
+I10\<4\> (CP\<4\> VSS MUX_SEL CP1\<4\> VSS VSS VDD VDD) MUX21
+I10\<3\> (CP\<3\> VSS MUX_SEL CP1\<3\> VSS VSS VDD VDD) MUX21
+I10\<2\> (CP\<2\> VSS MUX_SEL CP1\<2\> VSS VSS VDD VDD) MUX21
+I10\<1\> (CP\<1\> VSS MUX_SEL CP1\<1\> VSS VSS VDD VDD) MUX21
+I10\<0\> (CP\<0\> VSS MUX_SEL CP1\<0\> VSS VSS VDD VDD) MUX21
+I11\<11\> (VDD CP\<11\> MUX_SEL CP2\<11\> VSS VSS VDD VDD) MUX21
+I11\<10\> (VSS CP\<10\> MUX_SEL CP2\<10\> VSS VSS VDD VDD) MUX21
+I11\<9\> (VSS CP\<9\> MUX_SEL CP2\<9\> VSS VSS VDD VDD) MUX21
+I11\<8\> (VSS CP\<8\> MUX_SEL CP2\<8\> VSS VSS VDD VDD) MUX21
+I11\<7\> (VSS CP\<7\> MUX_SEL CP2\<7\> VSS VSS VDD VDD) MUX21
+I11\<6\> (VSS CP\<6\> MUX_SEL CP2\<6\> VSS VSS VDD VDD) MUX21
+I11\<5\> (VSS CP\<5\> MUX_SEL CP2\<5\> VSS VSS VDD VDD) MUX21
+I11\<4\> (VSS CP\<4\> MUX_SEL CP2\<4\> VSS VSS VDD VDD) MUX21
+I11\<3\> (VSS CP\<3\> MUX_SEL CP2\<3\> VSS VSS VDD VDD) MUX21
+I11\<2\> (VSS CP\<2\> MUX_SEL CP2\<2\> VSS VSS VDD VDD) MUX21
+I11\<1\> (VSS CP\<1\> MUX_SEL CP2\<1\> VSS VSS VDD VDD) MUX21
+I11\<0\> (VSS CP\<0\> MUX_SEL CP2\<0\> VSS VSS VDD VDD) MUX21
+I33 (CLK_OSCB SW2 VSS VSS VDD VDD) BUF
+I34 (CLK_OSC SW1 VSS VSS VDD VDD) BUF
+I35 (CLK_OSC net2 VSS VSS VDD VDD) BUF
+I36 (net2 net1 VSS VSS VDD VDD) BUF
+I37 (net1 MUX_SEL VSS VSS VDD VDD) BUF
+I44 (CLK_OSC CLK_OSCB VSS VSS VDD VDD) INV
+I19 (CKR_ASYN CLK1_ASYN22 VSS VSS VDD VDD) INV
+I39 (net7 CLK_ASYN1 VSS VSS VDD VDD) INV
+I41 (net6 CLK_ASYN2 VSS VSS VDD VDD) INV
+V7 (ADC_RST 0) vsource type=pwl \
+        file="/home1/sf3101/pdk_analog/CADENCE_ENV/simulation/test_StrongARMfull/spectre/schematic/netlist/adc_rst.pwl"
+V8 (CKR_ASYN 0) vsource type=pwl \
+        file="/home1/sf3101/pdk_analog/CADENCE_ENV/simulation/test_StrongARMfull/spectre/schematic/netlist/ckr_asyn.pwl"
+I40 (CLK1_ASYN22 SW2 net7 VSS VSS VDD VDD) NAND2
+I42 (CLK1_ASYN22 SW1 net6 VSS VSS VDD VDD) NAND2
+V3 (VRC2 0) vsource dc=500.0m type=sine ampl=200.0m freq=10K
+V4 (VRC1 0) vsource dc=500m type=sine ampl=-200m freq=10K
+simulatorOptions options psfversion="1.4.0" reltol=1e-5 vabstol=1e-8 \
+    iabstol=1e-13 temp=27 tnom=25 scalem=1.0 scale=1.0 gmin=1e-12 rforce=1 \
+    maxnotes=5 maxwarns=5 digits=5 cols=80 pivrel=1e-3 \
+    sensfile="../psf/sens.output" checklimitdest=psf 
+tran tran stop=20u errpreset=conservative write="spectre.ic" \
+    writefinal="spectre.fc" annotate=status maxiters=5 
+finalTimeOP info what=oppoint where=rawfile
+modelParameter info what=models where=rawfile
+element info what=inst where=rawfile
+outputParameter info what=output where=rawfile
+designParamVals info what=parameters where=rawfile
+primitives info what=primitives where=rawfile
+subckts info what=subckts where=rawfile
+saveOptions options save=allpub subcktprobelvl=2

@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" font-family="Arial, sans-serif">
+  <rect width="900" height="520" fill="#fafafa" rx="8"/>
+  <text x="450" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#222">온도 ↑ → ADC 코드가 커지는 이유</text>
+
+  <!-- ===== Top: CLK_OSC half-cycle breakdown ===== -->
+  <text x="450" y="60" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">CLK_OSC 반주기 구성 (온도별)</text>
+
+  <!-- Low temp bar -->
+  <text x="55" y="100" text-anchor="end" font-size="12" font-weight="bold" fill="#4a9eff">-30°C</text>
+  <rect x="70" y="85" width="740" height="30" rx="4" fill="#f8f9fa" stroke="#dee2e6"/>
+  <!-- idle -->
+  <rect x="70" y="85" width="170" height="30" rx="4" fill="#95a5a6" opacity="0.3"/>
+  <text x="155" y="105" text-anchor="middle" font-size="10" fill="#666">idle</text>
+  <!-- cal SAR -->
+  <rect x="240" y="85" width="280" height="30" rx="4" fill="#4a9eff" opacity="0.2" stroke="#4a9eff"/>
+  <text x="380" y="105" text-anchor="middle" font-size="10" fill="#2980b9">cal SAR (30 stages, 느림)</text>
+  <!-- temp SAR -->
+  <rect x="520" y="85" width="200" height="30" rx="4" fill="#e74c3c" opacity="0.15" stroke="#e74c3c"/>
+  <text x="620" y="105" text-anchor="middle" font-size="10" fill="#c0392b">temp SAR (느림)</text>
+  <!-- reset -->
+  <rect x="720" y="85" width="90" height="30" rx="4" fill="#8e44ad" opacity="0.15"/>
+  <text x="765" y="105" text-anchor="middle" font-size="9" fill="#8e44ad">RST+idle</text>
+
+  <!-- charging bracket -->
+  <line x1="70" y1="120" x2="520" y2="120" stroke="#27ae60" stroke-width="2"/>
+  <line x1="70" y1="116" x2="70" y2="124" stroke="#27ae60" stroke-width="2"/>
+  <line x1="520" y1="116" x2="520" y2="124" stroke="#27ae60" stroke-width="2"/>
+  <text x="295" y="135" text-anchor="middle" font-size="10" font-weight="bold" fill="#27ae60">충전 시간 (짧음)</text>
+
+  <!-- High temp bar -->
+  <text x="55" y="175" text-anchor="end" font-size="12" font-weight="bold" fill="#e74c3c">90°C</text>
+  <rect x="70" y="160" width="760" height="30" rx="4" fill="#f8f9fa" stroke="#dee2e6"/>
+  <!-- idle (much longer) -->
+  <rect x="70" y="160" width="440" height="30" rx="4" fill="#95a5a6" opacity="0.3"/>
+  <text x="290" y="180" text-anchor="middle" font-size="10" fill="#666">idle (크게 늘어남)</text>
+  <!-- cal SAR (much shorter) -->
+  <rect x="510" y="160" width="100" height="30" rx="4" fill="#4a9eff" opacity="0.2" stroke="#4a9eff"/>
+  <text x="560" y="180" text-anchor="middle" font-size="10" fill="#2980b9">cal SAR (빠름)</text>
+  <!-- temp SAR (shorter) -->
+  <rect x="610" y="160" width="80" height="30" rx="4" fill="#e74c3c" opacity="0.15" stroke="#e74c3c"/>
+  <text x="650" y="180" text-anchor="middle" font-size="10" fill="#c0392b">temp (빠름)</text>
+  <!-- reset -->
+  <rect x="690" y="160" width="140" height="30" rx="4" fill="#8e44ad" opacity="0.15"/>
+  <text x="760" y="180" text-anchor="middle" font-size="9" fill="#8e44ad">RST+idle</text>
+
+  <!-- charging bracket -->
+  <line x1="70" y1="195" x2="610" y2="195" stroke="#27ae60" stroke-width="2"/>
+  <line x1="70" y1="191" x2="70" y2="199" stroke="#27ae60" stroke-width="2"/>
+  <line x1="610" y1="191" x2="610" y2="199" stroke="#27ae60" stroke-width="2"/>
+  <text x="340" y="210" text-anchor="middle" font-size="10" font-weight="bold" fill="#27ae60">충전 시간 (길어짐!)</text>
+
+  <!-- Arrow showing increase -->
+  <path d="M830 100 L830 175" fill="none" stroke="#e67e22" stroke-width="2" marker-end="url(#arr2)"/>
+  <text x="855" y="140" font-size="10" font-weight="bold" fill="#e67e22">T ↑</text>
+  <defs>
+    <marker id="arr2" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#e67e22"/>
+    </marker>
+  </defs>
+
+  <!-- ===== Middle: key numbers ===== -->
+  <rect x="50" y="230" width="800" height="80" rx="8" fill="#fff" stroke="#dee2e6"/>
+  <text x="450" y="255" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">온도 -30°C → 90°C 변화</text>
+
+  <rect x="70" y="265" width="230" height="35" rx="6" fill="#e8f4fd" stroke="#4a9eff"/>
+  <text x="185" y="287" text-anchor="middle" font-size="11" fill="#333">CLK_OSC 반주기: +5%</text>
+
+  <rect x="320" y="265" width="230" height="35" rx="6" fill="#fde8e8" stroke="#e74c3c"/>
+  <text x="435" y="287" text-anchor="middle" font-size="11" fill="#333">Gate delay: 3배 빨라짐</text>
+
+  <rect x="570" y="265" width="260" height="35" rx="6" fill="#fff3e0" stroke="#f39c12"/>
+  <text x="700" y="287" text-anchor="middle" font-size="11" fill="#333">→ SAR 빨리 끝남 → idle ↑↑</text>
+
+  <!-- ===== Bottom: RC charging curves ===== -->
+  <rect x="50" y="325" width="800" height="185" rx="8" fill="#fff" stroke="#dee2e6"/>
+  <text x="450" y="348" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">RC 충전 곡선 + hold 시점</text>
+
+  <!-- Axes -->
+  <line x1="100" y1="480" x2="780" y2="480" stroke="#333" stroke-width="1.5"/>
+  <line x1="100" y1="480" x2="100" y2="355" stroke="#333" stroke-width="1.5"/>
+  <text x="440" y="500" text-anchor="middle" font-size="11" fill="#555">시간</text>
+  <text x="80" y="420" text-anchor="middle" font-size="11" fill="#555" transform="rotate(-90,80,420)">전압</text>
+
+  <!-- VDD line -->
+  <line x1="100" y1="360" x2="780" y2="360" stroke="#ccc" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="788" y="364" font-size="9" fill="#ccc">VDD</text>
+
+  <!-- Single RC curve (same τ, roughly) -->
+  <path d="M100,480 Q200,478 300,440 Q400,400 500,380 Q600,367 700,363 L780,361" fill="none" stroke="#888" stroke-width="1.5" stroke-dasharray="3,3"/>
+  <text x="790" y="365" font-size="9" fill="#888">τ_RC</text>
+
+  <!-- Low temp: short charge time, lower voltage -->
+  <line x1="380" y1="480" x2="380" y2="355" stroke="#4a9eff" stroke-width="1.5" stroke-dasharray="3,3"/>
+  <circle cx="380" cy="408" r="7" fill="#4a9eff"/>
+  <text x="380" y="398" text-anchor="middle" font-size="11" font-weight="bold" fill="#4a9eff">-30°C</text>
+  <text x="380" y="500" text-anchor="middle" font-size="9" fill="#4a9eff">hold (짧은 충전)</text>
+
+  <!-- High temp: long charge time, higher voltage -->
+  <line x1="600" y1="480" x2="600" y2="355" stroke="#e74c3c" stroke-width="1.5" stroke-dasharray="3,3"/>
+  <circle cx="600" cy="370" r="7" fill="#e74c3c"/>
+  <text x="600" y="360" text-anchor="middle" font-size="11" font-weight="bold" fill="#e74c3c">90°C</text>
+  <text x="600" y="500" text-anchor="middle" font-size="9" fill="#e74c3c">hold (긴 충전)</text>
+
+  <!-- Delta V bracket -->
+  <line x1="360" y1="408" x2="360" y2="370" stroke="#333" stroke-width="2"/>
+  <line x1="356" y1="408" x2="364" y2="408" stroke="#333" stroke-width="2"/>
+  <line x1="356" y1="370" x2="364" y2="370" stroke="#333" stroke-width="2"/>
+  <text x="340" y="393" text-anchor="end" font-size="11" font-weight="bold" fill="#333">ΔV</text>
+  <text x="340" y="406" text-anchor="end" font-size="9" fill="#333">= ADC 차이</text>
+</svg>

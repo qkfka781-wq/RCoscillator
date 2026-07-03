@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 500" font-family="Arial, sans-serif">
+  <rect width="1300" height="500" fill="#fafafa" rx="8"/>
+  <text x="650" y="28" text-anchor="middle" font-size="18" font-weight="bold" fill="#222">Timing</text>
+
+  <!-- Phase A region labels -->
+  <rect x="100" y="42" width="100" height="20" rx="3" fill="#95a5a6" opacity="0.15"/>
+  <text x="150" y="56" text-anchor="middle" font-size="9" font-weight="bold" fill="#7f8c8d">Idle</text>
+  <rect x="200" y="42" width="220" height="20" rx="3" fill="#4a9eff" opacity="0.15"/>
+  <text x="310" y="56" text-anchor="middle" font-size="9" font-weight="bold" fill="#2980b9">충전 + Cal SAR</text>
+  <rect x="420" y="42" width="140" height="20" rx="3" fill="#e74c3c" opacity="0.12"/>
+  <text x="490" y="56" text-anchor="middle" font-size="9" font-weight="bold" fill="#c0392b">Temp ADC</text>
+  <rect x="560" y="42" width="40" height="20" rx="3" fill="#8e44ad" opacity="0.15"/>
+  <text x="580" y="56" text-anchor="middle" font-size="9" font-weight="bold" fill="#8e44ad">RST</text>
+  <!-- Idle between phases -->
+  <rect x="600" y="42" width="100" height="20" rx="3" fill="#95a5a6" opacity="0.15"/>
+  <text x="650" y="56" text-anchor="middle" font-size="9" font-weight="bold" fill="#7f8c8d">Idle</text>
+  <!-- Phase B -->
+  <rect x="700" y="42" width="220" height="20" rx="3" fill="#4a9eff" opacity="0.15"/>
+  <text x="810" y="56" text-anchor="middle" font-size="9" font-weight="bold" fill="#2980b9">충전 + Cal SAR</text>
+  <rect x="920" y="42" width="140" height="20" rx="3" fill="#e74c3c" opacity="0.12"/>
+  <text x="990" y="56" text-anchor="middle" font-size="9" font-weight="bold" fill="#c0392b">Temp ADC</text>
+  <rect x="1060" y="42" width="40" height="20" rx="3" fill="#8e44ad" opacity="0.15"/>
+  <text x="1080" y="56" text-anchor="middle" font-size="9" font-weight="bold" fill="#8e44ad">RST</text>
+  <rect x="1100" y="42" width="150" height="20" rx="3" fill="#95a5a6" opacity="0.15"/>
+  <text x="1175" y="56" text-anchor="middle" font-size="9" font-weight="bold" fill="#7f8c8d">Idle</text>
+
+  <!-- Vertical markers -->
+  <line x1="200" y1="62" x2="200" y2="470" stroke="#ccc" stroke-width="1" stroke-dasharray="4,4"/>
+  <line x1="420" y1="62" x2="420" y2="470" stroke="#e74c3c" stroke-width="1" stroke-dasharray="4,4"/>
+  <line x1="560" y1="62" x2="560" y2="470" stroke="#8e44ad" stroke-width="1" stroke-dasharray="4,4"/>
+  <line x1="590" y1="62" x2="590" y2="470" stroke="#8e44ad" stroke-width="0.5" stroke-dasharray="4,4"/>
+  <line x1="700" y1="62" x2="700" y2="470" stroke="#ccc" stroke-width="1" stroke-dasharray="4,4"/>
+  <line x1="920" y1="62" x2="920" y2="470" stroke="#e74c3c" stroke-width="1" stroke-dasharray="4,4"/>
+  <line x1="1060" y1="62" x2="1060" y2="470" stroke="#8e44ad" stroke-width="1" stroke-dasharray="4,4"/>
+  <line x1="1090" y1="62" x2="1090" y2="470" stroke="#8e44ad" stroke-width="0.5" stroke-dasharray="4,4"/>
+
+  <text x="200" y="74" text-anchor="middle" font-size="8" fill="#888">CLK edge</text>
+  <text x="420" y="74" text-anchor="middle" font-size="8" fill="#888">D[30]</text>
+  <text x="575" y="74" text-anchor="middle" font-size="8" fill="#888">data_out</text>
+  <text x="700" y="74" text-anchor="middle" font-size="8" fill="#888">CLK edge</text>
+  <text x="920" y="74" text-anchor="middle" font-size="8" fill="#888">D[30]</text>
+  <text x="1075" y="74" text-anchor="middle" font-size="8" fill="#888">data_out</text>
+
+  <!-- ===== 1. CLK_OSC ===== -->
+  <text x="30" y="105" font-size="12" font-weight="bold" fill="#2980b9">CLK_OSC</text>
+  <polyline points="60,108 200,108 200,88 700,88 700,108 1250,108" fill="none" stroke="#2980b9" stroke-width="2.5"/>
+
+  <!-- ===== 2. temp_en ===== -->
+  <text x="30" y="155" font-size="12" font-weight="bold" fill="#e67e22">temp_en</text>
+  <polyline points="60,148 200,148 200,168 420,168 420,148 700,148 700,168 920,168 920,148 1250,148" fill="none" stroke="#e67e22" stroke-width="2.5"/>
+  <text x="150" y="144" text-anchor="middle" font-size="8" fill="#e67e22">1</text>
+  <text x="310" y="164" text-anchor="middle" font-size="8" fill="#e67e22">0</text>
+  <text x="490" y="144" text-anchor="middle" font-size="8" fill="#e67e22">1</text>
+  <text x="650" y="144" text-anchor="middle" font-size="8" fill="#e67e22">1</text>
+  <text x="810" y="164" text-anchor="middle" font-size="8" fill="#e67e22">0</text>
+  <text x="990" y="144" text-anchor="middle" font-size="8" fill="#e67e22">1</text>
+  <text x="1175" y="144" text-anchor="middle" font-size="8" fill="#e67e22">1</text>
+
+  <!-- ===== 3. RST (data_out) ===== -->
+  <text x="30" y="210" font-size="12" font-weight="bold" fill="#8e44ad">RST</text>
+  <polyline points="60,218 560,218 560,198 590,198 590,218 1060,218 1060,198 1090,198 1090,218 1250,218" fill="none" stroke="#8e44ad" stroke-width="2.5"/>
+
+  <!-- ===== 4. temp_sw (TG) ===== -->
+  <text x="30" y="268" font-size="12" font-weight="bold" fill="#27ae60">temp_sw</text>
+  <text x="30" y="280" font-size="9" fill="#888">(TG)</text>
+  <polyline points="60,262 420,262 420,282 560,282 560,262 920,262 920,282 1060,282 1060,262 1250,262" fill="none" stroke="#27ae60" stroke-width="2.5"/>
+  <text x="310" y="258" text-anchor="middle" font-size="8" fill="#27ae60">ON</text>
+  <text x="490" y="279" text-anchor="middle" font-size="8" fill="#27ae60">OFF</text>
+  <text x="650" y="258" text-anchor="middle" font-size="8" fill="#27ae60">ON</text>
+  <text x="810" y="258" text-anchor="middle" font-size="8" fill="#27ae60">ON</text>
+  <text x="990" y="279" text-anchor="middle" font-size="8" fill="#27ae60">OFF</text>
+  <text x="1175" y="258" text-anchor="middle" font-size="8" fill="#27ae60">ON</text>
+
+  <!-- ===== 5. VRC_temp ===== -->
+  <text x="30" y="330" font-size="12" font-weight="bold" fill="#c0392b">VRC_temp</text>
+
+  <!-- Phase A: 0V → charge → continues → reset → 0V -->
+  <line x1="60" y1="430" x2="200" y2="430" stroke="#c0392b" stroke-width="2.5"/>
+  <path d="M200,430 Q290,426 360,400 Q400,380 420,368" fill="none" stroke="#c0392b" stroke-width="2.5"/>
+  <path d="M420,368 Q490,352 545,344 L560,342" fill="none" stroke="#c0392b" stroke-width="2.5"/>
+  <line x1="560" y1="342" x2="590" y2="430" stroke="#c0392b" stroke-width="2.5"/>
+  <line x1="590" y1="430" x2="700" y2="430" stroke="#c0392b" stroke-width="2.5"/>
+  <!-- Phase B: 0V → charge → continues → reset → 0V -->
+  <path d="M700,430 Q790,426 860,400 Q900,380 920,368" fill="none" stroke="#c0392b" stroke-width="2.5"/>
+  <path d="M920,368 Q990,352 1045,344 L1060,342" fill="none" stroke="#c0392b" stroke-width="2.5"/>
+  <line x1="1060" y1="342" x2="1090" y2="430" stroke="#c0392b" stroke-width="2.5"/>
+  <line x1="1090" y1="430" x2="1250" y2="430" stroke="#c0392b" stroke-width="2.5"/>
+
+  <!-- ===== 6. temps ===== -->
+  <text x="30" y="445" font-size="12" font-weight="bold" fill="#27ae60">temps</text>
+
+  <!-- Phase A: 0V → follows → HOLD → reset → 0V -->
+  <line x1="60" y1="430" x2="200" y2="430" stroke="#27ae60" stroke-width="2" stroke-dasharray="5,3"/>
+  <path d="M200,430 Q290,426 360,400 Q400,380 420,368" fill="none" stroke="#27ae60" stroke-width="2" stroke-dasharray="5,3"/>
+  <line x1="420" y1="368" x2="560" y2="368" stroke="#27ae60" stroke-width="2.5"/>
+  <line x1="560" y1="368" x2="590" y2="430" stroke="#27ae60" stroke-width="2"/>
+  <line x1="590" y1="430" x2="700" y2="430" stroke="#27ae60" stroke-width="2"/>
+  <!-- Phase B: 0V → follows → HOLD → reset → 0V -->
+  <path d="M700,430 Q790,426 860,400 Q900,380 920,368" fill="none" stroke="#27ae60" stroke-width="2" stroke-dasharray="5,3"/>
+  <line x1="920" y1="368" x2="1060" y2="368" stroke="#27ae60" stroke-width="2.5"/>
+  <line x1="1060" y1="368" x2="1090" y2="430" stroke="#27ae60" stroke-width="2"/>
+  <line x1="1090" y1="430" x2="1250" y2="430" stroke="#27ae60" stroke-width="2"/>
+
+  <!-- Voltage label -->
+  <text x="52" y="434" font-size="9" fill="#888">0V</text>
+
+  <!-- Hold annotations -->
+  <circle cx="420" cy="368" r="4" fill="#e74c3c"/>
+  <text x="420" y="356" text-anchor="middle" font-size="8" font-weight="bold" fill="#e74c3c">hold</text>
+  <circle cx="920" cy="368" r="4" fill="#e74c3c"/>
+  <text x="920" y="356" text-anchor="middle" font-size="8" font-weight="bold" fill="#e74c3c">hold</text>
+
+  <!-- Phase labels -->
+  <text x="400" y="490" text-anchor="middle" font-size="12" font-weight="bold" fill="#2980b9">Phase A</text>
+  <text x="900" y="490" text-anchor="middle" font-size="12" font-weight="bold" fill="#2980b9">Phase B</text>
+</svg>

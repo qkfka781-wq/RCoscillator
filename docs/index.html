@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RC Oscillator Verification Dashboard</title>
+  <style>
+    :root {
+      --bg: #f6f4ef;
+      --ink: #182026;
+      --muted: #65717b;
+      --line: #d7d2c8;
+      --paper: #fffdfa;
+      --accent: #006d77;
+      --accent-2: #9b2226;
+      --accent-3: #ca6702;
+      --ok: #2b9348;
+      --shadow: 0 18px 42px rgba(36, 30, 20, 0.10);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Arial, "Malgun Gothic", sans-serif;
+      line-height: 1.55;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    header {
+      padding: 34px 0 18px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 48px);
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      max-width: 790px;
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .nav {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .nav a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 38px;
+      padding: 0 13px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: rgba(255, 255, 255, 0.72);
+      color: var(--ink);
+      font-size: 14px;
+    }
+
+    main {
+      padding: 28px 0 54px;
+    }
+
+    section {
+      margin-top: 30px;
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: 22px;
+      letter-spacing: 0;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .metric,
+    .block,
+    .panel,
+    .flow-node {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .metric {
+      padding: 16px;
+      min-height: 96px;
+    }
+
+    .metric .label {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .metric .value {
+      margin-top: 7px;
+      font-size: 28px;
+      line-height: 1.1;
+      font-weight: 700;
+    }
+
+    .metric .note {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(120px, 1fr));
+      gap: 10px;
+      align-items: stretch;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .flow-node {
+      min-width: 128px;
+      padding: 14px;
+      box-shadow: none;
+      position: relative;
+    }
+
+    .flow-node:not(:last-child)::after {
+      content: ">";
+      position: absolute;
+      right: -9px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--accent);
+      font-weight: 700;
+      z-index: 2;
+    }
+
+    .flow-node strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .flow-node span {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .graph-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .graph-tabs button {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      min-height: 36px;
+      padding: 0 12px;
+      border-radius: 7px;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .graph-tabs button.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .panel {
+      padding: 14px;
+      overflow: hidden;
+    }
+
+    .panel img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+    }
+
+    .caption {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .blocks {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .block {
+      padding: 16px;
+      box-shadow: none;
+    }
+
+    .block h3 {
+      margin: 0 0 6px;
+      font-size: 17px;
+      letter-spacing: 0;
+    }
+
+    .block p {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 0 9px;
+      border-radius: 999px;
+      background: rgba(43, 147, 72, 0.12);
+      color: var(--ok);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 14px;
+    }
+
+    .text-panel {
+      padding: 18px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .text-panel ul {
+      margin: 0;
+      padding-left: 19px;
+    }
+
+    .text-panel li + li {
+      margin-top: 7px;
+    }
+
+    @media (max-width: 920px) {
+      .metrics,
+      .blocks,
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .shell {
+        width: min(100% - 22px, 1180px);
+      }
+
+      header {
+        padding-top: 24px;
+      }
+
+      .metric .value {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="shell">
+      <div class="topline">
+        <div>
+          <h1>RC Oscillator Verification</h1>
+          <p class="subtitle">CP hold 값을 SAR로 읽고, DLF가 error를 적분해 oref를 조절하며, 바뀐 oref가 VRC 비교 타이밍과 주파수를 다시 움직이는 폐루프 검증 대시보드.</p>
+        </div>
+        <nav class="nav" aria-label="Primary">
+          <a href="https://github.com/qkfka781-wq/RCoscillator">README</a>
+          <a href="https://github.com/qkfka781-wq/RCoscillator/blob/main/docs/top_loop.md">Top note</a>
+          <a href="https://github.com/qkfka781-wq/RCoscillator/blob/main/docs/top_run_summary.md">Run summary</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="metrics" aria-label="Top run metrics">
+      <div class="metric">
+        <div class="label">Lock target</div>
+        <div class="value">DD2-DD1 -> 0</div>
+        <div class="note">phase hold-code balance</div>
+      </div>
+      <div class="metric">
+        <div class="label">Last sampled error</div>
+        <div class="value">0 code</div>
+        <div class="note">from top_run_summary.md</div>
+      </div>
+      <div class="metric">
+        <div class="label">Last oref</div>
+        <div class="value">0.491865 V</div>
+        <div class="note">DLF actuator output</div>
+      </div>
+      <div class="metric">
+        <div class="label">Events</div>
+        <div class="value">89 / 46</div>
+        <div class="note">hold / DLF update</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Closed-Loop Path</h2>
+      <div class="flow" aria-label="Closed-loop signal path">
+        <div class="flow-node"><strong>VRC ramp</strong><span>RC analog state</span></div>
+        <div class="flow-node"><strong>VRC vs oref</strong><span>crossing timing</span></div>
+        <div class="flow-node"><strong>OSC phase</strong><span>frequency changes</span></div>
+        <div class="flow-node"><strong>CP hold</strong><span>analog sample</span></div>
+        <div class="flow-node"><strong>SAR ADC</strong><span>12-bit code</span></div>
+        <div class="flow-node"><strong>DLF</strong><span>error integration</span></div>
+        <div class="flow-node"><strong>CDAC_17b</strong><span>oref update</span></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Waveform Viewer</h2>
+      <div class="graph-tabs" role="tablist" aria-label="Graphs">
+        <button class="active" type="button" data-graph="img/top_loop_overview.svg" data-caption="VRC, oref, oscillator nodes, and timing controls over the full top run.">Overview</button>
+        <button type="button" data-graph="img/top_dlf_convergence.svg" data-caption="DLF sampled codes and error convergence at CLK_DATASAMPLE edges.">DLF convergence</button>
+        <button type="button" data-graph="img/top_cp_hold_codes.svg" data-caption="CP1 and CP2 codes reconstructed at DATA_OUT hold edges.">CP hold</button>
+        <button type="button" data-graph="img/top_late_loop_zoom.svg" data-caption="Late loop timing window once the loop is near balance.">Late zoom</button>
+      </div>
+      <div class="panel">
+        <a id="graphLink" href="img/top_loop_overview.svg">
+          <img id="graphImage" src="img/top_loop_overview.svg" alt="Top loop overview graph">
+        </a>
+        <div class="caption">
+          <span id="graphCaption">VRC, oref, oscillator nodes, and timing controls over the full top run.</span>
+          <a id="openGraph" href="img/top_loop_overview.svg">Open SVG</a>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Block Status</h2>
+      <div class="blocks">
+        <article class="block">
+          <h3>SAR ADC</h3>
+          <p>Held CP voltage를 12-bit 코드로 변환. 양채널 ping-pong과 양극성 transfer 확인.</p>
+          <a class="status" href="https://github.com/qkfka781-wq/RCoscillator/blob/main/sar_test/20260702_sar_integration_verify.md">verified</a>
+        </article>
+        <article class="block">
+          <h3>DLF</h3>
+          <p>DD2-DD1 error를 적분해서 CDAC_17b 입력 코드와 oref를 조절.</p>
+          <a class="status" href="https://github.com/qkfka781-wq/RCoscillator/blob/main/dlf_test/20260702_dlf_verify.md">verified</a>
+        </article>
+        <article class="block">
+          <h3>CDAC_17b</h3>
+          <p>DLF accumulator를 oref 전압으로 변환. 단조성 중심으로 정수 캡 튜닝 완료.</p>
+          <a class="status" href="https://github.com/qkfka781-wq/RCoscillator/blob/main/cdac17_test/20260702_cdac17_verify.md">verified</a>
+        </article>
+        <article class="block">
+          <h3>CDAC_12b</h3>
+          <p>SAR 내부 split CDAC. 100 ns settling 기준 INL/DNL 및 단조성 확인.</p>
+          <a class="status" href="https://github.com/qkfka781-wq/RCoscillator/blob/main/cdac_test/20260701_cdac_12b_verify.md">verified</a>
+        </article>
+        <article class="block">
+          <h3>StrongARM</h3>
+          <p>SAR bit decision comparator. 정상 CM 영역과 저CM 한계 확인.</p>
+          <a class="status" href="https://github.com/qkfka781-wq/RCoscillator/blob/main/strongarm_test/20260701_sar_comparator_verify.md">verified</a>
+        </article>
+        <article class="block">
+          <h3>Top Loop</h3>
+          <p>RC osc, SAR, DLF, oref DAC를 연결한 폐루프 waveform 분석.</p>
+          <a class="status" href="https://github.com/qkfka781-wq/RCoscillator/blob/main/docs/top_loop.md">summarized</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="two-col">
+      <div class="text-panel">
+        <h2>What To Read First</h2>
+        <ul>
+          <li><a href="https://github.com/qkfka781-wq/RCoscillator/blob/main/docs/top_loop.md">Top closed-loop note</a>: 전체 feedback 구조와 lock 의미.</li>
+          <li><a href="https://github.com/qkfka781-wq/RCoscillator/blob/main/docs/top_run_summary.md">Run summary</a>: top CSV에서 뽑은 핵심 숫자.</li>
+          <li><a href="https://github.com/qkfka781-wq/RCoscillator/blob/main/sar_test/20260702_sar_integration_verify.md">SAR integration</a>: CP analog value가 code로 바뀌는 과정.</li>
+        </ul>
+      </div>
+      <div class="text-panel">
+        <h2>Current Caution</h2>
+        <ul>
+          <li>`top/top_run.csv`는 70 MB로 GitHub 권장 크기보다 큼.</li>
+          <li>`top/RCnetlist`가 민감하면 GitHub에서 별도로 제거 필요.</li>
+          <li>HTML 대시보드는 GitHub Pages를 켜면 웹페이지처럼 열림.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const buttons = document.querySelectorAll(".graph-tabs button");
+    const graphImage = document.getElementById("graphImage");
+    const graphLink = document.getElementById("graphLink");
+    const openGraph = document.getElementById("openGraph");
+    const graphCaption = document.getElementById("graphCaption");
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        buttons.forEach((item) => item.classList.remove("active"));
+        button.classList.add("active");
+        const src = button.dataset.graph;
+        graphImage.src = src;
+        graphImage.alt = `${button.textContent} graph`;
+        graphLink.href = src;
+        openGraph.href = src;
+        graphCaption.textContent = button.dataset.caption;
+      });
+    });
+  </script>
+</body>
+</html>

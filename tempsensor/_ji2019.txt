@@ -1,0 +1,908 @@
+
+===== PAGE 1 =====
+IEEE JOURNAL OF SOLID-STATE CIRCUITS, VOL. 54, NO. 12, DECEMBER 2019
+3281
+A 192-pW Voltage Reference Generating
+Bandgap–Vth With Process and Temperature
+Dependence Compensation
+Youngwoo Ji
+, Jungho Lee, Byungsub Kim
+, Senior Member, IEEE, Hong-June Park
+, Senior Member, IEEE,
+and Jae-Yoon Sim
+, Senior Member, IEEE
+Abstract—This article presents a methodology to design a
+circuit to compensate for process skew by exploiting an inherent
+dimension-dependent effect of process skew on change in the
+threshold voltage. We design a voltage reference circuit with
+a hybrid architecture of bandgap reference (BGR) and CMOS
+reference, which generates a nominal voltage level of (bandgap
+- threshold). By compensating the process skew of the threshold
+term with the proposed dimension-induced effect as well as
+the temperature dependence, the circuit achieves the simulta-
+neous beneﬁts of BGR and CMOS references. For veriﬁcation,
+the circuit was fabricated in three wafers of a 0.18-µm CMOS
+including extreme slow and fast corners. With an active area
+of 0.0045 mm2, it consumes 192 pW at room temperature. Mea-
+surement from 45 chips (15 chips per wafer) shows untrimmed
+process/voltage/temperature variations of 0.53%, 0.020%/V, and
+33 ppm/◦C, respectively.
+Index Terms—Bandgap, process compensation, temperature
+compensation, ultra-low power (ULP), voltage reference.
+I. INTRODUCTION
+I
+MPLANTABLE and attachable electronics often require a
+nanowatt (nW)-consuming smart system-on-a-chip (SoC)
+[1]–[7]. Processing with a duty cycling has been actively
+adopted to effectively manage energy consumption. Since the
+SoC mostly stays in the sleep mode, the power dissipation
+in this mode becomes an important consideration. A voltage
+reference circuit is an essential building block, which is often
+required to be turned on even during sleep mode to ensure
+fast start-up and, therefore, contributes signiﬁcantly to overall
+energy consumption.
+Voltage reference circuits can be categorized into two types:
+bandgap reference (BGR) and CMOS reference. In BGR
+circuits, an inherent voltage of the silicon bandgap (VBG) is
+associated with the p-n junction. The p-n junction, if conducted
+with a current bias, provides a complementary-to-absolute-
+temperature (CTAT) voltage that has a large temperature
+Manuscript received April 25, 2019; revised July 31, 2019 and September 4,
+2019; accepted September 10, 2019. Date of publication October 4, 2019;
+date of current version November 22, 2019. This article was approved by
+Guest Editor Youngcheol Chae. This work was supported by the Engineer-
+ing Research Center Program of the National Research Foundation (NRF)
+funded by the Korea Ministry of Science and ICT under Grant NRF-
+2019R1A5A1027055. (Corresponding author: Jae-Yoon Sim.)
+The authors are with the Department of Electrical Engineering, Pohang
+University of Science and Technology, Pohang 37673, South Korea (e-mail:
+jyw0605@postech.ac.kr; jysim@postech.ac.kr).
+Color versions of one or more of the ﬁgures in this article are available
+online at http://ieeexplore.ieee.org.
+Digital Object Identiﬁer 10.1109/JSSC.2019.2942356
+dependence of about −2 mV/◦C. By selecting the design para-
+meters to adjust the temperature coefﬁcient of a proportional-
+to-absolute-temperature (PTAT) voltage [8], the reference
+generates a voltage level of VBG. For low-power imple-
+mentation of BGR, various PTAT generation schemes have
+been proposed with differential ampliﬁer [9], capacitor net-
+work [10], [11], and use of leakage current for bias [12], [13].
+However, complicated circuits with multiple branches require
+a large area and preclude further reduction of power usage
+into the sub-nW regime.
+In CMOS reference circuits, the reference is determined
+by the threshold voltage of the MOS transistor (Vth). Vth
+typically holds a CTAT characteristic with a smaller temper-
+ature dependence than that of BJT. Vita and Iannaccone [14]
+and Ueno et al. [15] proposed current-bias circuits that had
+a square-root temperature dependence to generate a PTAT.
+Flowing this current into a MOS diode leads to a reference
+voltage that is close to Vth. To further reduce the power con-
+sumption, Magnelli et al. [16] and Seok et al. [17] ﬂow the
+leakage current with an exponential temperature dependence
+into a MOS diode. In this approach, the level of the reference
+voltage is represented as the difference between the threshold
+voltages (Vth) of two transistors. Since this difference is too
+small to be directly used, it should be ampliﬁed with an up-
+scaling [18], which eventually results in an ampliﬁcation of
+the standard deviation as well (Table I).
+Compared with BGR approaches, CMOS references have
+achieved lower power consumption with a smaller area
+(Fig. 1). However, the inclusion of the Vth term in the output
+results in an inevitable effect of the process variations [19].
+The process sensitivity can be reduced by constructing a circuit
+that uses only one type of transistor, e.g., only PMOS [20].
+Geometry dependence of Vth has also been considered for the
+generation of the voltage reference [21]. However, a small
+Vth requires a large ampliﬁcation factor to up-scale the out-
+put. Process compensation schemes have also been proposed
+for current bias [22], [23]. However, they assume a stable
+supply voltage which is not ensured for the voltage reference.
+This article presents a methodology to compensate for the
+process variation in Vth [24]. We propose a voltage reference
+circuit with a hybrid architecture of BGR and CMOS ref-
+erence; it generates a nominal voltage level of (VBG −Vth).
+By compensating for the process skew of the Vth term with the
+dimension-induced side effect, the proposed scheme achieves
+0018-9200 © 2019 IEEE. Personal use is permitted, but republication/redistribution requires IEEE permission.
+See http://www.ieee.org/publications_standards/publications/rights/index.html for more information.
+Authorized licensed use limited to: Sejong Univ. Downloaded on June 18,2026 at 03:50:03 UTC from IEEE Xplore.  Restrictions apply. 
+
+===== PAGE 2 =====
+3282
+IEEE JOURNAL OF SOLID-STATE CIRCUITS, VOL. 54, NO. 12, DECEMBER 2019
+TABLE I
+PREVIOUSLY REPORTED VOLTAGE REFERENCES
+Fig. 1.
+Power and area of the voltage references in Table I.
+the beneﬁts of both BGR and CMOS references. Section II
+introduces the principle of the proposed process compensation
+with the dimension-induced side effect. Section III describes
+the circuit design. Section IV shows the measurement results,
+and Section V concludes this article.
+II. RELATING PROCESS SKEW TO DESIGN PARAMETERS
+The dependence of Vth on transistor dimension is affected
+by the device-isolation process. There are two representa-
+tive schemes: local oxidation of silicon (LOCOS) isolation
+and shallow-trench isolation (STI). While LOCOS isolation
+exhibits a gradually grown oxidation, STI drastically deﬁnes
+device boundaries. Fig. 2 illustrates a cross-sectional view
+of a MOS transistor along the width direction for the case
+of STI, which is generally taken in the recent CMOS tech-
+nologies [25]. A gate voltage generates an electric ﬁeld that
+depletes the channel. The fringing ﬁeld on both edges of the
+channel is an extra ﬁeld and helps to deplete the channel. As a
+result, the fringing ﬁeld effectively reduces Vth. As the channel
+width decreases, the relative contribution of the fringing ﬁeld
+increases, so the reduction that it causes in Vth also increases.
+As substrate doping concentration increases, the process
+corner becomes slow-skewed, so the required electric ﬁeld
+increases and Vth itself increases. However, the relative portion
+of the fringing ﬁeld becomes weaker due to the thinner deple-
+tion region [Fig. 2(a)]. In contrast, for a fast-skewed process
+corner, the electric ﬁeld to turn on the channel decreases and
+Vth itself decreases. However, the relative portion of the fring-
+ing ﬁeld becomes stronger due to the thicker depletion region
+[Fig. 2(c)]. Since the fringing effect becomes more noticeable
+as the channel width decreases [Fig. 3(a)], the difference in
+the Vth between slow and fast corners (Vth,SS −Vth,FF) is a
+function of the width, where the subscripts SS and FF mean
+the slow and the fast corners. The difference increases as
+the channel width decreases while it becomes almost constant
+when the width is sufﬁciently large [Fig. 3(b)]. This indicates
+the process skew affects more signiﬁcantly for the smaller
+devices. Vth itself decreases as the process skew goes from
+slow to fast corners, but the decrease is increasingly signiﬁcant
+as the channel width decreases [Fig. 3(c)].
+This relationship suggests a method to include the amount
+of process skew as a circuit design parameter. As an example,
+given a differential pair that is composed of two input transis-
+tors, load resistors, and a current source [Fig. 4(a)], the offset
+voltage is
+VOS ∼=
+VGS −Vth
+2
+ RD
+RD
++ (total W/L)
+(total W/L)
+
+−Vth[26].
+(1)
+Assuming identical load resistors and the same total widths
+of input transistors with one composed of N ﬁngers while the
+other drawn with a single ﬁnger [Fig. 4(b)], the offset voltage
+is simpliﬁed to
+VOS∼= −Vth = Vth,L −Vth,R
+(2)
+where Vth,L and Vth,R are the threshold voltages of ML and
+MR. The effect of process skews on the offset voltage can be
+derived as follows:
+(V OS,SS −VOS,FF)
+∼= (V th,L,SS −Vth,R,SS)−(V th,L,FF −Vth,R,FF)
+= (V th,L,SS −Vth,L,FF)−(V th,R,SS −Vth,R,FF)
+= (V th,SS −Vth,FF)|WL −(V th,SS −Vth,FF)|WR
+(3)
+where VOS,SS and VOS,FF represents the offset voltage in slow
+and fast corners. Monte Carlo simulations were performed
+with 1000 iterations (Table II). Mismatches were not consid-
+ered in this simulation. The effect of dimension parameter,
+W2, on the statistics of the offset voltage increased the spread
+due to the increase in the relative contribution of the fringing
+ﬁeld as the number of ﬁngers (N) increased (Fig. 5).
+Authorized licensed use limited to: Sejong Univ. Downloaded on June 18,2026 at 03:50:03 UTC from IEEE Xplore.  Restrictions apply. 
+
+===== PAGE 3 =====
+JI et al.: 192-pW VOLTAGE REFERENCE GENERATING BANDGAP–Vth
+3283
+Fig. 2.
+Electric ﬁeld in STI structure when channel is formed for (a) slow, (b) typical, and (c) fast corners.
+Fig. 3.
+Simulation of a threshold voltage as channel width varies. (a) Threshold voltages for each process corners. (b) Difference in the threshold voltages
+of slow and fast corners. (c) Width dependence of the threshold voltage as the process skew goes from slow to fast corners.
+Fig. 4.
+(a) Test differential ampliﬁer with (b) two example designs for input
+transistors and (c) resulting offset voltage, where WL and WR are the unit
+width of each ﬁnger in ML and MR, respectively.
+Relating the amount of process skew to the design para-
+meters can also be applied to the channel length. However,
+the length dependence of the Vth is affected by additional
+complicated factors including the reverse short channel effect
+by HALO implant as well as the conventional short channel
+effects such as drain-induced barrier lowering (DIBL) and
+TABLE II
+SIMULATED INTER-DIE VARIATIONS OF THE OFFSET VOLTAGE
+WITH DIFFERENT UNIT WIDTHS AND FINGERS
+velocity saturation. However, the overall trend of the Vth
+variation is similar to that of the width.
+The proposed compensation scheme is still valid for other
+technologies. Fig. 6 shows the simulations of dimension-
+induced Vth difference across process corners for 180-, 130-,
+and 65-nm CMOS technologies. It should be noted that the
+length dependence shows steeper slope around the minimum
+dimension due to the effect of DIBL. It leads to a higher
+sensitivity to design change, so we considered the width as
+the design parameter with the length ﬁxed.
+III. CIRCUIT DESCRIPTION
+Using the previously mentioned method, the amount of
+process skew can be controlled by the width parameters.
+This section describes how to apply the proposed method to
+an actual circuit. The design strategy can be generalized as
+follows.
+Authorized licensed use limited to: Sejong Univ. Downloaded on June 18,2026 at 03:50:03 UTC from IEEE Xplore.  Restrictions apply. 
+
+===== PAGE 4 =====
+3284
+IEEE JOURNAL OF SOLID-STATE CIRCUITS, VOL. 54, NO. 12, DECEMBER 2019
+Fig. 5.
+Effect of width (W2) and ﬁnger (N2) on VOS. (a) Distributions of
+the Vth difference from 1000 runs of Monte-Carlo simulations with different
+ﬁngers (N2) and (b) summary of (a) as the process skew goes from slow to
+fast corners.
+1) Investigate the variation in the threshold voltage across
+the process corners to obtain (Vth,SS −Vth,FF) as a
+function of width [Fig. 3(b)].
+2) Obtain the required amount of the process compensation,
+or Vth change, for the circuit to be designed.
+3) Develop a circuit that contains two widths of transistors,
+W1 and W2. Choose the optimal W2 in Fig. 3(b) with a
+given large W1 so that the vertical change matches the
+required Vth change obtained from step 2.
+4) Combine the two circuits into one.
+We propose a process-independent voltage reference by
+stacking a process-dependent and its compensating parts in
+series. It holds a hybrid architecture of BGR and CMOS
+reference that generates (VBG −Vth). The process dependence
+of the Vth is compensated by the unit width of each ﬁnger
+while the temperature dependence compensated by the number
+of ﬁngers. Table III shows two core parts of the proposed
+reference circuit: a voltage generation part and a compensation
+part. Zero-bias leakage current of PMOS transistors (M1) with
+N1 ﬁngers provides bias current for both parts, which is
+I∼= μCox
+N1W 1
+L
+(m1 −1)V 2
+T e
+−Vth1
+m1VT
+
+1 −e
+−Vds
+VT
+
+(4)
+Fig. 6.
+Simulated difference in the threshold voltages between slow and
+fast corners for different technologies. (a) Width dependence and (b) length
+dependence.
+where m1, VT , and Vds are the subthreshold slope factor,
+the thermal voltage, and drain-to-source voltage, respectively.
+The voltage generation part ﬂows this current to a BJT
+diode (Q1), whereas the compensation part ﬂows it to a PMOS
+diode (M2 × N2). The Q1 ﬂows current of
+I = IS
+
+e
+V1
+VT −1
+
+∼= bT
+5
+2 e−VBG
+VT e
+V1
+VT
+(5)
+where IS and b are the saturation current and a proportionality
+factor, respectively [26]. Equating (4) and (5) yields
+V1 ∼=
+
+VBG−Vth1
+m1
+
+−VT ln
+
+bT
+5
+2
+μCox
+N1W1
+L
+(m1−1)V 2
+T
+
+.
+(6)
+The temperature dependence of m is small enough to
+be neglected (<0.1%/◦C) [27]. A SPICE simulation using
+BSIM4v5 reveals that it is about 0.05%/◦C with the used
+180-nm CMOS technology. Since the mobility is proportional
+to T −(3)/(2), the overall temperature dependence of the term
+in the logarithm follows T 2. SPICE simulations were also
+performed to quantify how the process variations affected m
+and μCox. The σ/μ for m and μCox are about 0.3% and
+1.4%, respectively. Thus, the total effects of these variations
+on V1 are less than 0.1%, and the process dependence of
+V1 is dominated by Vth1. Rearranging V1 according to the
+temperature-dependent terms in the logarithm leads to
+V1 ∼=
+
+VBG −Vth1
+m1
+
+−VT ln(αT 2)
+(7)
+Authorized licensed use limited to: Sejong Univ. Downloaded on June 18,2026 at 03:50:03 UTC from IEEE Xplore.  Restrictions apply. 
+
+===== PAGE 5 =====
+JI et al.: 192-pW VOLTAGE REFERENCE GENERATING BANDGAP–Vth
+3285
+TABLE III
+CORE BUILDING BLOCKS FOR REFERENCE GENERATION AND CONCEPT OF THEIR CHARACTERISTICS
+where α is a proportionality factor. We can deﬁne two
+terms: 1) complementary to faster-skewed process (CTFP)
+and 2) proportional to faster-skewed process (PTFP). The
+Vth1 decreases as the process skew goes to faster corner,
+so Vth1 itself is a CTFP voltage. However, due to the minus
+sign (−(Vth1)/(m1)), V1 holds a PTFP behavior. For the
+temperature dependence, −(Vth1)/(m1) and −VT ln(αT 2) hold
+PTAT and CTAT behaviors, respectively. However, the over-
+all temperature dependence of V1 is CTAT with a reduced
+coefﬁcient [28] because the BJT has stronger temperature
+dependence. The temperature dependence of V1 can be derived
+as follows:
+∂V1
+∂T
+∼= −1
+m1
+∂Vth1
+∂T
+−VT
+T (ln(αT 2)+2).
+(8)
+The value of (∂V1)/(∂T) varies from −1.05 to −1.11 mV/◦C.
+Since the effect of nonlinearity on the ﬁnal reference voltage is
+less than 0.5% in the temperature region of interest, additional
+curvature compensation is not considered in this article.
+The compensation part (the right side in Table III) has the
+same form as the leakage-based PTAT generator employed
+in [12] and [13]. The previous works used identical unit
+transistors for pull-up and pull-down transistors to eliminate
+the effect of the process variation, but (Vth2 −(m2)/(m1)Vth1)
+is no longer canceled out in this article because the transistors
+do not have identical width. The effect of Vds in (4) can
+be ignored because Vds for M2 is larger than 5VT in all
+process/voltage/temperature (PVT) conditions. By using the
+subthreshold current equation, V2 is derived as follows:
+V2 ∼=
+
+Vth2 −m2
+m1
+Vth1
+
++ m2VT ln
+ N1W1
+N2W2
+
+.
+(9)
+There are four design parameters: W1, W2, N1, and N2. The
+process dependence of V2 can be controlled to compensate
+that of V1 by adjusting W1 and W2. Once W1 and W2 are
+chosen, N1 can be determined to set the leakage current
+level for bias. Finally, N2 is the factor that changes only the
+temperature dependence of V2. With the given W1, W2, and
+N1, the temperature dependence compensation can be achieved
+by setting N2. When the optimal values of W1, W2, N1, and N2
+are found, V1 and V2 operate as in the last row in Table III.
+The overall circuit is composed of two core building blocks
+which are stacked in series to share the bias current while
+maintaining their operations (Fig. 7). To avoid an excessive
+size ratio between M1 and M2 for temperature compensation,
+two PMOS diodes (M2 × N2) are also stacked in series. The
+Authorized licensed use limited to: Sejong Univ. Downloaded on June 18,2026 at 03:50:03 UTC from IEEE Xplore.  Restrictions apply. 
+
+===== PAGE 6 =====
+3286
+IEEE JOURNAL OF SOLID-STATE CIRCUITS, VOL. 54, NO. 12, DECEMBER 2019
+Fig. 7.
+Overall circuit schematic of the proposed hybrid reference.
+resulting reference voltage can be represented as follows:
+VREF ∼= V1 + 2V2
+∼=
+
+VBG −Vth1
+m1
+
+−VT ln(αT 2)
++2
+
+Vth2 −m2
+m1
+Vth1
+
++ 2m2VT ln
+ N1W1
+N2W2
+
+. (10)
+Assuming the process variation of VREF is mainly affected by
+the MOS transistor, it can be obtained as follows:
+(VREF,SS −VREF,FF)
+∼= (V1,SS −V1,FF) + 2(V2,SS −V2,FF)
+∼= 2(Vth2,SS −Vth2,FF) −
+1 + 2m2
+m1
+
+(Vth1,SS −Vth1,FF).
+(11)
+To nullify (11)
+(Vth2,SS −Vth2,FF) =
+1 + 2m2
+2m1
+
+(Vth1,SS −Vth1,FF). (12)
+Now, ((1 + 2m2)/(2m1)) is bigger than 1, so W2 should be
+small enough with a large W1. If the plot in Fig. 3(b) is
+modeled as follows:
+(Vth,SS −Vth,FF) ∼= A +
+B
+W + C
+(13)
+then (12) can be rearranged as follows:
+
+A +
+B
+W2 + C
+
+∼=
+1 + 2m2
+2m1
+ 
+A +
+B
+W1 + C
+
+.
+(14)
+With a large W1, an iterative ﬁne tuning for W2 can start
+from
+W2∼=
+2m1
+2m2 −2m1 + 1
+ B
+A
+
+−C.
+(15)
+With this model, the curve ﬁtting by MATLAB nonlinear
+regression function extracts values of 0.06758, 0.01305, and
+Fig. 8.
+Curve ﬁtting by regression function of extracted threshold difference.
+TABLE IV
+DESIGN PARAMETERS OF THE PROPOSED HYBRID REFERENCE
+0.08466 for A, B, and C, with root-mean-squared error
+of 0.1314 and R2 of 0.9999 (Fig. 8).
+To quantify the effect of process variation of BJT, we sim-
+ulated BJT-only load when connected with an ideal cur-
+rent source of 200 pA. Monte Carlo simulations with 1000
+iterations show a standard deviation of 1.54 mV. However,
+technology-dependent characteristics should be considered in
+the sub-nA biasing of the BJT. While the effect of process
+variation in BJT voltage is only about 1 mV in the 180-nm
+CMOS technology [24], [32], a biasing of BJT in pA region
+can cause a standard deviation of more than 5 mV in other
+technology [29].
+The line regulation and power supply rejection ratio (PSRR)
+are the indicators of dc and ac supply sensitivities. To suppress
+the supply sensitivity, native NMOS transistors (MN1) are
+placed on the top of core circuits [17]. The stacked structure
+of two native NMOS is used to increase the effect of line
+regulation [30]. In the proposed scheme, the native NMOS
+transistors (MN1) and the leakage PMOS transistor (M1)
+perform a double regulation, which dramatically ampliﬁes the
+effect of the line regulation without affecting the amount of
+leakage bias current. M1 sees a low resistance of the common
+gate topology formed by MN1. Therefore, the source node of
+M1 is effectively isolated from the supply.
+Since M1 has the biggest size (Table IV), its gate-to-drain
+side gives the dominant parasitic capacitance. The transfer
+function from the supply voltage to the reference voltage is
+derived as follows:
+VREF
+VDD
+(s) ∼=
+1
+gm,N1rO,N1
+
+2
+gm,2 + RQ1
+	
+rO,1
+
+1 + s
+ωz
+	
+
+1 +
+s
+ωp
+	
+(16)
+Authorized licensed use limited to: Sejong Univ. Downloaded on June 18,2026 at 03:50:03 UTC from IEEE Xplore.  Restrictions apply. 
+
+===== PAGE 7 =====
+JI et al.: 192-pW VOLTAGE REFERENCE GENERATING BANDGAP–Vth
+3287
+Fig. 9.
+Chip micrograph.
+where gm,N1, gm,2, rO,N1, rO,1, and RQ1 represent transcon-
+ductances of MN1 and M2, output resistances of MN1 and M1,
+and equivalent resistance of Q1, respectively. Their values are
+about 4 nS, 3 nS, 20 G, 70 G, and 350 M, respec-
+tively. Equation (16) also indicates that the supply sensitivity
+is improved by a factor of the device gain of the native
+NMOS transistor (gm,N1rO,N1). The pole and zero in (16)
+are estimated as follows:
+⎧
+⎪⎨
+⎪⎩
+ωz∼=
+1
+CprO,1
+ωp ∼= gm,N1
+Cp
+(17)
+where Cp represents the parasitic capacitance of M1. The
+simulation showed that the zero and pole are located around
+7 Hz and 1.8 kHz, respectively.
+IV. MEASUREMENT RESULTS
+The proposed circuit was fabricated with a standard
+0.18-μm CMOS technology on three different wafers of
+process corners (SS, TT, and FF). Fig. 9 shows the chip
+micrograph. This article is based on the assumption that the
+effect of process variations has well-deﬁned statistics once the
+technology of interest is given. The statistics of the process
+variations should be included in the SPICE model parameters.
+Though the SPICE model has extracted sets of numerical
+coefﬁcients and skew parameters that can represent the temper-
+ature and process variations, commercially available models
+now do not guarantee to precisely cover the extreme range of
+pA-leakage level. Therefore, we implemented programmabil-
+ity in transistor size for M1 and M2 (Fig. 7) in the chip. While
+the widths of unit transistors for M1 and M2 (W1 and W2) were
+ﬁxed, the multiplier numbers (N1 and N2) were designed to
+be a variable, which can be controlled with a binary-weighted
+4 bits. To ﬁnd the optimal codes for sizing, we tested nine
+chips of a typical wafer, then we applied these codes to all
+the chips; it is deﬁned as “untrimmed” and is ﬁxed throughout
+Fig. 10.
+Discrepancy between simulation and measurement results of the
+proposed reference.
+Fig. 11.
+Measured VREF from 45 chips in three extreme-skewed wafers
+without trimming.
+all the measurements. Since the failure of temperature coefﬁ-
+cient modeling in pA range results in a discrepancy between
+simulation and measurement, original design parameters do
+not lead to the optimal results. Fig. 10 compares simulated
+and measured VREF when the optimal code extracted from the
+measurement of nine chips is applied. Though the inaccuracy
+in modeling causes a difference in VREF itself, deviations from
+the average hold reasonably matched characteristics. Monte
+Carlo simulations with the original design parameters show
+that VREF at room temperature has a standard deviation of
+about 0.7% while the measurement with three different wafers
+shows a standard deviation of 0.53%. Simulated σ/μ is about
+0.2% for each of SS, TT, and FF corners. Measured intra-die
+variations show σ/μ of 0.38%, 0.21%, and 0.22%, for SS, TT,
+and FF corners, respectively.
+The effect of oxide thickness change (tOX) on the thresh-
+old voltage can be expressed as follows:
+Vth = tOX
+εOX
+
+4εsiq NAψB = tOX
+tOX
+ψOX
+(18)
+where ψB is the difference between the Fermi potential and
+the intrinsic potential, ψOX is the potential drop across the
+oxide, tOX is the oxide thickness, NA is the channel doping
+concentration, and εOX and εsi are the permittivities of the
+oxide and the silicon [31]. According to the manufacturer’s
+data, oxide thickness varies ±2.5% across the extreme process
+corners. Considering the proposed hybrid scheme generates
+VREF level of VBG (∼1.2 V) −Vth (∼0.5 V), the contribution
+of Vth to the ﬁnal output is about 70%. Therefore, the effect
+of oxide thickness on VREF would be less than ±2%.
+Authorized licensed use limited to: Sejong Univ. Downloaded on June 18,2026 at 03:50:03 UTC from IEEE Xplore.  Restrictions apply. 
+
+===== PAGE 8 =====
+3288
+IEEE JOURNAL OF SOLID-STATE CIRCUITS, VOL. 54, NO. 12, DECEMBER 2019
+Fig. 12.
+Fig. 12. Measured statistics of each process corners at 30 ◦C.
+(a) VREF and (b) temperature coefﬁcient of VREF.
+Fig. 13.
+Measured VREF at different VDD.
+Fig. 14. Measured current consumption when supply voltage and temperature
+change.
+The 15 chips were measured from each corner (Fig. 11).
+Fig. 12 shows the distributions of the reference output and tem-
+perature coefﬁcient for each process corner at 30 ◦C. Standard
+deviations of VREF at typical, slow, and fast corners are 0.21%,
+0.38%, and 0.22%, respectively. Standard deviation among
+Fig. 15.
+Measured 99% settling time after the start-up as temperature varies.
+Fig. 16.
+Measured line sensitivity.
+Fig. 17.
+Simulated and measured PSRR without load capacitor.
+wafers was 0.53%. The average level of the reference voltage
+is 0.6926 V, which is approximately (VBG −Vth) in the given
+technology. The average temperature coefﬁcients without trim-
+ming were 33 ppm/◦C, 35 ppm/◦C, and 32 ppm/◦C in typical,
+slow, and fast corners, respectively. Standard deviations of the
+temperature coefﬁcient at typical, slow, and fast corners were
+7.0%, 18%, and 9.7%, respectively. The average temperature
+coefﬁcient for all 45 chips was 33 ppm/◦C. Fig. 13 shows the
+measured temperature dependence in different supply voltages.
+VREF started to be fully regulated from 1 V. Fig. 14 shows
+the measured current consumption at different supply voltage
+and temperature conditions. It consumed 192 pW at room
+temperature. Current consumption strongly depended on tem-
+perature and was almost unaffected by the supply voltage.
+The start-up time to reach within 1% of the ﬁnal value was
+measured at different temperatures (Fig. 15). Measured line
+sensitivity was 0.020%/V at the supply voltage above 1.0 V
+(Fig. 16). Measured PSRR was −55 dB at 100 Hz without
+using any capacitor (Fig. 17). To protect the leakage-biased
+Authorized licensed use limited to: Sejong Univ. Downloaded on June 18,2026 at 03:50:03 UTC from IEEE Xplore.  Restrictions apply. 
+
+===== PAGE 9 =====
+JI et al.: 192-pW VOLTAGE REFERENCE GENERATING BANDGAP–Vth
+3289
+TABLE V
+PERFORMANCE SUMMARY AND COMPARISON
+Fig. 18.
+Measured noise spectrum (with no-load capacitance).
+internal circuit in the measurement of the output voltage,
+a unity-gain conﬁgured two-stage ampliﬁer is integrated in the
+chip. The ampliﬁer output is monitored. The limited bandwidth
+due to the monitoring circuit affects PSRR measurement
+at frequencies above kHz. To obtain a credible result that
+excludes the effect of the output buffer ampliﬁer, we measured
+the PSRR only up to 1 kHz. The measured noise spectrum of
+VREF showed integrated noise of 26.8 μV from 0.1 to 10 Hz
+without using any capacitor (Fig. 18). It can be improved
+at the cost of increasing power consumption or increasing
+area. Table V shows the comparison of performance with
+the previously reported low-power voltage reference circuits.
+The proposed circuit achieves process variation of only 0.53%
+across the whole process skews and achieves power consump-
+tion and area compared with those of the group of the CMOS
+references [16]–[18], [20].
+V. CONCLUSION
+This article proposes a process/temperature-compensated
+voltage reference circuit with a hybrid architecture of BGR
+and CMOS references, which generates a nominal voltage
+level of (VBG −Vth). Vth is affected by so many technology-
+induced factors, but the major effect is originated from a
+consequence of a change in doping concentration. However,
+once the technology of interest for circuit design is given,
+the variations by the skew would have an average with a
+limited range of variation. The statistics are even clearly
+deﬁned in matured process for mass production. The proposed
+design methodology matches the amount of variation range
+with the dimension dependence of the Vth variation change.
+Authorized licensed use limited to: Sejong Univ. Downloaded on June 18,2026 at 03:50:03 UTC from IEEE Xplore.  Restrictions apply. 
+
+===== PAGE 10 =====
+3290
+IEEE JOURNAL OF SOLID-STATE CIRCUITS, VOL. 54, NO. 12, DECEMBER 2019
+Thus, the effect of process skew for given technology can be
+compensated by optimizing the design parameters over the
+process corners. A regulation scheme with a native device
+is also proposed to achieve a double regulation of supply
+variation. The whole circuit is formed in a single branch
+that is operated using only leakage current. The reference
+generator fabricated in three (SS, TT, and FF) wafers of
+a 0.18-μm CMOS. With an active area of 0.0045 mm2,
+it consumes 192 pW at room temperature. The measurement
+from 45 chips (15 chips per wafer) shows untrimmed PVT
+variations of 0.53%, 0.020%/V, and 33 ppm/◦C, respectively.
+REFERENCES
+[1] Y.-P. Chen et al., “An injectable 64 nW ECG mixed-signal SoC in 65 nm
+for arrhythmia monitoring,” IEEE J. Solid-State Circuits, vol. 50, no. 1,
+pp. 375–390, Jan. 2015.
+[2] P. Nadeau, M. Mimee, S. Carim, T. K. Lu, and A. P. Chandrakasan,
+“Nanowatt circuit interface to whole-cell bacterial sensors,” in IEEE
+Int. Solid-State Circuits Conf. (ISSCC) Dig. Tech. Papers, Feb. 2017,
+pp. 352–353.
+[3] H. Bhamra, J.-W. Tsai, Y.-W. Huang, Q. Yuan, J. V. Shah, and
+P. Irazoqui, “A subcubic millimeter wireless implantable intraocular
+pressure monitor microsystem,” IEEE Trans. Biomed. Circuits Syst.,
+vol. 11, no. 6, pp. 1204–1215, Dec. 2017.
+[4] S. Jeong et al., “Always-on 12-nW acoustic sensing and object recogni-
+tion microsystem for unattended ground sensor nodes,” IEEE J. Solid-
+State Circuits, vol. 53, no. 1, pp. 261–274, Jan. 2018.
+[5] H. Wang, X. Wang, A. Barﬁdokht, J. Park, J. Wang, and P. P. Mercier,
+“A battery-powered wireless ion sensing system consuming 5.5 nW
+of average power,” IEEE J. Solid-State Circuits, vol. 53, no. 7,
+pp. 2043–2053, Jul. 2018.
+[6] T. Tekeste, H. Saleh, B. Mohammad, A. Khandoker, H. Jelinek, and
+M. Ismail, “A nanowatt real-time cardiac autonomic neuropathy detec-
+tor,” IEEE Trans. Biomed. Circuits Syst., vol. 12, no. 4, pp. 739–750,
+Aug. 2018.
+[7] M. Cho et al., “A 142 nW voice and acoustic activity detection chip for
+mm-scale sensor nodes using time-interleaved mixer-based frequency
+scanning,” in IEEE Int. Solid-State Circuits Conf. (ISSCC) Dig. Tech.
+Papers, Feb. 2017, pp. 352–353.
+[8] K. E. Kuijk, “A precision reference voltage source,” IEEE J. Solid-State
+Circuits, vol. SC-8, no. 3, pp. 222–226, Jun. 1973.
+[9] Y. Osaki, T. Hirose, N. Kuroki, and M. Numa, “1.2-V supply, 100-nW,
+1.09-V bandgap and 0.7-V supply, 52.5-nW, 0.55-V subbandgap refer-
+ence circuits for nanowatt CMOS LSIs,” IEEE J. Solid-State Circuits,
+vol. 48, no. 6, pp. 1530–1538, Jun. 2013.
+[10] V. Ivanov, R. Brederlow, and J. Gerber, “An ultra low power bandgap
+operational at supply from 0.75 V,” IEEE J. Solid-State Circuits, vol. 47,
+no. 7, pp. 1515–1523, Jul. 2012.
+[11] A. Shrivastava, K. Craig, N. E. Roberts, D. D. Wentzloff, and
+B. H. Calhoun, “A 32 nW bandgap reference voltage operational from
+0.5 V supply for ultra-low power systems,” in IEEE Int. Solid-State
+Circuits Conf. (ISSCC) Dig. Tech. Papers, Feb. 2015, pp. 94–95.
+[12] J. M. Lee et al., “A 29 nW bandgap reference circuit,” in IEEE Int. Solid-
+State Circuits Conf. (ISSCC) Dig. Tech. Papers, Feb. 2015, pp. 100–101.
+[13] Y. Ji, C. Jeon, H. Son, B. Kim, H.-J. Park, and J.-Y. Sim, “A 9.3 nW all-
+in-one bandgap voltage and current reference circuit,” in IEEE Int. Solid-
+State Circuits Conf. (ISSCC) Dig. Tech. Papers, Feb. 2017, pp. 100–101.
+[14] G. de Vita and G. Iannaccone, “A sub-1-V, 10 ppm/◦C, nanopower
+voltage reference generator,” IEEE J. Solid-State Circuits, vol. 42, no. 7,
+pp. 1536–1542, Jul. 2007.
+[15] K. Ueno, T. Hirose, T. Asai, and Y. Amemiya, “A 300 nW, 15 ppm/◦C,
+20 ppm/V CMOS voltage reference circuit consisting of subthrshold
+MOSFETs,” IEEE J. Solid-State Circuits, vol. 44, no. 7, pp. 2047–2054,
+Jul. 2009.
+[16] L. Magnelli, F. Crupi, P. Corsonello, C. Pace, and G. Iannaccone,
+“A 2.6 nW, 0.45 V temperature-compensated subthreshold CMOS volt-
+age reference,” IEEE J. Solid-State Circuits, vol. 46, no. 2, pp. 465–474,
+Feb. 2011.
+[17] M. Seok, G. Kim, D. Blaauw, and D. Sylvester, “A portable 2-transistor
+picowatt temperature-compensated voltage reference operating at 0.5 V,”
+IEEE J. Solid-State Circuits, vol. 47, no. 10, pp. 2534–2545, Oct. 2012.
+[18] I. Lee, D. Sylvester, and D. Blaauw, “A subthreshold voltage reference
+with scalable output voltage for low-power IoT systems,” IEEE J. Solid-
+State Circuits, vol. 52, no. 5, pp. 1443–1449, May 2017.
+[19] A.-J. Annema and G. Goksun, “A 0.0025 mm2 bandgap voltage refer-
+ence for 1.1 V supply in standard 0.16 μm CMOS,” in IEEE Int. Solid-
+State Circuits Conf. (ISSCC) Dig. Tech. Papers, Feb. 2012, pp. 364–365.
+[20] Q. Dong, K. Yang, D. Blaauw, and D. Sylvester, “A 114-pW PMOS-
+only, trim-free voltage reference with 0.26% within-wafer inaccuracy for
+nW systems,” in IEEE Symp. VLSI Circuits Dig., Jun. 2016, pp. 98–99.
+[21] D. Albano, F. Crupi, F. Cucchi, and G. Iannaccone, “A sub-kT/q voltage
+reference operating at 150 mV,” IEEE Trans. Very Large Scale Integr.
+(VLSI) Syst., vol. 23, no. 8, pp. 1547–1551, Aug. 2015.
+[22] K. Sundaresan, P. E. Allen, and F. Ayazi, “Process and temperature
+compensation in a 7-MHz CMOS clock oscillator,” IEEE J. Solid-State
+Circuits, vol. 41, no. 2, pp. 433–442, Feb. 2006.
+[23] A. M. Pappu, X. Zhang, A. V. Harrison, and A. B. Apsel, “Process-
+invariant current source design: Methodology and examples,” IEEE J.
+Solid-State Circuits, vol. 42, no. 10, pp. 2293–2302, Oct. 2007.
+[24] Y. Ji, J. Lee, B. Kim, H.-J. Park, and J.-Y. Sim, “A 192 pW hybrid
+bandgap-Vth reference with process dependence compensated by a
+dimension-induced side-effect,” in IEEE Int. Solid-State Circuits Conf.
+(ISSCC) Dig. Tech. Papers, Feb. 2019, pp. 308–309.
+[25] Y. P. Tsividis, Operation and Modeling of the MOS Transistor.
+New York, NY, USA: McGraw-Hill, 1987.
+[26] B. Razavi, Design of Analog CMOS Integrated Circuits. New York, NY,
+USA: McGraw-Hill, 2001.
+[27] A. Wang, B. H. Calhoun, and A. P. Chandrakasan, Sub-Threshold Design
+for Ultra Low-Power Systems. Boston, MA, USA: Springer, 2006.
+[28] M. Kim and S. Cho, “A 0.8 V, 37 nW, 42 ppm/◦C sub-bandgap voltage
+reference with PSRR of −81 dB and line sensitivity of 51 ppm/V in 0.18
+μm CMOS,” in IEEE Symp. VLSI Circuits Dig., Jun. 2017, pp. 144–145.
+[29] Y.-W. Chen et al., “A 0.7 V, 2.35% 3σ-accuracy bandgap reference in
+12 nm CMOS,” in IEEE Int. Solid-State Circuits Conf. (ISSCC) Dig.
+Tech. Papers, Feb. 2019, pp. 306–307.
+[30] K. Yang et al., “A 0.6 nJ −0.22/+0.19 ◦C inaccuracy temperature
+sensor using exponential subthreshold oscillation dependence,” in IEEE
+Int. Solid-State Circuits Conf. (ISSCC) Dig. Tech. Papers, Feb. 2017,
+pp. 160–161.
+[31] Y. Taur and T. H. Ning, Fundamentals of Modern VLSI Devices.
+Cambridge, U.K.: Cambridge Univ. Press, 2002.
+[32] I. Lee and D. Blaauw, “A 31 pW-to-113 nW hybrid BJT and CMOS
+voltage reference with 3.6% ±3σ-inaccuracy from 0 ◦C to 170 ◦C for
+low-power high-temperature IoT systems,” in IEEE Symp. VLSI Circuits
+Dig., Jun. 2019, pp. C142–C143.
+Youngwoo Ji received the B.S. degree in elec-
+tronic and electrical engineering from the Pohang
+University of Science and Technology (POSTECH),
+Pohang, South Korea, in 2013, where he is currently
+pursuing the Ph.D. degree.
+His research interests include subthreshold cir-
+cuit designs, sensor interface circuits, and data
+converters.
+Jungho Lee received the B.S. degree in electronic
+and electrical engineering from the Pohang Uni-
+versity of Science and Technology (POSTECH),
+Pohang, South Korea, in 2018, where he is currently
+pursuing the M.S. degree.
+His research interests include neuromorphic circuit
+and ultra-low-power bandgap circuit.
+Authorized licensed use limited to: Sejong Univ. Downloaded on June 18,2026 at 03:50:03 UTC from IEEE Xplore.  Restrictions apply. 
+
+===== PAGE 11 =====
+JI et al.: 192-pW VOLTAGE REFERENCE GENERATING BANDGAP–Vth
+3291
+Byungsub Kim (M’11–SM’16) received the B.S.
+degree in electronic and electrical engineering from
+the Pohang University of Science and Technology
+(POSTECH), Pohang, South Korea, in 2000, and
+the M.S. and Ph.D. degrees in electrical engineering
+and computer science from the Massachusetts Insti-
+tute of Technology (MIT), Cambridge, MA, USA,
+in 2004 and 2010, respectively.
+From 2010 to 2011, he was an Analog Design
+Engineer with Intel Corporation, Hillsboro, OR,
+USA. In 2012, he joined the Department of Elec-
+tronic and Electrical Engineering, POSTECH, as a Faculty Member, where
+he is currently an Assistant Professor.
+Dr. Kim was a recipient of the MIT EECS Jin-Au Kong Outstanding
+Doctoral Thesis Honorable Mentions in 2011, the IEEE JOURNAL OF
+SOLID-STATE CIRCUITS Best Paper Award in 2009, and the Analog Device
+Inc. Outstanding Student Designer Award from MIT in 2009. He was a
+co-recipient of the Beatrice Winner Award for Editorial Excellence at the
+2009 IEEE International Solid-State Circuits Conference (ISSCC).
+Hong-June Park (M’88–SM’13) received the B.S.
+degree from the Department of Electronic Engineer-
+ing, Seoul National University, Seoul, South Korea,
+in 1979, the M.S. degree from the Korea Advanced
+Institute of Science and Technology, Daejeon, South
+Korea, in 1981, and the Ph.D. degree from the
+Department of Electrical Engineering and Com-
+puter Sciences, University of California at Berkeley,
+Berkeley, CA, USA, in 1989.
+He was a CAD Engineer with ETRI, Daejeon,
+from 1981 to 1984, and a Senior Engineer with the
+TCAD Department, Intel Corporation, Santa Clara, CA, USA, from 1989 to
+1991. In 1991, he joined the Faculty of Electronic and Electrical Engineering,
+Pohang University of Science and Technology (POSTECH), Pohang, South
+Korea, where he is currently a Professor. His research interests include CMOS
+analog circuit design such as high-speed interface circuits, readout integrated
+circuit (ROIC) of touch sensors, and analog/digital beamformer circuits for
+ultrasound medical imaging.
+Dr. Park is a member of IEEK. He was a recipient of the 2012 Haedong
+Academic Award from IEEK and Haedong Foundation. He served as the
+Editor-in-Chief for the Journal of Semiconductor Technology and Science and
+the SCIE Journal from 2009 to 2012, the Vice-President of IEEK in 2012,
+and a Technical Program Committee Member of ISSCC, SOVC, and A-SSCC
+for several years.
+Jae-Yoon Sim (M’02–SM’13) received the B.S.,
+M.S., and Ph.D. degrees in electronic and electrical
+engineering from the Pohang University of Science
+and Technology (POSTECH), Pohang, South Korea,
+in 1993, 1995, and 1999, respectively.
+From 1999 to 2005, he was a Senior Engineer with
+Samsung Electronics, Suwon, South Korea. From
+2003 to 2005, he was a Post-Doctoral Researcher
+with the University of Southern California, Los
+Angeles, CA, USA. From 2011 to 2012, he was a
+Visiting Scholar with the University of Michigan,
+Ann Arbor, MI, USA. In 2005, he joined POSTECH, where he is currently
+a Professor. From 2017 to 2019, he was the Director of the Joint Research
+Lab, which is nominated by the Korea Institute of Science and Technology,
+Seoul, South Korea. Since 2019, he has been the Director of the Scalable
+Quantum Computer Technology Platform Center, Pohang, which is an Engi-
+neering Research Center nominated by the Korea Ministry of Science and
+Information and Communication Technology (ICT), Sejong, South Korea. His
+research interests include sensor interface circuits, high-speed serial/parallel
+links, phase-locked loops (PLLs), data converters, power module for plasma
+generation, and quantum computing.
+Dr. Sim was a recipient of the Special Author-Recognition Award at ISSCC
+2013 and was a co-recipient of the Takuo Sugano Award at ISSCC 2001. He is
+an IEEE Distinguished Lecturer. He has served on the technical program com-
+mittees for the IEEE International Solid-State Circuits Conference (ISSCC),
+Symposium on VLSI Circuits, and Asian Solid-State Circuits Conference.
+Authorized licensed use limited to: Sejong Univ. Downloaded on June 18,2026 at 03:50:03 UTC from IEEE Xplore.  Restrictions apply. 

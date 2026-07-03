@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 400" font-family="Arial, sans-serif">
+  <rect width="900" height="400" fill="#fafafa" rx="8"/>
+  <text x="450" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#222">온도 측정 원리</text>
+
+  <!-- RC charging diagram -->
+  <rect x="50" y="55" width="380" height="200" rx="8" fill="#fff" stroke="#dee2e6"/>
+  <text x="240" y="80" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">RC 충전 곡선 (온도별)</text>
+
+  <!-- Axes -->
+  <line x1="100" y1="230" x2="400" y2="230" stroke="#333" stroke-width="1.5"/>
+  <line x1="100" y1="230" x2="100" y2="90" stroke="#333" stroke-width="1.5"/>
+  <text x="250" y="248" text-anchor="middle" font-size="11" fill="#555">시간</text>
+  <text x="82" y="160" text-anchor="middle" font-size="11" fill="#555" transform="rotate(-90,82,160)">전압</text>
+
+  <!-- VDD line -->
+  <line x1="100" y1="95" x2="400" y2="95" stroke="#ccc" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="408" y="99" font-size="9" fill="#ccc">VDD</text>
+
+  <!-- Sample time line -->
+  <line x1="290" y1="230" x2="290" y2="90" stroke="#8e44ad" stroke-width="1.5" stroke-dasharray="3,3"/>
+  <text x="290" y="244" text-anchor="middle" font-size="10" font-weight="bold" fill="#8e44ad">TG OFF (hold)</text>
+
+  <!-- Low temp curve (fast charge, higher voltage) -->
+  <path d="M100,230 Q160,225 200,170 Q240,130 290,115 Q340,103 400,98" fill="none" stroke="#4a9eff" stroke-width="2.5"/>
+  <circle cx="290" cy="115" r="5" fill="#4a9eff"/>
+  <text x="310" y="110" font-size="11" font-weight="bold" fill="#4a9eff">저온 (-20°C)</text>
+
+  <!-- Mid temp curve -->
+  <path d="M100,230 Q165,226 210,180 Q250,145 290,132 Q345,113 400,103" fill="none" stroke="#27ae60" stroke-width="2.5"/>
+  <circle cx="290" cy="132" r="5" fill="#27ae60"/>
+  <text x="310" y="140" font-size="11" font-weight="bold" fill="#27ae60">상온 (30°C)</text>
+
+  <!-- High temp curve (slow charge, lower voltage) -->
+  <path d="M100,230 Q170,227 220,192 Q260,162 290,150 Q350,125 400,110" fill="none" stroke="#e74c3c" stroke-width="2.5"/>
+  <circle cx="290" cy="150" r="5" fill="#e74c3c"/>
+  <text x="310" y="162" font-size="11" font-weight="bold" fill="#e74c3c">고온 (120°C)</text>
+
+  <!-- Bracket showing ADC difference -->
+  <line x1="280" y1="115" x2="280" y2="150" stroke="#333" stroke-width="2"/>
+  <line x1="276" y1="115" x2="284" y2="115" stroke="#333" stroke-width="2"/>
+  <line x1="276" y1="150" x2="284" y2="150" stroke="#333" stroke-width="2"/>
+  <text x="265" y="136" text-anchor="end" font-size="10" font-weight="bold" fill="#333">ΔV</text>
+
+  <!-- Explanation -->
+  <rect x="470" y="55" width="400" height="200" rx="8" fill="#fff" stroke="#dee2e6"/>
+  <text x="670" y="80" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">왜 온도마다 전압이 다른가</text>
+
+  <rect x="490" y="95" width="360" height="50" rx="6" fill="#e8f4fd" stroke="#4a9eff"/>
+  <text x="670" y="115" text-anchor="middle" font-size="12" fill="#333">온도 ↑ → R(opppcres) ↑</text>
+  <text x="670" y="133" text-anchor="middle" font-size="12" fill="#333">→ RC 시정수(τ) ↑ → 충전 느려짐</text>
+
+  <text x="670" y="165" text-anchor="middle" font-size="16" fill="#e67e22">▼</text>
+
+  <rect x="490" y="175" width="360" height="50" rx="6" fill="#fde8e8" stroke="#e74c3c"/>
+  <text x="670" y="195" text-anchor="middle" font-size="12" fill="#333">같은 시간에 도달하는 전압이 낮아짐</text>
+  <text x="670" y="213" text-anchor="middle" font-size="12" font-weight="bold" fill="#c0392b">→ ADC 코드가 달라짐 = 온도 정보</text>
+
+  <!-- Bottom: summary -->
+  <rect x="50" y="280" width="820" height="100" rx="10" fill="#fff3e0" stroke="#f39c12" stroke-width="2"/>
+  <text x="460" y="305" text-anchor="middle" font-size="14" font-weight="bold" fill="#e67e22">정리</text>
+  <text x="460" y="330" text-anchor="middle" font-size="13" fill="#333">매 phase마다: 리셋(0V) → 충전 → 일정 시점에서 전압 hold → SAR ADC 변환</text>
+  <text x="460" y="355" text-anchor="middle" font-size="13" fill="#333">온도가 바뀌면 R이 바뀌고 → 충전 속도가 바뀌고 → hold되는 전압이 바뀌고 → ADC 코드가 바뀜</text>
+</svg>
