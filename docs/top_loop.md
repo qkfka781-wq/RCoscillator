@@ -49,6 +49,7 @@ The analysis uses two different sampling points:
 
 - `DATA_OUT` rising edge: CP hold code is valid at the edge, then resets shortly after.
 - `CLK_DATASAMPLE` rising edge + 20 ns: DLF buses and `oref` are sampled after digital/analog settling.
+- Numeric interpretation table: [`top_numeric_analysis.md`](top_numeric_analysis.md). `CP`/`DD`/`D` are unsigned; `DIFF*` buses are signed two's-complement.
 
 ### Lock Summary
 
@@ -92,3 +93,4 @@ The late-window zoom is useful for checking how the changed `oref` shifts RC com
 - Fully interactive graphs with hover/zoom need HTML/JavaScript. GitHub will store those files, but it will not execute the JavaScript inside README. If interactive plots become important, use GitHub Pages or attach exported HTML files as downloadable artifacts.
 - Keep `top/top_run.csv` as the source of truth and regenerate `docs/img/*.svg` whenever the top simulation is rerun.
 - `docs/top_event_analysis.csv` contains the extracted event table used for the event-based plots.
+- `docs/top_numeric_analysis.md` contains a readable numeric table with unsigned/signed naming.

@@ -31,6 +31,7 @@ flowchart LR
 | Visual dashboard | [docs/index.html](docs/index.html) |
 | Top closed-loop explanation and plots | [docs/top_loop.md](docs/top_loop.md) |
 | Generated top-run summary | [docs/top_run_summary.md](docs/top_run_summary.md) |
+| Numeric event table | [docs/top_numeric_analysis.md](docs/top_numeric_analysis.md) |
 | Event analysis CSV | [docs/top_event_analysis.csv](docs/top_event_analysis.csv) |
 | SAR integration verification | [sar_test/20260702_sar_integration_verify.md](sar_test/20260702_sar_integration_verify.md) |
 | DLF verification | [dlf_test/20260702_dlf_verify.md](dlf_test/20260702_dlf_verify.md) |

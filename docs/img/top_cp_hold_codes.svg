@@ -2,7 +2,7 @@
 <rect width="100%" height="100%" fill="#fbfbf8"/>
 <text x="86" y="34" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#202124">DATA_OUT Hold Event Analysis</text>
 <text x="86" y="58" font-family="Arial, sans-serif" font-size="13" fill="#5f6368">source: top/top_run.csv</text>
-<text x="86" y="62" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#202124">CP code captured at hold edge</text>
+<text x="86" y="62" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#202124">Unsigned CP code captured at hold edge</text>
 <rect x="86" y="76" width="1006" height="220" fill="#ffffff" stroke="#dadce0" stroke-width="1"/>
 <line x1="86" y1="296.00" x2="1092" y2="296.00" stroke="#eceff1" stroke-width="1"/>
 <text x="76" y="300.00" font-family="Arial, sans-serif" font-size="11" text-anchor="end" fill="#6b7280">1.88e+03</text>
@@ -24,7 +24,7 @@
 <text x="840.50" y="317" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#6b7280">66.0</text>
 <line x1="1092.00" y1="76" x2="1092.00" y2="296" stroke="#f1f3f4" stroke-width="1"/>
 <text x="1092.00" y="317" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#6b7280">88.0</text>
-<text x="26" y="186.00" transform="rotate(-90 26,186.00)" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#5f6368">code</text>
+<text x="26" y="186.00" transform="rotate(-90 26,186.00)" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#5f6368">unsigned code</text>
 <polyline fill="none" stroke="#005f73" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" points="86.00,192.32 97.43,193.53 108.86,91.17 120.30,193.53 131.73,103.21 143.16,193.53 154.59,121.28 166.02,193.53 177.45,133.92 188.89,193.53 200.32,142.35 211.75,193.53 223.18,148.97 234.61,193.53 246.05,154.99 257.48,193.53 268.91,159.21 280.34,193.53 291.77,163.42 303.20,193.53 314.64,165.83 326.07,193.53 337.50,168.24 348.93,193.53 360.36,169.44 371.80,193.53 383.23,173.66 394.66,193.53 406.09,179.68 417.52,193.53 428.95,182.69 440.39,193.53 451.82,182.69 463.25,193.53 474.68,182.69 486.11,193.53 497.55,185.10 508.98,193.53 520.41,189.91 531.84,193.53 543.27,192.32 554.70,193.53 566.14,191.72 577.57,193.53 589.00,190.52 600.43,193.53 611.86,189.31 623.30,193.53 634.73,188.11 646.16,193.53 657.59,189.91 669.02,193.53 680.45,194.13 691.89,193.53 703.32,195.93 714.75,193.53 726.18,194.73 737.61,193.53 749.05,193.53 760.48,193.53 771.91,191.72 783.34,193.53 794.77,193.53 806.20,193.53 817.64,197.74 829.07,193.53 840.50,199.55 851.93,193.53 863.36,197.74 874.80,193.53 886.23,195.93 897.66,193.53 909.09,194.73 920.52,193.53 931.95,192.92 943.39,193.53 954.82,191.72 966.25,193.53 977.68,192.92 989.11,193.53 1000.55,197.14 1011.98,193.53 1023.41,198.94 1034.84,193.53 1046.27,197.14 1057.70,193.53 1069.14,195.33 1080.57,193.53 1092.00,194.13"/>
 <circle cx="86.00" cy="192.32" r="2.5" fill="#005f73"/>
 <circle cx="97.43" cy="193.53" r="2.5" fill="#005f73"/>
@@ -206,10 +206,10 @@
 <circle cx="1080.57" cy="195.33" r="2.5" fill="#ae2012"/>
 <circle cx="1092.00" cy="193.53" r="2.5" fill="#ae2012"/>
 <line x1="94" y1="94" x2="118" y2="94" stroke="#005f73" stroke-width="3"/>
-<text x="125" y="98" font-family="Arial, sans-serif" font-size="12" fill="#374151">CP1</text>
-<line x1="210" y1="94" x2="234" y2="94" stroke="#ae2012" stroke-width="3"/>
-<text x="241" y="98" font-family="Arial, sans-serif" font-size="12" fill="#374151">CP2</text>
-<text x="86" y="337" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#202124">Hold-code balance around zero</text>
+<text x="125" y="98" font-family="Arial, sans-serif" font-size="12" fill="#374151">CP1_u12</text>
+<line x1="234" y1="94" x2="258" y2="94" stroke="#ae2012" stroke-width="3"/>
+<text x="265" y="98" font-family="Arial, sans-serif" font-size="12" fill="#374151">CP2_u12</text>
+<text x="86" y="337" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#202124">Signed hold-code difference around zero</text>
 <rect x="86" y="351" width="1006" height="220" fill="#ffffff" stroke="#dadce0" stroke-width="1"/>
 <line x1="86" y1="571.00" x2="1092" y2="571.00" stroke="#eceff1" stroke-width="1"/>
 <text x="76" y="575.00" font-family="Arial, sans-serif" font-size="11" text-anchor="end" fill="#6b7280">-185</text>
@@ -232,7 +232,7 @@
 <line x1="1092.00" y1="351" x2="1092.00" y2="571" stroke="#f1f3f4" stroke-width="1"/>
 <text x="1092.00" y="592" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#6b7280">88.0</text>
 <line x1="86" y1="385.24" x2="1092" y2="385.24" stroke="#9aa0a6" stroke-width="1.2" stroke-dasharray="5,5"/>
-<text x="26" y="461.00" transform="rotate(-90 26,461.00)" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#5f6368">code</text>
+<text x="26" y="461.00" transform="rotate(-90 26,461.00)" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#5f6368">signed code</text>
 <polyline fill="none" stroke="#0a9396" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" points="86.00,387.25 97.43,366.17 108.86,555.83 120.30,525.72 131.73,535.76 143.16,530.74 154.59,505.65 166.02,523.72 177.45,484.58 188.89,505.65 200.32,470.53 211.75,490.60 223.18,459.49 234.61,475.55 246.05,449.46 257.48,463.51 268.91,442.44 280.34,451.47 291.77,435.41 303.20,440.43 314.64,431.40 326.07,431.40 337.50,427.38 348.93,422.37 360.36,425.38 371.80,413.34 383.23,418.35 394.66,415.34 406.09,408.32 417.52,415.34 428.95,403.30 440.39,408.32 451.82,403.30 463.25,402.30 474.68,403.30 486.11,397.28 497.55,399.29 508.98,402.30 520.41,391.26 531.84,407.31 543.27,387.25 554.70,403.30 566.14,388.25 577.57,398.28 589.00,390.26 600.43,394.27 611.86,392.26 623.30,390.26 634.73,394.27 646.16,386.24 657.59,391.26 669.02,392.26 680.45,384.23 691.89,399.29 703.32,381.22 714.75,395.27 726.18,383.23 737.61,392.26 749.05,385.24 760.48,389.25 771.91,388.25 783.34,386.24 794.77,385.24 806.20,393.27 817.64,378.21 829.07,399.29 840.50,375.20 851.93,396.28 863.36,378.21 874.80,393.27 886.23,381.22 897.66,390.26 909.09,383.23 920.52,388.25 931.95,386.24 943.39,385.24 954.82,388.25 966.25,382.23 977.68,386.24 989.11,389.25 1000.55,379.22 1011.98,396.28 1023.41,376.21 1034.84,393.27 1046.27,379.22 1057.70,390.26 1069.14,382.23 1080.57,388.25 1092.00,384.23"/>
 <circle cx="86.00" cy="387.25" r="2.5" fill="#0a9396"/>
 <circle cx="97.43" cy="366.17" r="2.5" fill="#0a9396"/>
@@ -324,7 +324,7 @@
 <circle cx="1080.57" cy="388.25" r="2.5" fill="#0a9396"/>
 <circle cx="1092.00" cy="384.23" r="2.5" fill="#0a9396"/>
 <line x1="94" y1="369" x2="118" y2="369" stroke="#0a9396" stroke-width="3"/>
-<text x="125" y="373" font-family="Arial, sans-serif" font-size="12" fill="#374151">CP2-CP1</text>
+<text x="125" y="373" font-family="Arial, sans-serif" font-size="12" fill="#374151">CP2-CP1_sdiff</text>
 <text x="86" y="612" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#202124">Held analog state and oref</text>
 <rect x="86" y="626" width="1006" height="220" fill="#ffffff" stroke="#dadce0" stroke-width="1"/>
 <line x1="86" y1="846.00" x2="1092" y2="846.00" stroke="#eceff1" stroke-width="1"/>

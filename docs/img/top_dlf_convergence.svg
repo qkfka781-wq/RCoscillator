@@ -2,7 +2,7 @@
 <rect width="100%" height="100%" fill="#fbfbf8"/>
 <text x="86" y="34" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#202124">Corrected DLF Event Analysis</text>
 <text x="86" y="58" font-family="Arial, sans-serif" font-size="13" fill="#5f6368">source: top/top_run.csv</text>
-<text x="86" y="62" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#202124">Sampled SAR codes (20 ns after update edge)</text>
+<text x="86" y="62" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#202124">Unsigned sampled SAR codes (20 ns after update edge)</text>
 <rect x="86" y="76" width="1006" height="220" fill="#ffffff" stroke="#dadce0" stroke-width="1"/>
 <line x1="86" y1="296.00" x2="1092" y2="296.00" stroke="#eceff1" stroke-width="1"/>
 <text x="76" y="300.00" font-family="Arial, sans-serif" font-size="11" text-anchor="end" fill="#6b7280">-177</text>
@@ -25,7 +25,7 @@
 <line x1="1092.00" y1="76" x2="1092.00" y2="296" stroke="#f1f3f4" stroke-width="1"/>
 <text x="1092.00" y="317" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#6b7280">45.0</text>
 <line x1="86" y1="280.83" x2="1092" y2="280.83" stroke="#9aa0a6" stroke-width="1.2" stroke-dasharray="5,5"/>
-<text x="26" y="186.00" transform="rotate(-90 26,186.00)" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#5f6368">code</text>
+<text x="26" y="186.00" transform="rotate(-90 26,186.00)" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#5f6368">unsigned code</text>
 <polyline fill="none" stroke="#005f73" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" points="86.00,280.83 108.36,104.08 130.71,117.68 153.07,118.11 175.42,117.51 197.78,115.97 220.13,114.69 242.49,113.40 264.84,112.38 287.20,111.35 309.56,110.41 331.91,109.64 354.27,108.87 376.62,108.10 398.98,108.27 421.33,108.27 443.69,107.68 466.04,107.16 488.40,106.73 510.76,107.16 533.11,107.59 555.47,107.25 577.82,106.82 600.18,106.82 622.53,106.48 644.89,106.14 667.24,105.79 689.60,106.31 711.96,106.91 734.31,106.56 756.67,106.31 779.02,106.05 801.38,105.79 823.73,106.39 846.09,106.91 868.44,106.65 890.80,106.39 913.16,106.14 935.51,105.97 957.87,105.71 980.22,105.45 1002.58,106.05 1024.93,106.65 1047.29,106.39 1069.64,106.14 1092.00,105.97"/>
 <circle cx="86.00" cy="280.83" r="2.5" fill="#005f73"/>
 <circle cx="108.36" cy="104.08" r="2.5" fill="#005f73"/>
@@ -121,10 +121,10 @@
 <circle cx="1069.64" cy="106.22" r="2.5" fill="#ae2012"/>
 <circle cx="1092.00" cy="105.97" r="2.5" fill="#ae2012"/>
 <line x1="94" y1="94" x2="118" y2="94" stroke="#005f73" stroke-width="3"/>
-<text x="125" y="98" font-family="Arial, sans-serif" font-size="12" fill="#374151">DD1</text>
-<line x1="210" y1="94" x2="234" y2="94" stroke="#ae2012" stroke-width="3"/>
-<text x="241" y="98" font-family="Arial, sans-serif" font-size="12" fill="#374151">DD2</text>
-<text x="86" y="337" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#202124">Loop error converging to zero</text>
+<text x="125" y="98" font-family="Arial, sans-serif" font-size="12" fill="#374151">DD1_u12</text>
+<line x1="234" y1="94" x2="258" y2="94" stroke="#ae2012" stroke-width="3"/>
+<text x="265" y="98" font-family="Arial, sans-serif" font-size="12" fill="#374151">DD2_u12</text>
+<text x="86" y="337" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#202124">Signed loop error converging to zero</text>
 <rect x="86" y="351" width="1006" height="220" fill="#ffffff" stroke="#dadce0" stroke-width="1"/>
 <line x1="86" y1="571.00" x2="1092" y2="571.00" stroke="#eceff1" stroke-width="1"/>
 <text x="76" y="575.00" font-family="Arial, sans-serif" font-size="11" text-anchor="end" fill="#6b7280">-360</text>
@@ -147,7 +147,7 @@
 <line x1="1092.00" y1="351" x2="1092.00" y2="571" stroke="#f1f3f4" stroke-width="1"/>
 <text x="1092.00" y="592" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#6b7280">45.0</text>
 <line x1="86" y1="461.00" x2="1092" y2="461.00" stroke="#9aa0a6" stroke-width="1.2" stroke-dasharray="5,5"/>
-<text x="26" y="461.00" transform="rotate(-90 26,461.00)" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#5f6368">code</text>
+<text x="26" y="461.00" transform="rotate(-90 26,461.00)" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#5f6368">signed code</text>
 <polyline fill="none" stroke="#0a9396" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" points="86.00,461.00 108.36,466.20 130.71,366.17 153.07,370.76 175.42,382.08 197.78,394.01 220.13,402.88 242.49,410.83 264.84,417.56 287.20,423.37 309.56,428.88 331.91,432.86 354.27,436.83 376.62,440.20 398.98,441.73 421.33,444.79 443.69,448.46 466.04,450.29 488.40,451.82 510.76,451.52 533.11,452.43 555.47,454.88 577.82,456.11 600.18,456.11 622.53,456.72 644.89,457.33 667.24,457.94 689.60,457.02 711.96,457.02 734.31,459.16 756.67,459.47 779.02,459.78 801.38,459.78 823.73,458.55 846.09,458.86 868.44,460.69 890.80,460.69 913.16,460.69 935.51,460.69 957.87,460.69 980.22,461.00 1002.58,459.47 1024.93,459.47 1047.29,461.31 1069.64,461.31 1092.00,461.00"/>
 <circle cx="86.00" cy="461.00" r="2.5" fill="#0a9396"/>
 <circle cx="108.36" cy="466.20" r="2.5" fill="#0a9396"/>
@@ -243,10 +243,10 @@
 <circle cx="1069.64" cy="460.69" r="2.5" fill="#ca6702"/>
 <circle cx="1092.00" cy="461.00" r="2.5" fill="#ca6702"/>
 <line x1="94" y1="369" x2="118" y2="369" stroke="#0a9396" stroke-width="3"/>
-<text x="125" y="373" font-family="Arial, sans-serif" font-size="12" fill="#374151">DD2-DD1</text>
-<line x1="234" y1="369" x2="258" y2="369" stroke="#ca6702" stroke-width="3"/>
-<text x="265" y="373" font-family="Arial, sans-serif" font-size="12" fill="#374151">DIFF = -(DD2-DD1)</text>
-<text x="86" y="612" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#202124">DLF/CDAC drive</text>
+<text x="125" y="373" font-family="Arial, sans-serif" font-size="12" fill="#374151">DD2-DD1_sdiff</text>
+<line x1="270" y1="369" x2="294" y2="369" stroke="#ca6702" stroke-width="3"/>
+<text x="301" y="373" font-family="Arial, sans-serif" font-size="12" fill="#374151">DIFF_s12</text>
+<text x="86" y="612" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#202124">Unsigned DLF/CDAC drive</text>
 <rect x="86" y="626" width="1006" height="220" fill="#ffffff" stroke="#dadce0" stroke-width="1"/>
 <line x1="86" y1="846.00" x2="1092" y2="846.00" stroke="#eceff1" stroke-width="1"/>
 <text x="76" y="850.00" font-family="Arial, sans-serif" font-size="11" text-anchor="end" fill="#6b7280">6.11e+04</text>
@@ -268,7 +268,7 @@
 <text x="840.50" y="867" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#6b7280">33.8</text>
 <line x1="1092.00" y1="626" x2="1092.00" y2="846" stroke="#f1f3f4" stroke-width="1"/>
 <text x="1092.00" y="867" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#6b7280">45.0</text>
-<text x="26" y="736.00" transform="rotate(-90 26,736.00)" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#5f6368">code</text>
+<text x="26" y="736.00" transform="rotate(-90 26,736.00)" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#5f6368">unsigned code</text>
 <polyline fill="none" stroke="#3a0ca3" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" points="86.00,672.34 108.36,830.83 130.71,819.13 153.07,796.68 175.42,776.15 197.78,757.80 220.13,741.92 242.49,728.06 264.84,716.14 287.20,705.68 309.56,696.70 331.91,688.88 354.27,682.06 376.62,676.10 398.98,671.37 421.33,667.27 443.69,663.55 466.04,660.38 488.40,657.67 510.76,655.65 533.11,653.87 555.47,652.01 577.82,650.39 600.18,650.39 622.53,648.99 644.89,647.75 667.24,646.67 689.60,646.13 711.96,645.66 734.31,644.89 756.67,644.27 779.02,643.73 801.38,643.19 823.73,643.11 846.09,643.03 868.44,642.72 890.80,642.41 913.16,642.10 935.51,641.87 957.87,641.56 980.22,641.33 1002.58,641.48 1024.93,641.64 1047.29,641.48 1069.64,641.33 1092.00,641.17"/>
 <circle cx="86.00" cy="672.34" r="2.5" fill="#3a0ca3"/>
 <circle cx="108.36" cy="830.83" r="2.5" fill="#3a0ca3"/>
@@ -317,7 +317,7 @@
 <circle cx="1069.64" cy="641.33" r="2.5" fill="#3a0ca3"/>
 <circle cx="1092.00" cy="641.17" r="2.5" fill="#3a0ca3"/>
 <line x1="94" y1="644" x2="118" y2="644" stroke="#3a0ca3" stroke-width="3"/>
-<text x="125" y="648" font-family="Arial, sans-serif" font-size="12" fill="#374151">D&lt;16:0&gt;</text>
+<text x="125" y="648" font-family="Arial, sans-serif" font-size="12" fill="#374151">D_u17</text>
 <text x="86" y="887" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#202124">oref actuator</text>
 <rect x="86" y="901" width="1006" height="220" fill="#ffffff" stroke="#dadce0" stroke-width="1"/>
 <line x1="86" y1="1121.00" x2="1092" y2="1121.00" stroke="#eceff1" stroke-width="1"/>
