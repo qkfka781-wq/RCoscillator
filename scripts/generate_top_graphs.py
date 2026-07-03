@@ -101,6 +101,8 @@ def row_from_parts(cols: list[str], index: dict[str, int], parts: list[str]) -> 
         "vrc1": vrc1,
         "vrc2": vrc2,
         "vrc_diff": vrc1 - vrc2,
+        "cp1_analog": float(parts[index["I0.osc1"]]) - float(parts[index["I0.osc2"]]),
+        "cp2_analog": float(parts[index["I0.osc11"]]) - float(parts[index["I0.osc22"]]),
         "data_out": float(parts[index["DATA_OUT"]]),
         "clk_sample": float(parts[index["CLK_DATASAMPLE"]]),
         "clk_osc": float(parts[index["CLK_OSC"]]),
@@ -480,9 +482,71 @@ def write_requested_window_table(
         "| `D_s17` | signed 17-bit D code interpretation |",
         "| `oref_V` | analog voltage corresponding to the D/oref actuator state |",
         "",
-        "## DLF Update Samples",
+        "## CP Analog Voltage To Digital Code Mapping",
+        "",
+        "This table maps the analog phase difference to the CP digital code at `DATA_OUT` rising edges.",
+        "",
+        "| Rule | Analog source | Digital code | DATA_OUT mapping |",
+        "|---|---|---|---|",
+        "| `CLK_OSC = 0` | `osc1 - osc2` | `CP1_u12` unsigned 12b | `DD1_from_CP1_u12` |",
+        "| `CLK_OSC = 1` | `osc11 - osc22` | `CP2_u12` unsigned 12b | `DD2_from_CP2_u12` |",
         "",
     ]
+    cp_map_headers = ["event", "DATA_OUT_t_us", "CLK_OSC", "analog_source", "analog_voltage_V", "CP_code_signal", "CP_code_u12", "mapped_DD_signal", "mapped_DD_u12"]
+    cp_map_rows = []
+    for row in hold_window:
+        clk_state = 1 if row["clk_osc"] > 0.5 else 0
+        if clk_state == 0:
+            cp_map_rows.append([
+                str(int(row["event"])),
+                f"{row['t_us']:.3f}",
+                "0",
+                "osc1 - osc2",
+                f"{row['cp1_analog']:.6f}",
+                "CP1_u12",
+                str(int(row["cp1"])),
+                "DD1_from_CP1_u12",
+                str(int(row["cp1"])),
+            ])
+        else:
+            cp_map_rows.append([
+                str(int(row["event"])),
+                f"{row['t_us']:.3f}",
+                "1",
+                "osc11 - osc22",
+                f"{row['cp2_analog']:.6f}",
+                "CP2_u12",
+                str(int(row["cp2"])),
+                "DD2_from_CP2_u12",
+                str(int(row["cp2"])),
+            ])
+    lines.extend(markdown_table(cp_map_headers, cp_map_rows))
+    lines.extend([
+        "",
+        "## DATA_OUT Rising CP To DD Mapping",
+        "",
+        "At each `DATA_OUT` rising edge, this table records the CP code values used for the DD mapping requested here.",
+        "",
+    ])
+    dd_map_headers = ["event", "DATA_OUT_t_us", "CLK_OSC", "CP1_u12", "DD1_from_CP1_u12", "CP2_u12", "DD2_from_CP2_u12"]
+    dd_map_rows = [
+        [
+            str(int(row["event"])),
+            f"{row['t_us']:.3f}",
+            str(1 if row["clk_osc"] > 0.5 else 0),
+            str(int(row["cp1"])),
+            str(int(row["cp1"])),
+            str(int(row["cp2"])),
+            str(int(row["cp2"])),
+        ]
+        for row in hold_window
+    ]
+    lines.extend(markdown_table(dd_map_headers, dd_map_rows))
+    lines.extend([
+        "",
+        "## DLF Update Samples",
+        "",
+    ])
     dlf_headers = ["event", "t_us", "CP1_u12", "CP2_u12", "DD1_u12", "DD2_u12", "DD2-DD1", "DIFF_SAMPLE_s12", "DIFF_s12", "D_s17", "oref_V"]
     dlf_rows = [
         [
