@@ -1,96 +1,89 @@
 # Top Closed-Loop Operation
 
-이 문서는 `top/RCnetlist`와 `top/top_run.csv`를 기준으로 RC oscillator 폐루프가 무엇을 맞추는지 정리한 GitHub용 노트이다.
+이 문서는 `top/RCnetlist`와 `top/top_run.csv`를 기준으로 RC oscillator top loop가 어떤 식으로 닫히는지 정리한 자료입니다. 숫자 자체보다 “어떤 신호가 다음 신호를 움직이는가”에 초점을 둡니다.
 
-## Core Idea
+## 한 줄 요약
 
-폐루프의 목표는 두 RC phase가 hold 시점에 만들어낸 SAR 코드 차이가 0이 되도록 `oref`를 조절하는 것이다.
-
-1. RC 네트워크의 `VRC`가 시간에 따라 충전/방전된다.
-2. `VRC`와 `oref`의 비교 타이밍이 oscillator phase를 결정한다.
-3. SAR ADC가 hold 시점의 `CP` 아날로그 값을 코드로 변환한다.
-4. DLF가 두 phase 코드 `DD2-DD1`을 적분한다.
-5. DLF accumulator가 `CDAC_17b`를 구동해 `oref`를 바꾼다.
-6. 바뀐 `oref`가 다시 비교 타이밍과 주파수를 바꾼다.
-7. 반복 후 `DD2-DD1 -> 0`이면 두 phase가 같은 지점에서 hold되고 주파수가 lock된다.
+`CP` hold 값을 SAR ADC가 읽고, DLF가 `DD2-DD1` error를 줄이는 방향으로 `oref`를 조절합니다. `oref`가 바뀌면 `VRC` 비교 타이밍과 oscillator phase/frequency가 바뀌고, 다음 hold 시점의 CP 값도 다시 달라집니다.
 
 ```mermaid
 flowchart LR
-    A["RC ramp / VRC"] --> B["VRC vs oref comparator timing"]
-    B --> C["Oscillator phase and frequency"]
-    C --> D["Hold CP analog value"]
-    D --> E["SAR ADC code"]
-    E --> F["DLF: integrate DD2-DD1"]
-    F --> G["CDAC_17b: update oref"]
+    A["VRC ramp"] --> B["VRC vs oref"]
+    B --> C["Oscillator phase / frequency"]
+    C --> D["CP hold"]
+    D --> E["SAR ADC"]
+    E --> F["DLF"]
+    F --> G["CDAC_17b / oref"]
     G --> B
 ```
 
-## Block Map
+## 회로 그림
 
-| Block | Folder | Role | Current verification |
-|------|------|------|------|
-| RC oscillator top | `top/` | Connects RC ramp, SAR, DLF, and oref feedback | `top/top_run.csv`, `top/RCnetlist` |
-| SAR ADC | `sar_test/` | Converts held CP voltage into a 12-bit code | `sar_test/20260702_sar_integration_verify.md` |
-| DLF | `dlf_test/` | Integrates phase-code error and drives oref DAC code | `dlf_test/20260702_dlf_verify.md` |
-| oref DAC | `cdac17_test/` | 17-bit CDAC that converts DLF accumulator to `oref` | `cdac17_test/20260702_cdac17_verify.md` |
-| SAR CDAC | `cdac_test/` | 12-bit charge redistribution DAC inside SAR | `cdac_test/20260701_cdac_12b_verify.md` |
-| StrongARM comparator | `strongarm_test/` | SAR bit decision comparator | `strongarm_test/20260701_sar_comparator_verify.md` |
-| Temperature / bias references | `tempsensor/` | Supporting reference and temperature-related notes | `tempsensor/docs/` |
+### Oscillator, Sample/Hold, SAR ADC
 
-## Top Waveform Evidence
+[![Oscillator to SAR path](assets/osc_to_sar_path.png)](assets/osc_to_sar_path.png)
 
-GitHub can show SVGs inline, and each thumbnail below is clickable. The SVGs are generated from `top/top_run.csv` with:
+이 그림은 top loop에서 가장 중요한 신호 경로입니다. Oscillator core의 VRC/oref 비교 결과가 phase를 만들고, CP hold 경로를 통해 SAR ADC 입력으로 넘어갑니다.
 
-```powershell
-python scripts/generate_top_graphs.py
-```
+### Oscillator Core
 
-The analysis uses two different sampling points:
+[![Oscillator core](assets/oscillator_core.png)](assets/oscillator_core.png)
 
-- `DATA_OUT` rising edge: CP hold code is valid at the edge, then resets shortly after.
-- `CLK_DATASAMPLE` rising edge + 20 ns: DLF buses and `oref` are sampled after digital/analog settling.
-- Numeric interpretation table: [`top_numeric_analysis.md`](top_numeric_analysis.md). `CP`/`DD`/`D` are unsigned; `DIFF*` buses are signed two's-complement.
+core 안에서는 `VRC` ramp와 `oref` 기준 전압의 crossing 시점이 oscillator timing을 결정합니다.
+
+## 파형 그림
+
+### Timing And Frequency
+
+[![Timing and frequency](assets/frequency_timing.png)](assets/frequency_timing.png)
+
+`oref` 위치가 바뀌면 `VRC` crossing 시점이 달라지고, 그 결과 `CLK_OSC` timing과 instantaneous frequency도 같이 움직입니다.
+
+### DLF Sample Path
+
+[![DLF sample waveform](assets/dlf_sample_waveform.png)](assets/dlf_sample_waveform.png)
+
+DLF는 두 phase path의 sample 차이를 보고 누적 방향을 결정합니다. 여기서 중요한 것은 숫자 하나하나보다, error가 `oref`를 움직이는 방향성을 만든다는 점입니다.
+
+## CSV에서 만든 그래프
+
+아래 SVG는 `top/top_run.csv`에서 edge 기준으로 다시 뽑은 그래프입니다. GitHub에서 바로 보이고, 클릭하면 원본 크기로 열립니다.
 
 ### Lock Summary
 
 [![Lock summary](img/top_lock_summary.svg)](img/top_lock_summary.svg)
 
-This is the main result plot. It shows the DLF sampled error collapsing from hundreds of codes to a few codes and finally reaching zero.
-
-### Loop Overview
-
-[![Top loop overview](img/top_loop_overview.svg)](img/top_loop_overview.svg)
-
-### DLF Convergence
-
-[![DLF convergence](img/top_dlf_convergence.svg)](img/top_dlf_convergence.svg)
-
-The important trace is the sampled code error. The run starts with a large startup transient, then the sampled `DD2-DD1` term settles around zero-code error in the late part of the simulation. This plot is sampled 20 ns after `CLK_DATASAMPLE` edges.
+loop가 진행되면서 DLF error가 0 근처로 들어오는 흐름을 보는 요약 그래프입니다.
 
 ### CP Hold Codes
 
 [![CP hold codes](img/top_cp_hold_codes.svg)](img/top_cp_hold_codes.svg)
 
-`DATA_OUT` is the CP hold/capture event. This plot reconstructs the `CP1<11:0>` and `CP2<11:0>` buses at those edges.
+`DATA_OUT` edge 기준으로 `CP1`, `CP2` hold code를 복원한 그래프입니다.
 
-### Late Loop Timing Zoom
+### DLF Convergence
 
-[![Late loop zoom](img/top_late_loop_zoom.svg)](img/top_late_loop_zoom.svg)
+[![DLF convergence](img/top_dlf_convergence.svg)](img/top_dlf_convergence.svg)
 
-The late-window zoom is useful for checking how the changed `oref` shifts RC comparison timing once the loop is near balance.
+`CLK_DATASAMPLE` 이후 안정된 시점에서 DLF 관련 값을 샘플링한 그래프입니다.
 
-## Interpretation
+## 블록 역할
 
-- The intended lock condition is not a fixed absolute `oref`; it is the condition where the hold-time CP code difference becomes zero.
-- `oref` is the loop actuator. If `DD2-DD1` is positive or negative, the DLF changes the CDAC_17b code and moves `oref`.
-- Moving `oref` changes the crossing time between `VRC` and `oref`, which changes oscillator period/phase.
-- Because the next hold samples a different analog CP value, the SAR code changes and the DLF sees a smaller or opposite error.
-- In the current top run, the late samples show `DD2-DD1` repeatedly reaching 0 or a few LSB around 0, which is the expected closed-loop behavior.
+| Block | Role | Link |
+| --- | --- | --- |
+| RC oscillator top | VRC/oref 비교, phase/frequency 생성, CP hold 연결 | `top/` |
+| SAR ADC | hold된 CP 아날로그 값을 12-bit code로 변환 | [SAR verify](https://github.com/qkfka781-wq/RCoscillator/blob/main/sar_test/20260702_sar_integration_verify.md) |
+| DLF | `DD2-DD1` error를 적분해 oref 방향 결정 | [DLF verify](https://github.com/qkfka781-wq/RCoscillator/blob/main/dlf_test/20260702_dlf_verify.md) |
+| CDAC_17b | DLF code를 `oref` 전압으로 변환 | [CDAC_17b verify](https://github.com/qkfka781-wq/RCoscillator/blob/main/cdac17_test/20260702_cdac17_verify.md) |
+| CDAC_12b | SAR 내부 capacitive DAC | [CDAC_12b verify](https://github.com/qkfka781-wq/RCoscillator/blob/main/cdac_test/20260701_cdac_12b_verify.md) |
+| StrongARM | SAR bit decision comparator | [StrongARM verify](https://github.com/qkfka781-wq/RCoscillator/blob/main/strongarm_test/20260701_sar_comparator_verify.md) |
 
-## Notes For GitHub
+## 숫자 자료
 
-- Static graph thumbnails are the safest GitHub option. Markdown can link images, so clicking a thumbnail opens the full SVG.
-- Fully interactive graphs with hover/zoom need HTML/JavaScript. GitHub will store those files, but it will not execute the JavaScript inside README. If interactive plots become important, use GitHub Pages or attach exported HTML files as downloadable artifacts.
-- Keep `top/top_run.csv` as the source of truth and regenerate `docs/img/*.svg` whenever the top simulation is rerun.
-- `docs/top_event_analysis.csv` contains the extracted event table used for the event-based plots.
-- `docs/top_numeric_analysis.md` contains a readable numeric table with unsigned/signed naming.
+숫자 분석이 필요할 때만 아래 파일을 보면 됩니다.
+
+- [top_run_summary.md](top_run_summary.md)
+- [top_numeric_analysis.md](top_numeric_analysis.md)
+- [top_event_analysis.csv](top_event_analysis.csv)
+
+해석 기준은 단순합니다. `CP`, `DD`, `D` 계열은 unsigned code로 보고, `DIFF` 계열은 signed two's-complement로 봅니다.
