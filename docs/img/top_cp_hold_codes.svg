@@ -206,9 +206,9 @@
 <circle cx="1080.57" cy="195.33" r="2.5" fill="#ae2012"/>
 <circle cx="1092.00" cy="193.53" r="2.5" fill="#ae2012"/>
 <line x1="94" y1="94" x2="118" y2="94" stroke="#005f73" stroke-width="3"/>
-<text x="125" y="98" font-family="Arial, sans-serif" font-size="12" fill="#374151">CP1_u12</text>
-<line x1="234" y1="94" x2="258" y2="94" stroke="#ae2012" stroke-width="3"/>
-<text x="265" y="98" font-family="Arial, sans-serif" font-size="12" fill="#374151">CP2_u12</text>
+<text x="125" y="98" font-family="Arial, sans-serif" font-size="12" fill="#374151">CP1 code</text>
+<line x1="240" y1="94" x2="264" y2="94" stroke="#ae2012" stroke-width="3"/>
+<text x="271" y="98" font-family="Arial, sans-serif" font-size="12" fill="#374151">CP2 code</text>
 <text x="86" y="337" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#202124">Signed hold-code difference around zero</text>
 <rect x="86" y="351" width="1006" height="220" fill="#ffffff" stroke="#dadce0" stroke-width="1"/>
 <line x1="86" y1="571.00" x2="1092" y2="571.00" stroke="#eceff1" stroke-width="1"/>
@@ -324,7 +324,7 @@
 <circle cx="1080.57" cy="388.25" r="2.5" fill="#0a9396"/>
 <circle cx="1092.00" cy="384.23" r="2.5" fill="#0a9396"/>
 <line x1="94" y1="369" x2="118" y2="369" stroke="#0a9396" stroke-width="3"/>
-<text x="125" y="373" font-family="Arial, sans-serif" font-size="12" fill="#374151">CP2-CP1_sdiff</text>
+<text x="125" y="373" font-family="Arial, sans-serif" font-size="12" fill="#374151">CP2-CP1</text>
 <text x="86" y="612" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#202124">Held analog state and oref</text>
 <rect x="86" y="626" width="1006" height="220" fill="#ffffff" stroke="#dadce0" stroke-width="1"/>
 <line x1="86" y1="846.00" x2="1092" y2="846.00" stroke="#eceff1" stroke-width="1"/>

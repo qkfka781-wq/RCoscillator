@@ -15,11 +15,13 @@
 ```mermaid
 flowchart LR
     V["VRC1/VRC2"] --> C["VRC와 oref crossing"]
-    C --> O["oscillator frequency"]
+    C --> O["oscillator timing / CLK_OSC period"]
     O --> H["phase별 hold"]
     H --> S["SAR ADC code"]
-    S --> D["DLF: DD2-DD1 판단"]
-    D --> R["oref 보정"]
+    S --> E["DD2-DD1 error 계산"]
+    E --> F["DIFF = -(DD2-DD1)"]
+    F --> D["DLF가 D code 업데이트"]
+    D --> R["CDAC_17b가 oref 보정"]
     R --> C
 ```
 
@@ -29,11 +31,13 @@ flowchart LR
 | --- | --- |
 | `VRC1`, `VRC2` | distributed RC network의 출력 전압 |
 | `oref` | `VRC1`과 비교되는 기준 전압 |
-| `CP1`, `CP2` | phase별 comparator 입력차를 hold 후 SAR ADC한 unsigned 12b code (`CP1=osc1-osc2`, `CP2=osc11-osc22`) |
+| `CP1`, `CP2` | phase별 comparator 입력차를 hold 후 SAR ADC한 12-bit unsigned code (`CP1=osc1-osc2`, `CP2=osc11-osc22`) |
 | `DD1`, `DD2` | 두 phase의 sampled digital code (`CP1 -> DD2`, `CP2 -> DD1`) |
 | `DD2-DD1` | DLF가 줄이려는 phase code error |
-| DLF | `DD2-DD1`을 보고 `oref` 보정 방향을 결정하는 digital loop filter |
-| CDAC_17b | DLF code를 실제 `oref` 전압으로 바꾸는 DAC |
+| `DIFF` | `DREF=0`일 때 `-(DD2-DD1)`로 해석되는 signed error |
+| DLF | `DIFF`를 적분해 `D code`를 업데이트하는 digital loop filter |
+| `D code` | 17-bit offset-binary code, `D-65536`이 실제 보정량 |
+| CDAC_17b | `D code`를 실제 `oref` 전압으로 바꾸는 DAC |
 
 ## 1. Oscillator Core
 

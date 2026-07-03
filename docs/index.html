@@ -320,6 +320,12 @@
       letter-spacing: 0;
     }
 
+    .table-panel p {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
     table {
       width: 100%;
       border-collapse: collapse;
@@ -416,9 +422,9 @@
         <dl>
           <dt>VRC1/VRC2</dt><dd>distributed RC network의 출력 전압</dd>
           <dt>oref</dt><dd>VRC1과 비교되는 기준 전압</dd>
-          <dt>CP1/CP2</dt><dd>CP1=osc1-osc2, CP2=osc11-osc22를 hold 후 SAR ADC한 unsigned 12b code</dd>
+          <dt>CP1/CP2</dt><dd>CP1=osc1-osc2, CP2=osc11-osc22를 hold 후 SAR ADC한 12-bit unsigned code</dd>
           <dt>DD1/DD2</dt><dd>두 phase에서 sample한 digital code, CP1은 DD2로 CP2는 DD1로 이어짐</dd>
-          <dt>DLF</dt><dd>error를 보고 oref 보정 방향을 결정</dd>
+          <dt>DLF</dt><dd>DD2-DD1에서 DIFF와 D code를 만들고 oref를 보정</dd>
         </dl>
       </div>
     </section>
@@ -428,8 +434,8 @@
       <div class="steps">
         <div class="step"><strong>1. 비교</strong><span>`VRC`와 `oref`의 crossing timing이 oscillator timing을 만듭니다.</span></div>
         <div class="step"><strong>2. 샘플</strong><span>그 timing에서 아날로그 전압을 hold합니다.</span></div>
-        <div class="step"><strong>3. 판단</strong><span>SAR ADC와 DLF가 두 phase의 차이 `DD2-DD1`을 봅니다.</span></div>
-        <div class="step"><strong>4. 보정</strong><span>차이가 있으면 `oref`를 보정해 다음 timing과 frequency를 바꿉니다.</span></div>
+        <div class="step"><strong>3. 판단</strong><span>DLF가 `DD2-DD1`에서 `DIFF`를 만들고 `D code`를 업데이트합니다.</span></div>
+        <div class="step"><strong>4. 보정</strong><span>`D code`가 `oref`를 보정해 다음 timing과 frequency를 바꿉니다.</span></div>
       </div>
     </section>
 
@@ -464,6 +470,7 @@
         </figure>
         <div class="table-panel">
           <h3>CP/DD Mapping Table</h3>
+          <p>차전압은 mV로 표시했습니다. CP와 DD는 모두 12-bit unsigned code입니다.</p>
           <table>
             <thead>
               <tr>
@@ -471,18 +478,41 @@
                 <th>DATA_OUT us</th>
                 <th>CLK_OSC</th>
                 <th>analog source</th>
-                <th>analog V</th>
+                <th>osc diff mV</th>
                 <th>CP code</th>
-                <th>CP u12</th>
+                <th>CP value</th>
                 <th>mapped DD</th>
-                <th>DD u12</th>
+                <th>DD value</th>
               </tr>
             </thead>
             <tbody>
-              <tr><td>14</td><td>32.792</td><td>0</td><td>osc1 - osc2</td><td>0.000381</td><td>CP1_u12</td><td>2112</td><td>DD2_from_CP1</td><td>2112</td></tr>
-              <tr><td>15</td><td>35.103</td><td>1</td><td>osc11 - osc22</td><td>0.000422</td><td>CP2_u12</td><td>1970</td><td>DD1_from_CP2</td><td>1970</td></tr>
-              <tr><td>16</td><td>37.381</td><td>0</td><td>osc1 - osc2</td><td>0.000050</td><td>CP1_u12</td><td>2105</td><td>DD2_from_CP1</td><td>2105</td></tr>
-              <tr><td>17</td><td>39.683</td><td>1</td><td>osc11 - osc22</td><td>0.000194</td><td>CP2_u12</td><td>1982</td><td>DD1_from_CP2</td><td>1982</td></tr>
+              <tr><td>14</td><td>32.792</td><td>0</td><td>osc1 - osc2</td><td>0.381</td><td>CP1</td><td>2112</td><td>DD2 from CP1</td><td>2112</td></tr>
+              <tr><td>15</td><td>35.103</td><td>1</td><td>osc11 - osc22</td><td>0.422</td><td>CP2</td><td>1970</td><td>DD1 from CP2</td><td>1970</td></tr>
+              <tr><td>16</td><td>37.381</td><td>0</td><td>osc1 - osc2</td><td>0.050</td><td>CP1</td><td>2105</td><td>DD2 from CP1</td><td>2105</td></tr>
+              <tr><td>17</td><td>39.683</td><td>1</td><td>osc11 - osc22</td><td>0.194</td><td>CP2</td><td>1982</td><td>DD1 from CP2</td><td>1982</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-panel">
+          <h3>DLF Operation Table</h3>
+          <p>DLF는 DD2-DD1을 보고 DIFF를 만든 뒤 D code를 업데이트하고, 그 D code가 oref 전압을 움직입니다.</p>
+          <table>
+            <thead>
+              <tr>
+                <th>event</th>
+                <th>time us</th>
+                <th>DD1 code</th>
+                <th>DD2 code</th>
+                <th>DD2-DD1</th>
+                <th>DIFF</th>
+                <th>D code</th>
+                <th>D - 65536</th>
+                <th>oref V</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>8</td><td>35.129</td><td>1970</td><td>2112</td><td>+142</td><td>-142</td><td>64405</td><td>-1131</td><td>0.504597</td></tr>
+              <tr><td>9</td><td>39.709</td><td>1982</td><td>2105</td><td>+123</td><td>-123</td><td>64675</td><td>-861</td><td>0.503193</td></tr>
             </tbody>
           </table>
         </div>
@@ -497,8 +527,8 @@
         <div class="loop-node"><strong>OSC frequency</strong><span>phase/frequency 변화</span></div>
         <div class="loop-node"><strong>Hold</strong><span>아날로그 전압 hold</span></div>
         <div class="loop-node"><strong>SAR ADC</strong><span>digital code 변환</span></div>
-        <div class="loop-node"><strong>DLF</strong><span>DD2-DD1 error 판단</span></div>
-        <div class="loop-node"><strong>CDAC_17b</strong><span>oref 보정</span></div>
+        <div class="loop-node"><strong>DLF</strong><span>DIFF 적분, D code update</span></div>
+        <div class="loop-node"><strong>CDAC_17b</strong><span>D code를 oref로 변환</span></div>
       </div>
     </section>
   </main>

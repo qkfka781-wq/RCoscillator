@@ -6,12 +6,12 @@ Window: `32.5 us` to `41.5 us` from `top/top_run.csv`.
 
 | Signal | Interpretation |
 |---|---|
-| `CP1_u12`, `CP2_u12` | unsigned 12-bit digital CP hold codes |
-| `DD1_u12`, `DD2_u12` | unsigned 12-bit sampled ADC/DLF codes |
-| `DIFF_SAMPLE_s12`, `DIFF_s12` | signed 12-bit two's-complement values |
-| `D_u17` | offset-binary unsigned 17-bit D code, mid code = 65536 |
-| `D_minus_mid_s17` | signed correction amount, `D_u17 - 65536` |
-| `oref_V` | analog voltage corresponding to the D/oref actuator state |
+| `CP1`, `CP2` | 12-bit unsigned digital CP hold codes, 0 to 4095 |
+| `DD1`, `DD2` | 12-bit unsigned sampled ADC/DLF codes, 0 to 4095 |
+| `DIFF_SAMPLE`, `DIFF` | signed 12-bit values |
+| `D code` | 17-bit offset-binary code, mid code = 65536 |
+| `D - 65536` | signed correction amount represented by the D code |
+| `oref` | analog voltage corresponding to the D/oref actuator state |
 
 ## CP Analog Voltage To Digital Code Mapping
 
@@ -20,39 +20,39 @@ The CSV register trace shows `CP1 -> DD2` and `CP2 -> DD1` at the following DLF 
 
 | Rule | Analog source | Digital code | DATA_OUT mapping |
 |---|---|---|---|
-| `CLK_OSC = 0` | `osc1 - osc2` | `CP1_u12` unsigned 12b | `DD2_from_CP1_u12` |
-| `CLK_OSC = 1` | `osc11 - osc22` | `CP2_u12` unsigned 12b | `DD1_from_CP2_u12` |
+| `CLK_OSC = 0` | `osc1 - osc2` | `CP1 code` (12-bit unsigned) | `DD2 code` from CP1 |
+| `CLK_OSC = 1` | `osc11 - osc22` | `CP2 code` (12-bit unsigned) | `DD1 code` from CP2 |
 
-| event | DATA_OUT_t_us | CLK_OSC | analog_source | analog_voltage_V | CP_code_signal | CP_code_u12 | mapped_DD_signal | mapped_DD_u12 |
+| event | DATA_OUT (us) | CLK_OSC | analog source | osc diff (mV) | CP signal | CP code | mapped DD | DD code |
 | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| 14 | 32.792 | 0 | osc1 - osc2 | 0.000381 | CP1_u12 | 2112 | DD2_from_CP1_u12 | 2112 |
-| 15 | 35.103 | 1 | osc11 - osc22 | 0.000422 | CP2_u12 | 1970 | DD1_from_CP2_u12 | 1970 |
-| 16 | 37.381 | 0 | osc1 - osc2 | 0.000050 | CP1_u12 | 2105 | DD2_from_CP1_u12 | 2105 |
-| 17 | 39.683 | 1 | osc11 - osc22 | 0.000194 | CP2_u12 | 1982 | DD1_from_CP2_u12 | 1982 |
+| 14 | 32.792 | 0 | osc1 - osc2 | 0.381 | CP1 | 2112 | DD2 from CP1 | 2112 |
+| 15 | 35.103 | 1 | osc11 - osc22 | 0.422 | CP2 | 1970 | DD1 from CP2 | 1970 |
+| 16 | 37.381 | 0 | osc1 - osc2 | 0.050 | CP1 | 2105 | DD2 from CP1 | 2105 |
+| 17 | 39.683 | 1 | osc11 - osc22 | 0.194 | CP2 | 1982 | DD1 from CP2 | 1982 |
 
 ## Active CP To Next DLF Register Mapping
 
 Each active CP hold is checked against the following DLF sample register value.
 
-| hold_event | DATA_OUT_t_us | CLK_OSC | active_CP | CP_u12 | next_DLF_event | next_DLF_t_us | mapped_DD | DLF_DD_u12 |
+| hold event | DATA_OUT (us) | CLK_OSC | active CP | CP code | next DLF event | next DLF time (us) | mapped DD | DLF DD code |
 | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| 14 | 32.792 | 0 | CP1_u12 | 2112 | 8 | 35.129 | DD2_u12 | 2112 |
-| 15 | 35.103 | 1 | CP2_u12 | 1970 | 8 | 35.129 | DD1_u12 | 1970 |
-| 16 | 37.381 | 0 | CP1_u12 | 2105 | 9 | 39.709 | DD2_u12 | 2105 |
-| 17 | 39.683 | 1 | CP2_u12 | 1982 | 9 | 39.709 | DD1_u12 | 1982 |
+| 14 | 32.792 | 0 | CP1 | 2112 | 8 | 35.129 | DD2 | 2112 |
+| 15 | 35.103 | 1 | CP2 | 1970 | 8 | 35.129 | DD1 | 1970 |
+| 16 | 37.381 | 0 | CP1 | 2105 | 9 | 39.709 | DD2 | 2105 |
+| 17 | 39.683 | 1 | CP2 | 1982 | 9 | 39.709 | DD1 | 1982 |
 
 ## DLF Update Samples
 
-`DIFF_s12` follows the opposite sign of `DD2-DD1` here because `DREF=0`, so `DIFF_s12 = -(DD2-DD1)`. `DIFF_SAMPLE_s12` stores the sampled `DD2-DD1` value before that sign inversion.
+`DIFF` follows the opposite sign of `DD2-DD1` here because `DREF=0`, so `DIFF = -(DD2-DD1)`. `DIFF_SAMPLE` stores the sampled `DD2-DD1` value before that sign inversion.
 
-| event | t_us | CP1_u12 | CP2_u12 | DD1_u12 | DD2_u12 | DD2-DD1 | DIFF_SAMPLE_s12 | DIFF_s12 | D_u17 | D_minus_mid_s17 | oref_V |
+| event | time (us) | CP1 code | CP2 code | DD1 code | DD2 code | DD2-DD1 | DIFF_SAMPLE | DIFF | D code | D - 65536 | oref (V) |
 | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | 8 | 35.129 | 2048 | 2048 | 1970 | 2112 | 142 | 142 | -142 | 64405 | -1131 | 0.504597 |
 | 9 | 39.709 | 2048 | 2048 | 1982 | 2105 | 123 | 123 | -123 | 64675 | -861 | 0.503193 |
 
 ## DATA_OUT Hold Samples
 
-| event | t_us | CP1_u12 | CP2_u12 | CP2-CP1 | DD1_u12 | DD2_u12 | oref_V |
+| event | time (us) | CP1 code | CP2 code | CP2-CP1 | DD1 code | DD2 code | oref (V) |
 | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | 14 | 32.792 | 2112 | 2048 | -64 | 1958 | 2122 | 0.486590 |
 | 15 | 35.103 | 2048 | 1970 | -78 | 1958 | 2112 | 0.506722 |

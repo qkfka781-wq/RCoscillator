@@ -433,24 +433,24 @@ def write_numeric_markdown(path: Path, dlf_events: list[dict[str, float]], hold_
         "",
         "| Signal | Interpretation |",
         "|---|---|",
-        "| `CP1_u12`, `CP2_u12` | unsigned 12-bit SAR/hold codes |",
-        "| `DD1_u12`, `DD2_u12` | unsigned 12-bit sampled SAR codes |",
-        "| `D_u17` | unsigned 17-bit CDAC_17b input code |",
-        "| `DIFF_SAMPLE_s12`, `DIFF_s12` | signed 12-bit two's-complement values |",
-        "| `DIFF_OUT1_s17` | signed 17-bit two's-complement scaled DLF error |",
-        "| `DD2_minus_DD1_sdiff`, `CP2_minus_CP1_sdiff` | signed arithmetic difference between two unsigned codes |",
+        "| `CP1`, `CP2` | 12-bit unsigned SAR/hold codes |",
+        "| `DD1`, `DD2` | 12-bit unsigned sampled SAR codes |",
+        "| `D code` | 17-bit offset-binary CDAC_17b input code, mid code = 65536 |",
+        "| `DIFF_SAMPLE`, `DIFF` | signed 12-bit values |",
+        "| `DIFF_OUT1` | signed 17-bit scaled DLF error |",
+        "| `DD2-DD1`, `CP2-CP1` | signed arithmetic difference between two unsigned codes |",
         "",
         "DLF rows are sampled 20 ns after `CLK_DATASAMPLE` rising edges. Hold rows are sampled exactly at `DATA_OUT` rising edges.",
         "",
         "## DLF Events - First 12",
         "",
     ]
-    dlf_headers = ["n", "t_us", "DD1_u12", "DD2_u12", "DD2-DD1", "DIFF_SAMPLE_s12", "DIFF_s12", "DIFF_OUT1_s17", "D_u17", "oref_V"]
+    dlf_headers = ["n", "time (us)", "DD1 code", "DD2 code", "DD2-DD1 error", "DIFF_SAMPLE", "DIFF", "DIFF_OUT1", "D code", "oref (V)"]
     lines.extend(markdown_table(dlf_headers, [dlf_row(row) for row in dlf_events[:12]]))
     lines.extend(["", "## DLF Events - Last 16", ""])
     lines.extend(markdown_table(dlf_headers, [dlf_row(row) for row in dlf_events[-16:]]))
     lines.extend(["", "## DATA_OUT Hold Events - Last 20", ""])
-    hold_headers = ["n", "t_us", "CP1_u12", "CP2_u12", "CP2-CP1", "VRC1_V", "VRC2_V", "oref_V", "dt_us", "freq_kHz"]
+    hold_headers = ["n", "time (us)", "CP1 code", "CP2 code", "CP2-CP1", "VRC1 (V)", "VRC2 (V)", "oref (V)", "period (us)", "freq (kHz)"]
     lines.extend(markdown_table(hold_headers, [hold_row(row) for row in hold_events[-20:]]))
     lines.extend(["", "Full machine-readable table: [`top_event_analysis.csv`](top_event_analysis.csv).", ""])
     path.write_text("\n".join(lines), encoding="utf-8")
@@ -477,12 +477,12 @@ def write_requested_window_table(
         "",
         "| Signal | Interpretation |",
         "|---|---|",
-        "| `CP1_u12`, `CP2_u12` | unsigned 12-bit digital CP hold codes |",
-        "| `DD1_u12`, `DD2_u12` | unsigned 12-bit sampled ADC/DLF codes |",
-        "| `DIFF_SAMPLE_s12`, `DIFF_s12` | signed 12-bit two's-complement values |",
-        "| `D_u17` | offset-binary unsigned 17-bit D code, mid code = 65536 |",
-        "| `D_minus_mid_s17` | signed correction amount, `D_u17 - 65536` |",
-        "| `oref_V` | analog voltage corresponding to the D/oref actuator state |",
+        "| `CP1`, `CP2` | 12-bit unsigned digital CP hold codes, 0 to 4095 |",
+        "| `DD1`, `DD2` | 12-bit unsigned sampled ADC/DLF codes, 0 to 4095 |",
+        "| `DIFF_SAMPLE`, `DIFF` | signed 12-bit values |",
+        "| `D code` | 17-bit offset-binary code, mid code = 65536 |",
+        "| `D - 65536` | signed correction amount represented by the D code |",
+        "| `oref` | analog voltage corresponding to the D/oref actuator state |",
         "",
         "## CP Analog Voltage To Digital Code Mapping",
         "",
@@ -491,11 +491,11 @@ def write_requested_window_table(
         "",
         "| Rule | Analog source | Digital code | DATA_OUT mapping |",
         "|---|---|---|---|",
-        "| `CLK_OSC = 0` | `osc1 - osc2` | `CP1_u12` unsigned 12b | `DD2_from_CP1_u12` |",
-        "| `CLK_OSC = 1` | `osc11 - osc22` | `CP2_u12` unsigned 12b | `DD1_from_CP2_u12` |",
+        "| `CLK_OSC = 0` | `osc1 - osc2` | `CP1 code` (12-bit unsigned) | `DD2 code` from CP1 |",
+        "| `CLK_OSC = 1` | `osc11 - osc22` | `CP2 code` (12-bit unsigned) | `DD1 code` from CP2 |",
         "",
     ]
-    cp_map_headers = ["event", "DATA_OUT_t_us", "CLK_OSC", "analog_source", "analog_voltage_V", "CP_code_signal", "CP_code_u12", "mapped_DD_signal", "mapped_DD_u12"]
+    cp_map_headers = ["event", "DATA_OUT (us)", "CLK_OSC", "analog source", "osc diff (mV)", "CP signal", "CP code", "mapped DD", "DD code"]
     cp_map_rows = []
     for row in hold_window:
         clk_state = 1 if row["clk_osc"] > 0.5 else 0
@@ -505,10 +505,10 @@ def write_requested_window_table(
                 f"{row['t_us']:.3f}",
                 "0",
                 "osc1 - osc2",
-                f"{row['cp1_analog']:.6f}",
-                "CP1_u12",
+                f"{row['cp1_analog'] * 1000:.3f}",
+                "CP1",
                 str(int(row["cp1"])),
-                "DD2_from_CP1_u12",
+                "DD2 from CP1",
                 str(int(row["cp1"])),
             ])
         else:
@@ -517,10 +517,10 @@ def write_requested_window_table(
                 f"{row['t_us']:.3f}",
                 "1",
                 "osc11 - osc22",
-                f"{row['cp2_analog']:.6f}",
-                "CP2_u12",
+                f"{row['cp2_analog'] * 1000:.3f}",
+                "CP2",
                 str(int(row["cp2"])),
-                "DD1_from_CP2_u12",
+                "DD1 from CP2",
                 str(int(row["cp2"])),
             ])
     lines.extend(markdown_table(cp_map_headers, cp_map_rows))
@@ -531,7 +531,7 @@ def write_requested_window_table(
         "Each active CP hold is checked against the following DLF sample register value.",
         "",
     ])
-    dd_map_headers = ["hold_event", "DATA_OUT_t_us", "CLK_OSC", "active_CP", "CP_u12", "next_DLF_event", "next_DLF_t_us", "mapped_DD", "DLF_DD_u12"]
+    dd_map_headers = ["hold event", "DATA_OUT (us)", "CLK_OSC", "active CP", "CP code", "next DLF event", "next DLF time (us)", "mapped DD", "DLF DD code"]
     dd_map_rows = []
     for row in hold_window:
         clk_state = 1 if row["clk_osc"] > 0.5 else 0
@@ -539,14 +539,14 @@ def write_requested_window_table(
         if next_dlf is None:
             continue
         if clk_state == 0:
-            active_cp = "CP1_u12"
+            active_cp = "CP1"
             cp_code = int(row["cp1"])
-            mapped_dd = "DD2_u12"
+            mapped_dd = "DD2"
             dlf_dd = int(next_dlf["dd2"])
         else:
-            active_cp = "CP2_u12"
+            active_cp = "CP2"
             cp_code = int(row["cp2"])
-            mapped_dd = "DD1_u12"
+            mapped_dd = "DD1"
             dlf_dd = int(next_dlf["dd1"])
         dd_map_rows.append([
             str(int(row["event"])),
@@ -564,10 +564,10 @@ def write_requested_window_table(
         "",
         "## DLF Update Samples",
         "",
-        "`DIFF_s12` follows the opposite sign of `DD2-DD1` here because `DREF=0`, so `DIFF_s12 = -(DD2-DD1)`. `DIFF_SAMPLE_s12` stores the sampled `DD2-DD1` value before that sign inversion.",
+        "`DIFF` follows the opposite sign of `DD2-DD1` here because `DREF=0`, so `DIFF = -(DD2-DD1)`. `DIFF_SAMPLE` stores the sampled `DD2-DD1` value before that sign inversion.",
         "",
     ])
-    dlf_headers = ["event", "t_us", "CP1_u12", "CP2_u12", "DD1_u12", "DD2_u12", "DD2-DD1", "DIFF_SAMPLE_s12", "DIFF_s12", "D_u17", "D_minus_mid_s17", "oref_V"]
+    dlf_headers = ["event", "time (us)", "CP1 code", "CP2 code", "DD1 code", "DD2 code", "DD2-DD1", "DIFF_SAMPLE", "DIFF", "D code", "D - 65536", "oref (V)"]
     dlf_rows = [
         [
             str(int(row["event"])),
@@ -587,7 +587,7 @@ def write_requested_window_table(
     ]
     lines.extend(markdown_table(dlf_headers, dlf_rows))
     lines.extend(["", "## DATA_OUT Hold Samples", ""])
-    hold_headers = ["event", "t_us", "CP1_u12", "CP2_u12", "CP2-CP1", "DD1_u12", "DD2_u12", "oref_V"]
+    hold_headers = ["event", "time (us)", "CP1 code", "CP2 code", "CP2-CP1", "DD1 code", "DD2 code", "oref (V)"]
     hold_rows = [
         [
             str(int(row["event"])),
@@ -710,15 +710,15 @@ def main() -> int:
         "Corrected DLF Event Analysis",
         [
             Panel(f"Unsigned sampled SAR codes ({DLF_SETTLE_NS:.0f} ns after update edge)", "unsigned code", [
-                make_series(dlf_events, "event", "dd1", "DD1_u12", 0),
-                make_series(dlf_events, "event", "dd2", "DD2_u12", 1),
+                make_series(dlf_events, "event", "dd1", "DD1 code", 0),
+                make_series(dlf_events, "event", "dd2", "DD2 code", 1),
             ]),
             Panel("Signed loop error converging to zero", "signed code", [
-                make_series(dlf_events, "event", "dd_delta", "DD2-DD1_sdiff", 2),
-                make_series(dlf_events, "event", "diff", "DIFF_s12", 3),
+                make_series(dlf_events, "event", "dd_delta", "DD2-DD1 error", 2),
+                make_series(dlf_events, "event", "diff", "DIFF", 3),
             ]),
-            Panel("Unsigned DLF/CDAC drive", "unsigned code", [
-                make_series(dlf_events, "event", "d_code", "D_u17", 4),
+            Panel("DLF/CDAC drive", "offset-binary code", [
+                make_series(dlf_events, "event", "d_code", "D code", 4),
             ]),
             Panel("oref actuator", "V", [
                 make_series(dlf_events, "event", "oref", "oref", 5),
@@ -732,11 +732,11 @@ def main() -> int:
         "DATA_OUT Hold Event Analysis",
         [
             Panel("Unsigned CP code captured at hold edge", "unsigned code", [
-                make_series(hold_events, "event", "cp1", "CP1_u12", 0),
-                make_series(hold_events, "event", "cp2", "CP2_u12", 1),
+                make_series(hold_events, "event", "cp1", "CP1 code", 0),
+                make_series(hold_events, "event", "cp2", "CP2 code", 1),
             ]),
             Panel("Signed hold-code difference around zero", "signed code", [
-                make_series(hold_events, "event", "cp_delta", "CP2-CP1_sdiff", 2),
+                make_series(hold_events, "event", "cp_delta", "CP2-CP1", 2),
             ]),
             Panel("Held analog state and oref", "V", [
                 make_series(hold_events, "event", "vrc1", "VRC1", 0),

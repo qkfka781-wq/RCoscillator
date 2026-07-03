@@ -11,12 +11,14 @@
 ```mermaid
 flowchart LR
     A["1. VRC1/VRC2 생성"] --> B["2. VRC와 oref crossing"]
-    B --> C["3. oscillator frequency 변화"]
+    B --> C["3. oscillator timing / CLK_OSC period 변화"]
     C --> D["4. phase별 analog hold"]
     D --> E["5. SAR ADC code"]
-    E --> F["6. DLF가 DD2-DD1 판단"]
-    F --> G["7. CDAC_17b가 oref 보정"]
-    G --> B
+    E --> F["6. DD2-DD1 error 계산"]
+    F --> G["7. DIFF = DREF - (DD2-DD1)"]
+    G --> H["8. DLF가 D code 업데이트"]
+    H --> I["9. CDAC_17b가 oref 보정"]
+    I --> B
 ```
 
 ## 신호 이름부터 보기
@@ -27,11 +29,13 @@ flowchart LR
 | `oref` | `VRC1`과 비교되는 기준 전압 | DLF/CDAC_17b에 의해 보정되며 crossing timing을 바꿈 |
 | `osc1`, `osc2` | 한 phase의 oscillator node | 이 path의 결과가 `DD2` code로 이어짐 |
 | `osc11`, `osc22` | 다른 phase의 oscillator node | 이 path의 결과가 `DD1` code로 이어짐 |
-| `CP1`, `CP2` | phase별 ADC hold 결과의 디지털 code | `CP1=osc1-osc2`, `CP2=osc11-osc22`를 hold 후 SAR ADC한 unsigned 12b code |
+| `CP1`, `CP2` | phase별 ADC hold 결과의 디지털 code | `CP1=osc1-osc2`, `CP2=osc11-osc22`를 hold 후 SAR ADC한 12-bit unsigned code |
 | `DD1`, `DD2` | 두 phase의 sampled digital code | DLF가 비교하는 code |
 | `DD2-DD1` | error | 0 근처로 수렴해야 하는 값 |
-| DLF | digital loop filter | error를 보고 `oref` 보정 방향을 결정 |
-| CDAC_17b | oref DAC | DLF code를 실제 `oref` 전압으로 변환 |
+| `DIFF` | signed error | `DREF=0`이면 `DIFF = -(DD2-DD1)` |
+| DLF | digital loop filter | `DIFF`를 적분해 `D code`를 업데이트 |
+| `D code` | oref 보정 code | 17-bit offset-binary code, `D-65536`이 실제 보정량 |
+| CDAC_17b | oref DAC | `D code`를 실제 `oref` 전압으로 변환 |
 
 ## 1. Oscillator Core
 
@@ -95,12 +99,14 @@ DLF가 error를 보고 `oref`를 보정하면서 error가 줄어드는지 확인
 
 1. distributed RC network에서 `VRC1`, `VRC2`가 나옵니다.
 2. oscillator core에서 `VRC`와 `oref`의 crossing timing이 정해집니다.
-3. crossing timing이 바뀌면 oscillator frequency가 바뀝니다.
+3. crossing timing이 바뀌면 oscillator timing과 그래프의 `CLK_OSC` edge 기준 주기가 바뀝니다.
 4. 그 timing에서 아날로그 전압을 hold합니다.
 5. SAR ADC가 phase별 hold 결과를 digital code로 만듭니다.
-6. DLF가 `DD2-DD1`을 보고 error가 남았는지 판단합니다.
-7. error가 있으면 CDAC_17b를 통해 `oref`를 보정합니다.
-8. 보정된 `oref`가 다음 crossing timing을 바꾸고, 다시 frequency와 CP hold 값이 바뀝니다.
+6. `DD2-DD1`을 계산해 두 phase code 차이를 봅니다.
+7. `DIFF = DREF - (DD2-DD1)`를 만듭니다. 여기서는 `DREF=0`이라 `DIFF`와 `DD2-DD1`은 크기가 같고 부호가 반대입니다.
+8. DLF가 `DIFF`를 적분해 `D code`를 업데이트합니다.
+9. CDAC_17b가 `D code`를 `oref` 전압으로 바꿉니다. `D code`는 17-bit offset-binary이고, 실제 보정량은 `D - 65536`입니다.
+10. 보정된 `oref`가 다음 crossing timing을 바꾸고, 다시 `CLK_OSC` period와 CP hold 값이 바뀝니다.
 
 ## 블록별 역할
 
@@ -108,7 +114,7 @@ DLF가 error를 보고 `oref`를 보정하면서 error가 줄어드는지 확인
 | --- | --- | --- |
 | RC oscillator top | `VRC`/`oref` crossing, phase/frequency 생성, CP hold 연결 | `top/` |
 | SAR ADC | phase별 hold 결과를 12-bit digital code로 변환 | [SAR verify](https://github.com/qkfka781-wq/RCoscillator/blob/main/sar_test/20260702_sar_integration_verify.md) |
-| DLF | `DD2-DD1` error를 적분해 oref 보정 방향 결정 | [DLF verify](https://github.com/qkfka781-wq/RCoscillator/blob/main/dlf_test/20260702_dlf_verify.md) |
+| DLF | `DIFF`를 적분해 `D code`를 업데이트하고 oref 보정 방향 결정 | [DLF verify](https://github.com/qkfka781-wq/RCoscillator/blob/main/dlf_test/20260702_dlf_verify.md) |
 | CDAC_17b | DLF code를 `oref` 전압으로 변환 | [CDAC_17b verify](https://github.com/qkfka781-wq/RCoscillator/blob/main/cdac17_test/20260702_cdac17_verify.md) |
 | CDAC_12b | SAR 내부 capacitive DAC | [CDAC_12b verify](https://github.com/qkfka781-wq/RCoscillator/blob/main/cdac_test/20260701_cdac_12b_verify.md) |
 | StrongARM | SAR bit decision comparator | [StrongARM verify](https://github.com/qkfka781-wq/RCoscillator/blob/main/strongarm_test/20260701_sar_comparator_verify.md) |
