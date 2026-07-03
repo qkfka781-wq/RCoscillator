@@ -371,13 +371,16 @@
     }
 
     td:first-child,
-    th:first-child,
-    td:nth-child(4),
-    th:nth-child(4),
-    td:nth-child(6),
-    th:nth-child(6),
-    td:nth-child(8),
-    th:nth-child(8) {
+    th:first-child {
+      text-align: left;
+    }
+
+    .mapping-table td:nth-child(3),
+    .mapping-table th:nth-child(3),
+    .mapping-table td:nth-child(5),
+    .mapping-table th:nth-child(5),
+    .mapping-table td:nth-child(7),
+    .mapping-table th:nth-child(7) {
       text-align: left;
     }
 
@@ -502,15 +505,14 @@
         </figure>
         <div class="table-panel">
           <h3>CP/DD Mapping Table</h3>
-          <p>차전압은 mV로 표시했습니다. CP와 DD는 모두 12-bit unsigned code입니다.</p>
-          <table>
+          <p>osc diff는 clock edge 부근에서 본 차전압을 mV로 표시했습니다. CP와 DD는 모두 12-bit unsigned code입니다.</p>
+          <table class="mapping-table">
             <thead>
               <tr>
                 <th>event</th>
-                <th>DATA_OUT us</th>
                 <th>CLK_OSC</th>
                 <th>analog source</th>
-                <th>osc diff mV</th>
+                <th>edge osc diff mV</th>
                 <th>CP code</th>
                 <th>CP value</th>
                 <th>mapped DD</th>
@@ -518,10 +520,10 @@
               </tr>
             </thead>
             <tbody>
-              <tr><td>14</td><td>32.792</td><td>0</td><td>osc1 - osc2</td><td>0.381</td><td>CP1</td><td>2112</td><td>DD2 from CP1</td><td>2112</td></tr>
-              <tr><td>15</td><td>35.103</td><td>1</td><td>osc11 - osc22</td><td>0.422</td><td>CP2</td><td>1970</td><td>DD1 from CP2</td><td>1970</td></tr>
-              <tr><td>16</td><td>37.381</td><td>0</td><td>osc1 - osc2</td><td>0.050</td><td>CP1</td><td>2105</td><td>DD2 from CP1</td><td>2105</td></tr>
-              <tr><td>17</td><td>39.683</td><td>1</td><td>osc11 - osc22</td><td>0.194</td><td>CP2</td><td>1982</td><td>DD1 from CP2</td><td>1982</td></tr>
+              <tr><td>14</td><td>0</td><td>osc1 - osc2</td><td>0.381</td><td>CP1</td><td>2112</td><td>DD2 from CP1</td><td>2112</td></tr>
+              <tr><td>15</td><td>1</td><td>osc11 - osc22</td><td>0.422</td><td>CP2</td><td>1970</td><td>DD1 from CP2</td><td>1970</td></tr>
+              <tr><td>16</td><td>0</td><td>osc1 - osc2</td><td>0.050</td><td>CP1</td><td>2105</td><td>DD2 from CP1</td><td>2105</td></tr>
+              <tr><td>17</td><td>1</td><td>osc11 - osc22</td><td>0.194</td><td>CP2</td><td>1982</td><td>DD1 from CP2</td><td>1982</td></tr>
             </tbody>
           </table>
         </div>
