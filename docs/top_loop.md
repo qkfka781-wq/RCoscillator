@@ -57,6 +57,10 @@ flowchart LR
 
 CP/DD/DIFF/D/oref 숫자 매핑은 [top_requested_window_table.md](top_requested_window_table.md)에 따로 정리했습니다.
 
+### CP/DD Mapping Table
+
+[CP/DD/DIFF/D/oref 숫자 매핑 표 열기](top_requested_window_table.md)
+
 ### Oref Correction Timing Zoom
 
 [![Oref correction timing zoom](img/top_oref_timing_zoom.svg)](img/top_oref_timing_zoom.svg)
@@ -112,7 +116,6 @@ DLF가 error를 보고 `oref`를 보정하면서 error가 줄어드는지 확인
 ## 숫자 자료
 
 - [top_run_summary.md](top_run_summary.md)
-- [top_requested_window_table.md](top_requested_window_table.md)
 - [top_numeric_analysis.md](top_numeric_analysis.md)
 - [top_event_analysis.csv](top_event_analysis.csv)
 
