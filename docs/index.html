@@ -350,6 +350,54 @@
       grid-column: 1 / -1;
     }
 
+    .table-panel {
+      grid-column: 1 / -1;
+      padding: 14px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow-x: auto;
+      box-shadow: var(--shadow);
+    }
+
+    .table-panel h3 {
+      margin: 0 0 10px;
+      font-size: 17px;
+      letter-spacing: 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 760px;
+      font-size: 13px;
+    }
+
+    th,
+    td {
+      padding: 8px 9px;
+      border-bottom: 1px solid var(--line);
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    th {
+      color: var(--ink);
+      background: #f7f4ee;
+      font-weight: 700;
+    }
+
+    td:first-child,
+    th:first-child,
+    td:nth-child(4),
+    th:nth-child(4),
+    td:nth-child(6),
+    th:nth-child(6),
+    td:nth-child(8),
+    th:nth-child(8) {
+      text-align: left;
+    }
+
     @media (max-width: 980px) {
       .answer,
       .visual-grid,
@@ -458,12 +506,32 @@
           <a href="img/top_requested_csv_window.svg">
             <img src="img/top_requested_csv_window.svg" alt="Requested CSV capture graph">
           </a>
-          <figcaption>`top/top_run.csv`에서 32.5-41.5 us 구간을 잘라 만든 요청 그래프입니다. VRC1/oref, CLK_OSC와 주파수, osc1/osc2, osc11/osc22를 봅니다. CP/DD/DIFF/D/oref 숫자 매핑은 아래 표 링크에서 봅니다.</figcaption>
+          <figcaption>32.5-41.5 us CSV 캡처 그래프입니다.</figcaption>
         </figure>
-        <a class="note wide" href="top_requested_window_table.md">
-          <strong>CP/DD/DIFF/D/oref 숫자 매핑 표</strong>
-          `CLK_OSC=0`일 때 `osc1-osc2 -> CP1 -> DD1`, `CLK_OSC=1`일 때 `osc11-osc22 -> CP2 -> DD2`로 매핑한 표입니다.
-        </a>
+        <div class="table-panel">
+          <h3>CP/DD Mapping Table</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>event</th>
+                <th>DATA_OUT us</th>
+                <th>CLK_OSC</th>
+                <th>analog source</th>
+                <th>analog V</th>
+                <th>CP code</th>
+                <th>CP u12</th>
+                <th>mapped DD</th>
+                <th>DD u12</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>14</td><td>32.792</td><td>0</td><td>osc1 - osc2</td><td>0.000381</td><td>CP1_u12</td><td>2112</td><td>DD1_from_CP1</td><td>2112</td></tr>
+              <tr><td>15</td><td>35.103</td><td>1</td><td>osc11 - osc22</td><td>0.000422</td><td>CP2_u12</td><td>1970</td><td>DD2_from_CP2</td><td>1970</td></tr>
+              <tr><td>16</td><td>37.381</td><td>0</td><td>osc1 - osc2</td><td>0.000050</td><td>CP1_u12</td><td>2105</td><td>DD1_from_CP1</td><td>2105</td></tr>
+              <tr><td>17</td><td>39.683</td><td>1</td><td>osc11 - osc22</td><td>0.000194</td><td>CP2_u12</td><td>1982</td><td>DD2_from_CP2</td><td>1982</td></tr>
+            </tbody>
+          </table>
+        </div>
         <figure class="visual wide">
           <a href="img/top_phase_adc_paths.svg">
             <img src="img/top_phase_adc_paths.svg" alt="Oscillator phase nodes and ADC codes graph">
