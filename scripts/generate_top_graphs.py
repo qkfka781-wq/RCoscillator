@@ -114,11 +114,13 @@ def parse_top_csv(path: Path) -> tuple[list[dict[str, float]], list[dict[str, fl
     rows: list[dict[str, float]] = []
     hold_edge_indices: list[int] = []
     dlf_edge_indices: list[int] = []
+    clk_transition_indices: list[int] = []
 
     cols: list[str] | None = None
     index: dict[str, int] = {}
     prev_data_out = 0
     prev_clk_sample = 0
+    prev_clk_osc = 0
 
     with path.open("r", encoding="utf-8", errors="replace") as f:
         for raw_line in f:
@@ -128,6 +130,7 @@ def parse_top_csv(path: Path) -> tuple[list[dict[str, float]], list[dict[str, fl
                 index = {}
                 prev_data_out = 0
                 prev_clk_sample = 0
+                prev_clk_osc = 0
                 continue
             if line.startswith("#") or not line.strip():
                 continue
@@ -136,6 +139,7 @@ def parse_top_csv(path: Path) -> tuple[list[dict[str, float]], list[dict[str, fl
                 index = {name: i for i, name in enumerate(cols)}
                 prev_data_out = 0
                 prev_clk_sample = 0
+                prev_clk_osc = 0
                 continue
             if cols is None:
                 continue
@@ -147,21 +151,39 @@ def parse_top_csv(path: Path) -> tuple[list[dict[str, float]], list[dict[str, fl
             row = row_from_parts(cols, index, parts)
             data_out = 1 if row["data_out"] > 0.5 else 0
             clk_sample = 1 if row["clk_sample"] > 0.5 else 0
+            clk_osc = 1 if row["clk_osc"] > 0.5 else 0
 
             if data_out and not prev_data_out:
                 hold_edge_indices.append(len(rows))
             if clk_sample and not prev_clk_sample:
                 dlf_edge_indices.append(len(rows))
+            if clk_osc != prev_clk_osc:
+                clk_transition_indices.append(len(rows))
 
             rows.append(row)
             prev_data_out = data_out
             prev_clk_sample = clk_sample
+            prev_clk_osc = clk_osc
 
     hold_events: list[dict[str, float]] = []
     for n, edge_index in enumerate(hold_edge_indices):
         row = dict(rows[edge_index])
         row["event"] = n
         row["sample_t_us"] = row["t_us"]
+        prev_clk_edges = [idx for idx in clk_transition_indices if idx <= edge_index]
+        if prev_clk_edges:
+            clk_row = rows[prev_clk_edges[-1]]
+            row["clk_edge_t_us"] = clk_row["t_us"]
+            row["clk_edge_dt_us"] = row["t_us"] - clk_row["t_us"]
+            row["clk_edge_cp1_analog"] = clk_row["cp1_analog"]
+            row["clk_edge_cp2_analog"] = clk_row["cp2_analog"]
+            row["clk_edge_active_analog"] = clk_row["cp1_analog"] if row["clk_osc"] <= 0.5 else clk_row["cp2_analog"]
+        else:
+            row["clk_edge_t_us"] = math.nan
+            row["clk_edge_dt_us"] = math.nan
+            row["clk_edge_cp1_analog"] = math.nan
+            row["clk_edge_cp2_analog"] = math.nan
+            row["clk_edge_active_analog"] = math.nan
         if hold_events:
             row["dt_us"] = row["t_us"] - hold_events[-1]["t_us"]
             row["freq_khz"] = 1000.0 / row["dt_us"] if row["dt_us"] else math.nan
@@ -486,7 +508,7 @@ def write_requested_window_table(
         "",
         "## CP Analog Voltage To Digital Code Mapping",
         "",
-        "This table maps the analog phase difference to the CP digital code at `DATA_OUT` rising edges.",
+        "This table maps the clock-edge oscillator difference to the CP digital code captured at the following `DATA_OUT` rising edge.",
         "The CSV register trace shows `CP1 -> DD2` and `CP2 -> DD1` at the following DLF sample.",
         "",
         "| Rule | Analog source | Digital code | DATA_OUT mapping |",
@@ -495,17 +517,17 @@ def write_requested_window_table(
         "| `CLK_OSC = 1` | `osc11 - osc22` | `CP2 code` (12-bit unsigned) | `DD1 code` from CP2 |",
         "",
     ]
-    cp_map_headers = ["event", "DATA_OUT (us)", "CLK_OSC", "analog source", "osc diff (mV)", "CP signal", "CP code", "mapped DD", "DD code"]
+    cp_map_headers = ["event", "CLK edge (us)", "CLK_OSC", "analog source", "edge osc diff (mV)", "CP signal", "CP code", "mapped DD", "DD code"]
     cp_map_rows = []
     for row in hold_window:
         clk_state = 1 if row["clk_osc"] > 0.5 else 0
         if clk_state == 0:
             cp_map_rows.append([
                 str(int(row["event"])),
-                f"{row['t_us']:.3f}",
+                f"{row['clk_edge_t_us']:.3f}",
                 "0",
                 "osc1 - osc2",
-                f"{row['cp1_analog'] * 1000:.3f}",
+                f"{row['clk_edge_cp1_analog'] * 1000:.3f}",
                 "CP1",
                 str(int(row["cp1"])),
                 "DD2 from CP1",
@@ -514,10 +536,10 @@ def write_requested_window_table(
         else:
             cp_map_rows.append([
                 str(int(row["event"])),
-                f"{row['t_us']:.3f}",
+                f"{row['clk_edge_t_us']:.3f}",
                 "1",
                 "osc11 - osc22",
-                f"{row['cp2_analog'] * 1000:.3f}",
+                f"{row['clk_edge_cp2_analog'] * 1000:.3f}",
                 "CP2",
                 str(int(row["cp2"])),
                 "DD1 from CP2",

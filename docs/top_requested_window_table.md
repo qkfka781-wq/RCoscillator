@@ -15,7 +15,7 @@ Window: `32.5 us` to `41.5 us` from `top/top_run.csv`.
 
 ## CP Analog Voltage To Digital Code Mapping
 
-This table maps the analog phase difference to the CP digital code at `DATA_OUT` rising edges.
+This table maps the clock-edge oscillator difference to the CP digital code captured at the following `DATA_OUT` rising edge.
 The CSV register trace shows `CP1 -> DD2` and `CP2 -> DD1` at the following DLF sample.
 
 | Rule | Analog source | Digital code | DATA_OUT mapping |
@@ -23,12 +23,12 @@ The CSV register trace shows `CP1 -> DD2` and `CP2 -> DD1` at the following DLF 
 | `CLK_OSC = 0` | `osc1 - osc2` | `CP1 code` (12-bit unsigned) | `DD2 code` from CP1 |
 | `CLK_OSC = 1` | `osc11 - osc22` | `CP2 code` (12-bit unsigned) | `DD1 code` from CP2 |
 
-| event | DATA_OUT (us) | CLK_OSC | analog source | osc diff (mV) | CP signal | CP code | mapped DD | DD code |
+| event | CLK edge (us) | CLK_OSC | analog source | edge osc diff (mV) | CP signal | CP code | mapped DD | DD code |
 | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| 14 | 32.792 | 0 | osc1 - osc2 | 0.381 | CP1 | 2112 | DD2 from CP1 | 2112 |
-| 15 | 35.103 | 1 | osc11 - osc22 | 0.422 | CP2 | 1970 | DD1 from CP2 | 1970 |
-| 16 | 37.381 | 0 | osc1 - osc2 | 0.050 | CP1 | 2105 | DD2 from CP1 | 2105 |
-| 17 | 39.683 | 1 | osc11 - osc22 | 0.194 | CP2 | 1982 | DD1 from CP2 | 1982 |
+| 14 | 32.650 | 0 | osc1 - osc2 | 29.081 | CP1 | 2112 | DD2 from CP1 | 2112 |
+| 15 | 34.951 | 1 | osc11 - osc22 | -34.081 | CP2 | 1970 | DD1 from CP2 | 1970 |
+| 16 | 37.240 | 0 | osc1 - osc2 | 25.231 | CP1 | 2105 | DD2 from CP1 | 2105 |
+| 17 | 39.532 | 1 | osc11 - osc22 | -28.951 | CP2 | 1982 | DD1 from CP2 | 1982 |
 
 ## Active CP To Next DLF Register Mapping
 

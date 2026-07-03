@@ -505,7 +505,7 @@
         </figure>
         <div class="table-panel">
           <h3>CP/DD Mapping Table</h3>
-          <p>osc diff는 clock edge 부근에서 본 차전압을 mV로 표시했습니다. CP와 DD는 모두 12-bit unsigned code입니다.</p>
+          <p>osc diff는 DATA_OUT 시점이 아니라 직전 CLK_OSC edge 부근에서 본 차전압을 mV로 표시했습니다. CP와 DD는 모두 12-bit unsigned code입니다.</p>
           <table class="mapping-table">
             <thead>
               <tr>
@@ -520,10 +520,10 @@
               </tr>
             </thead>
             <tbody>
-              <tr><td>14</td><td>0</td><td>osc1 - osc2</td><td>0.381</td><td>CP1</td><td>2112</td><td>DD2 from CP1</td><td>2112</td></tr>
-              <tr><td>15</td><td>1</td><td>osc11 - osc22</td><td>0.422</td><td>CP2</td><td>1970</td><td>DD1 from CP2</td><td>1970</td></tr>
-              <tr><td>16</td><td>0</td><td>osc1 - osc2</td><td>0.050</td><td>CP1</td><td>2105</td><td>DD2 from CP1</td><td>2105</td></tr>
-              <tr><td>17</td><td>1</td><td>osc11 - osc22</td><td>0.194</td><td>CP2</td><td>1982</td><td>DD1 from CP2</td><td>1982</td></tr>
+              <tr><td>14</td><td>0</td><td>osc1 - osc2</td><td>29.081</td><td>CP1</td><td>2112</td><td>DD2 from CP1</td><td>2112</td></tr>
+              <tr><td>15</td><td>1</td><td>osc11 - osc22</td><td>-34.081</td><td>CP2</td><td>1970</td><td>DD1 from CP2</td><td>1970</td></tr>
+              <tr><td>16</td><td>0</td><td>osc1 - osc2</td><td>25.231</td><td>CP1</td><td>2105</td><td>DD2 from CP1</td><td>2105</td></tr>
+              <tr><td>17</td><td>1</td><td>osc11 - osc22</td><td>-28.951</td><td>CP2</td><td>1982</td><td>DD1 from CP2</td><td>1982</td></tr>
             </tbody>
           </table>
         </div>
