@@ -410,14 +410,14 @@
     <section class="answer" aria-label="Plain explanation">
       <div class="plain">
         <p class="headline">기준 전압 `oref`를 보정하며 oscillator 주파수를 조절합니다.</p>
-        <p>두 phase에서 sample한 code 차이가 남아 있으면 DLF가 `oref`를 바꾸고, `oref`가 조정되면 `VRC`와 crossing timing이 바뀝니다. 그 결과 oscillator frequency와 다음 CP hold 값이 바뀌고, 이 과정이 반복되면서 error가 0으로 수렴합니다.</p>
+        <p>두 phase에서 sample한 code 차이가 남아 있으면 DLF가 `oref`를 바꾸고, `oref`가 조정되면 `VRC`와 crossing timing이 바뀝니다. 그 결과 oscillator frequency와 다음 CP hold 값이 바뀌고, 이 과정이 반복되면서 error가 0 근처로 수렴합니다.</p>
       </div>
       <div class="dictionary">
         <dl>
           <dt>VRC1/VRC2</dt><dd>distributed RC network의 출력 전압</dd>
           <dt>oref</dt><dd>VRC1과 비교되는 기준 전압</dd>
-          <dt>CP1/CP2</dt><dd>해당 phase에서 ADC되는 VRC1-VRC2 hold 결과의 디지털 code</dd>
-          <dt>DD1/DD2</dt><dd>두 phase에서 sample한 digital code</dd>
+          <dt>CP1/CP2</dt><dd>CP1=osc1-osc2, CP2=osc11-osc22를 hold 후 SAR ADC한 unsigned 12b code</dd>
+          <dt>DD1/DD2</dt><dd>두 phase에서 sample한 digital code, CP1은 DD2로 CP2는 DD1로 이어짐</dd>
           <dt>DLF</dt><dd>error를 보고 oref 보정 방향을 결정</dd>
         </dl>
       </div>
@@ -479,10 +479,10 @@
               </tr>
             </thead>
             <tbody>
-              <tr><td>14</td><td>32.792</td><td>0</td><td>osc1 - osc2</td><td>0.000381</td><td>CP1_u12</td><td>2112</td><td>DD1_from_CP1</td><td>2112</td></tr>
-              <tr><td>15</td><td>35.103</td><td>1</td><td>osc11 - osc22</td><td>0.000422</td><td>CP2_u12</td><td>1970</td><td>DD2_from_CP2</td><td>1970</td></tr>
-              <tr><td>16</td><td>37.381</td><td>0</td><td>osc1 - osc2</td><td>0.000050</td><td>CP1_u12</td><td>2105</td><td>DD1_from_CP1</td><td>2105</td></tr>
-              <tr><td>17</td><td>39.683</td><td>1</td><td>osc11 - osc22</td><td>0.000194</td><td>CP2_u12</td><td>1982</td><td>DD2_from_CP2</td><td>1982</td></tr>
+              <tr><td>14</td><td>32.792</td><td>0</td><td>osc1 - osc2</td><td>0.000381</td><td>CP1_u12</td><td>2112</td><td>DD2_from_CP1</td><td>2112</td></tr>
+              <tr><td>15</td><td>35.103</td><td>1</td><td>osc11 - osc22</td><td>0.000422</td><td>CP2_u12</td><td>1970</td><td>DD1_from_CP2</td><td>1970</td></tr>
+              <tr><td>16</td><td>37.381</td><td>0</td><td>osc1 - osc2</td><td>0.000050</td><td>CP1_u12</td><td>2105</td><td>DD2_from_CP1</td><td>2105</td></tr>
+              <tr><td>17</td><td>39.683</td><td>1</td><td>osc11 - osc22</td><td>0.000194</td><td>CP2_u12</td><td>1982</td><td>DD1_from_CP2</td><td>1982</td></tr>
             </tbody>
           </table>
         </div>

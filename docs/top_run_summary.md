@@ -22,4 +22,4 @@ DLF values are sampled 20 ns after `CLK_DATASAMPLE` rising edges. CP values are 
 | Late 20-hold average period | 2.2434 us |
 | Late 20-hold average frequency | 445.77 kHz |
 
-Key result: the sampled DLF error converges from hundreds of codes to a few codes and ends at zero. The remaining hold-code ripple alternates around zero, which is the expected closed-loop behavior.
+Key result: the sampled DLF error converges from hundreds of codes to a few codes around zero. The remaining hold-code ripple alternates around zero, which is the expected closed-loop behavior.

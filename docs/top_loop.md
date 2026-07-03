@@ -2,11 +2,11 @@
 
 이 문서는 RC oscillator top loop를 처음 보는 사람도 이해할 수 있게 설명한 자료입니다.
 
-**이 회로는 기준 전압 `oref`를 보정하며 oscillator 주파수를 조절하고, 두 phase의 sample code 차이가 0으로 수렴하도록 만듭니다.**
+**이 회로는 기준 전압 `oref`를 보정하며 oscillator 주파수를 조절하고, 두 phase의 sample code 차이가 0 근처로 수렴하도록 만듭니다.**
 
 ## 핵심 흐름
 
-두 phase에서 sample한 code 차이가 남아 있으면 DLF가 `oref`를 바꾸고, `oref`가 조정되면 `VRC`와 crossing timing이 바뀝니다. 그 결과 oscillator frequency와 다음 CP hold 값이 바뀌고, 이 과정이 반복되면서 error가 0으로 수렴합니다.
+두 phase에서 sample한 code 차이가 남아 있으면 DLF가 `oref`를 바꾸고, `oref`가 조정되면 `VRC`와 crossing timing이 바뀝니다. 그 결과 oscillator frequency와 다음 CP hold 값이 바뀌고, 이 과정이 반복되면서 error가 0 근처로 수렴합니다.
 
 ```mermaid
 flowchart LR
@@ -27,9 +27,9 @@ flowchart LR
 | `oref` | `VRC1`과 비교되는 기준 전압 | DLF/CDAC_17b에 의해 보정되며 crossing timing을 바꿈 |
 | `osc1`, `osc2` | 한 phase의 oscillator node | 이 path의 결과가 `DD2` code로 이어짐 |
 | `osc11`, `osc22` | 다른 phase의 oscillator node | 이 path의 결과가 `DD1` code로 이어짐 |
-| `CP1`, `CP2` | phase별 ADC hold 결과의 디지털 code | 해당 phase에서 ADC되는 `VRC1-VRC2` hold 결과 |
+| `CP1`, `CP2` | phase별 ADC hold 결과의 디지털 code | `CP1=osc1-osc2`, `CP2=osc11-osc22`를 hold 후 SAR ADC한 unsigned 12b code |
 | `DD1`, `DD2` | 두 phase의 sampled digital code | DLF가 비교하는 code |
-| `DD2-DD1` | error | 0으로 수렴해야 하는 값 |
+| `DD2-DD1` | error | 0 근처로 수렴해야 하는 값 |
 | DLF | digital loop filter | error를 보고 `oref` 보정 방향을 결정 |
 | CDAC_17b | oref DAC | DLF code를 실제 `oref` 전압으로 변환 |
 
@@ -77,7 +77,7 @@ CP/DD/DIFF/D/oref 숫자 매핑은 [top_requested_window_table.md](top_requested
 
 [![Error convergence summary](img/top_lock_summary.svg)](img/top_lock_summary.svg)
 
-`DD2-DD1` error가 0으로 수렴하는지 확인하는 요약 그래프입니다.
+`DD2-DD1` error가 0 근처로 수렴하는지 확인하는 요약 그래프입니다.
 
 ### CP Hold Codes
 
@@ -119,4 +119,4 @@ DLF가 error를 보고 `oref`를 보정하면서 error가 줄어드는지 확인
 - [top_numeric_analysis.md](top_numeric_analysis.md)
 - [top_event_analysis.csv](top_event_analysis.csv)
 
-해석 기준은 `CP`, `DD`, `D` 계열은 unsigned code, `DIFF` 계열은 signed two's-complement입니다.
+해석 기준은 `CP`, `DD`, `D` 계열은 unsigned code, `DIFF` 계열은 signed two's-complement입니다. `D`의 부호 있는 보정량은 `D - 65536`으로 읽습니다.

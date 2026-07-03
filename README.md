@@ -10,7 +10,7 @@
 
 ## 이 회로가 하는 일
 
-두 phase에서 sample한 code 차이가 남아 있으면 DLF가 `oref`를 바꾸고, `oref`가 조정되면 `VRC`와 crossing timing이 바뀝니다. 그 결과 oscillator frequency와 다음 CP hold 값이 바뀌고, 이 과정이 반복되면서 error가 0으로 수렴합니다.
+두 phase에서 sample한 code 차이가 남아 있으면 DLF가 `oref`를 바꾸고, `oref`가 조정되면 `VRC`와 crossing timing이 바뀝니다. 그 결과 oscillator frequency와 다음 CP hold 값이 바뀌고, 이 과정이 반복되면서 error가 0 근처로 수렴합니다.
 
 ```mermaid
 flowchart LR
@@ -29,8 +29,8 @@ flowchart LR
 | --- | --- |
 | `VRC1`, `VRC2` | distributed RC network의 출력 전압 |
 | `oref` | `VRC1`과 비교되는 기준 전압 |
-| `CP1`, `CP2` | 해당 phase에서 ADC되는 `VRC1-VRC2` hold 결과의 디지털 code |
-| `DD1`, `DD2` | 두 phase의 sampled digital code |
+| `CP1`, `CP2` | phase별 comparator 입력차를 hold 후 SAR ADC한 unsigned 12b code (`CP1=osc1-osc2`, `CP2=osc11-osc22`) |
+| `DD1`, `DD2` | 두 phase의 sampled digital code (`CP1 -> DD2`, `CP2 -> DD1`) |
 | `DD2-DD1` | DLF가 줄이려는 phase code error |
 | DLF | `DD2-DD1`을 보고 `oref` 보정 방향을 결정하는 digital loop filter |
 | CDAC_17b | DLF code를 실제 `oref` 전압으로 바꾸는 DAC |

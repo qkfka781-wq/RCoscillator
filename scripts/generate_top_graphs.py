@@ -78,6 +78,7 @@ def row_from_parts(cols: list[str], index: dict[str, int], parts: list[str]) -> 
     dd2 = bus_value(cols, parts, "I3.DD2_SAMPLE")
     cp1 = bus_value(cols, parts, "CP1")
     cp2 = bus_value(cols, parts, "CP2")
+    d_code = bus_value(cols, parts, "D")
     vrc1 = float(parts[index["I0.VRC1"]])
     vrc2 = float(parts[index["I0.VRC2"]])
     return {
@@ -91,8 +92,8 @@ def row_from_parts(cols: list[str], index: dict[str, int], parts: list[str]) -> 
         "diff_sample": signed(bus_value(cols, parts, "I3.DIFF_SAMPLE"), 12),
         "diff": signed(bus_value(cols, parts, "I3.DIFF"), 12),
         "diff_out": signed(bus_value(cols, parts, "I3.DIFF_OUT1"), 17),
-        "d_code": bus_value(cols, parts, "D"),
-        "d_signed": signed(bus_value(cols, parts, "D"), 17),
+        "d_code": d_code,
+        "d_offset": d_code - 65536,
         "oref": float(parts[index["oref"]]),
         "osc1": float(parts[index["I0.osc1"]]),
         "osc2": float(parts[index["I0.osc2"]]),
@@ -479,17 +480,19 @@ def write_requested_window_table(
         "| `CP1_u12`, `CP2_u12` | unsigned 12-bit digital CP hold codes |",
         "| `DD1_u12`, `DD2_u12` | unsigned 12-bit sampled ADC/DLF codes |",
         "| `DIFF_SAMPLE_s12`, `DIFF_s12` | signed 12-bit two's-complement values |",
-        "| `D_s17` | signed 17-bit D code interpretation |",
+        "| `D_u17` | offset-binary unsigned 17-bit D code, mid code = 65536 |",
+        "| `D_minus_mid_s17` | signed correction amount, `D_u17 - 65536` |",
         "| `oref_V` | analog voltage corresponding to the D/oref actuator state |",
         "",
         "## CP Analog Voltage To Digital Code Mapping",
         "",
         "This table maps the analog phase difference to the CP digital code at `DATA_OUT` rising edges.",
+        "The CSV register trace shows `CP1 -> DD2` and `CP2 -> DD1` at the following DLF sample.",
         "",
         "| Rule | Analog source | Digital code | DATA_OUT mapping |",
         "|---|---|---|---|",
-        "| `CLK_OSC = 0` | `osc1 - osc2` | `CP1_u12` unsigned 12b | `DD1_from_CP1_u12` |",
-        "| `CLK_OSC = 1` | `osc11 - osc22` | `CP2_u12` unsigned 12b | `DD2_from_CP2_u12` |",
+        "| `CLK_OSC = 0` | `osc1 - osc2` | `CP1_u12` unsigned 12b | `DD2_from_CP1_u12` |",
+        "| `CLK_OSC = 1` | `osc11 - osc22` | `CP2_u12` unsigned 12b | `DD1_from_CP2_u12` |",
         "",
     ]
     cp_map_headers = ["event", "DATA_OUT_t_us", "CLK_OSC", "analog_source", "analog_voltage_V", "CP_code_signal", "CP_code_u12", "mapped_DD_signal", "mapped_DD_u12"]
@@ -505,7 +508,7 @@ def write_requested_window_table(
                 f"{row['cp1_analog']:.6f}",
                 "CP1_u12",
                 str(int(row["cp1"])),
-                "DD1_from_CP1_u12",
+                "DD2_from_CP1_u12",
                 str(int(row["cp1"])),
             ])
         else:
@@ -517,37 +520,54 @@ def write_requested_window_table(
                 f"{row['cp2_analog']:.6f}",
                 "CP2_u12",
                 str(int(row["cp2"])),
-                "DD2_from_CP2_u12",
+                "DD1_from_CP2_u12",
                 str(int(row["cp2"])),
             ])
     lines.extend(markdown_table(cp_map_headers, cp_map_rows))
     lines.extend([
         "",
-        "## DATA_OUT Rising CP To DD Mapping",
+        "## Active CP To Next DLF Register Mapping",
         "",
-        "At each `DATA_OUT` rising edge, this table records the CP code values used for the DD mapping requested here.",
+        "Each active CP hold is checked against the following DLF sample register value.",
         "",
     ])
-    dd_map_headers = ["event", "DATA_OUT_t_us", "CLK_OSC", "CP1_u12", "DD1_from_CP1_u12", "CP2_u12", "DD2_from_CP2_u12"]
-    dd_map_rows = [
-        [
+    dd_map_headers = ["hold_event", "DATA_OUT_t_us", "CLK_OSC", "active_CP", "CP_u12", "next_DLF_event", "next_DLF_t_us", "mapped_DD", "DLF_DD_u12"]
+    dd_map_rows = []
+    for row in hold_window:
+        clk_state = 1 if row["clk_osc"] > 0.5 else 0
+        next_dlf = next((dlf for dlf in dlf_window if dlf["sample_t_us"] > row["t_us"]), None)
+        if next_dlf is None:
+            continue
+        if clk_state == 0:
+            active_cp = "CP1_u12"
+            cp_code = int(row["cp1"])
+            mapped_dd = "DD2_u12"
+            dlf_dd = int(next_dlf["dd2"])
+        else:
+            active_cp = "CP2_u12"
+            cp_code = int(row["cp2"])
+            mapped_dd = "DD1_u12"
+            dlf_dd = int(next_dlf["dd1"])
+        dd_map_rows.append([
             str(int(row["event"])),
             f"{row['t_us']:.3f}",
-            str(1 if row["clk_osc"] > 0.5 else 0),
-            str(int(row["cp1"])),
-            str(int(row["cp1"])),
-            str(int(row["cp2"])),
-            str(int(row["cp2"])),
-        ]
-        for row in hold_window
-    ]
+            str(clk_state),
+            active_cp,
+            str(cp_code),
+            str(int(next_dlf["event"])),
+            f"{next_dlf['sample_t_us']:.3f}",
+            mapped_dd,
+            str(dlf_dd),
+        ])
     lines.extend(markdown_table(dd_map_headers, dd_map_rows))
     lines.extend([
         "",
         "## DLF Update Samples",
         "",
+        "`DIFF_s12` follows the opposite sign of `DD2-DD1` here because `DREF=0`, so `DIFF_s12 = -(DD2-DD1)`. `DIFF_SAMPLE_s12` stores the sampled `DD2-DD1` value before that sign inversion.",
+        "",
     ])
-    dlf_headers = ["event", "t_us", "CP1_u12", "CP2_u12", "DD1_u12", "DD2_u12", "DD2-DD1", "DIFF_SAMPLE_s12", "DIFF_s12", "D_s17", "oref_V"]
+    dlf_headers = ["event", "t_us", "CP1_u12", "CP2_u12", "DD1_u12", "DD2_u12", "DD2-DD1", "DIFF_SAMPLE_s12", "DIFF_s12", "D_u17", "D_minus_mid_s17", "oref_V"]
     dlf_rows = [
         [
             str(int(row["event"])),
@@ -559,7 +579,8 @@ def write_requested_window_table(
             str(int(row["dd_delta"])),
             str(int(row["diff_sample"])),
             str(int(row["diff"])),
-            str(int(row["d_signed"])),
+            str(int(row["d_code"])),
+            str(int(row["d_offset"])),
             f"{row['oref']:.6f}",
         ]
         for row in dlf_window
@@ -633,7 +654,7 @@ def write_markdown_summary(path: Path, rows: list[dict[str, float]], dlf_events:
         f"| Late 20-hold average period | {avg_period:.4f} us |",
         f"| Late 20-hold average frequency | {avg_freq:.2f} kHz |",
         "",
-        "Key result: the sampled DLF error converges from hundreds of codes to a few codes and ends at zero. The remaining hold-code ripple alternates around zero, which is the expected closed-loop behavior.",
+        "Key result: the sampled DLF error converges from hundreds of codes to a few codes around zero. The remaining hold-code ripple alternates around zero, which is the expected closed-loop behavior.",
         "",
     ]
     path.write_text("\n".join(lines), encoding="utf-8")
