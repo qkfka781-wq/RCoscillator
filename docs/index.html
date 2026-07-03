@@ -116,8 +116,7 @@
     .step,
     .block,
     .note,
-    .visual,
-    .viewer {
+    .visual {
       background: var(--paper);
       border: 1px solid var(--line);
       border-radius: 8px;
@@ -201,8 +200,7 @@
       grid-column: 1 / -1;
     }
 
-    .visual img,
-    .viewer img {
+    .visual img {
       display: block;
       width: 100%;
       height: auto;
@@ -254,50 +252,6 @@
       margin-top: 5px;
       color: var(--muted);
       font-size: 12px;
-    }
-
-    .tabs {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-bottom: 12px;
-    }
-
-    .tabs button {
-      min-height: 36px;
-      padding: 0 12px;
-      border: 1px solid var(--line);
-      border-radius: 7px;
-      background: #fff;
-      color: var(--ink);
-      font: inherit;
-      cursor: pointer;
-    }
-
-    .tabs button.active {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #fff;
-    }
-
-    .viewer {
-      padding: 14px;
-      box-shadow: var(--shadow);
-    }
-
-    .viewer img {
-      border: 1px solid var(--line);
-      border-radius: 6px;
-    }
-
-    .caption {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 10px;
-      color: var(--muted);
-      font-size: 13px;
     }
 
     .blocks,
@@ -532,34 +486,6 @@
             </tbody>
           </table>
         </div>
-        <figure class="visual wide">
-          <a href="img/top_phase_adc_paths.svg">
-            <img src="img/top_phase_adc_paths.svg" alt="Oscillator phase nodes and ADC codes graph">
-          </a>
-          <figcaption>CSV에서 `osc1/osc2 -> DD2`, `osc11/osc22 -> DD1` 경로를 phase별로 그린 그래프입니다.</figcaption>
-        </figure>
-      </div>
-    </section>
-
-    <section>
-      <h2>4. 파형 뷰어</h2>
-      <div class="tabs" role="tablist" aria-label="CSV waveform graphs">
-        <button class="active" type="button" data-graph="img/top_requested_csv_window.svg" data-label="CSV에서 32.5-41.5 us 구간을 잘라 만든 요청 그래프입니다. CP/DD/DIFF/D/oref 숫자 매핑은 표로 분리했습니다.">Requested capture</button>
-        <button type="button" data-graph="img/top_oref_timing_zoom.svg" data-label="CSV에서 0-25 us 구간을 잘라 만든 oref 보정 timing 파형입니다.">Oref timing</button>
-        <button type="button" data-graph="img/top_phase_adc_paths.svg" data-label="CSV에서 osc1/osc2와 DD2, osc11/osc22와 DD1을 함께 그린 그래프입니다.">Phase ADC paths</button>
-        <button type="button" data-graph="img/top_lock_summary.svg" data-label="CSV에서 뽑은 error convergence 요약입니다. error가 0으로 수렴하는지가 핵심입니다.">Error convergence</button>
-        <button type="button" data-graph="img/top_cp_hold_codes.svg" data-label="DATA_OUT edge 기준으로 복원한 CP hold digital code입니다.">CP hold</button>
-        <button type="button" data-graph="img/top_dlf_convergence.svg" data-label="DLF가 error를 줄여가며 oref를 보정하는 과정을 정리한 그래프입니다.">Oref convergence</button>
-        <button type="button" data-graph="img/top_late_loop_zoom.svg" data-label="후반부 170-180 us 구간에서 VRC, oref, oscillator node를 다시 확대해서 보는 CSV 그래프입니다.">Late zoom</button>
-      </div>
-      <div class="viewer">
-        <a id="graphLink" href="img/top_requested_csv_window.svg">
-          <img id="graphImage" src="img/top_requested_csv_window.svg" alt="Selected RC oscillator CSV graph">
-        </a>
-        <div class="caption">
-          <span id="graphCaption">CSV에서 32.5-41.5 us 구간을 잘라 만든 요청 그래프입니다. CP/DD/DIFF/D/oref 숫자 매핑은 표로 분리했습니다.</span>
-          <a id="openGraph" href="img/top_requested_csv_window.svg">원본 열기</a>
-        </div>
       </div>
     </section>
 
@@ -575,72 +501,6 @@
         <div class="loop-node"><strong>CDAC_17b</strong><span>oref 보정</span></div>
       </div>
     </section>
-
-    <section>
-      <h2>블록별 자료</h2>
-      <div class="blocks">
-        <article class="block">
-          <h3>SAR ADC</h3>
-          <p>phase별 hold 값을 digital code로 바꾸고, CP/DD code 흐름을 만듭니다.</p>
-          <a class="status" href="https://github.com/qkfka781-wq/RCoscillator/blob/main/sar_test/20260702_sar_integration_verify.md">verified</a>
-        </article>
-        <article class="block">
-          <h3>DLF</h3>
-          <p>`DD2-DD1` error를 보고 oref를 어느 방향으로 움직일지 결정합니다.</p>
-          <a class="status" href="https://github.com/qkfka781-wq/RCoscillator/blob/main/dlf_test/20260702_dlf_verify.md">verified</a>
-        </article>
-        <article class="block">
-          <h3>CDAC_17b</h3>
-          <p>DLF의 digital 값을 실제 `oref` 아날로그 전압으로 바꿉니다.</p>
-          <a class="status" href="https://github.com/qkfka781-wq/RCoscillator/blob/main/cdac17_test/20260702_cdac17_verify.md">verified</a>
-        </article>
-        <article class="block">
-          <h3>CDAC_12b</h3>
-          <p>SAR ADC 내부에서 bit decision에 쓰이는 capacitive DAC입니다.</p>
-          <a class="status" href="https://github.com/qkfka781-wq/RCoscillator/blob/main/cdac_test/20260701_cdac_12b_verify.md">verified</a>
-        </article>
-        <article class="block">
-          <h3>StrongARM</h3>
-          <p>SAR ADC의 비교 판단을 담당하는 comparator입니다.</p>
-          <a class="status" href="https://github.com/qkfka781-wq/RCoscillator/blob/main/strongarm_test/20260701_sar_comparator_verify.md">verified</a>
-        </article>
-        <article class="block">
-          <h3>Top Loop</h3>
-          <p>RC osc, SAR, DLF, oref DAC가 연결된 closed loop입니다.</p>
-          <a class="status" href="top_loop.md">summarized</a>
-        </article>
-      </div>
-    </section>
-
-    <section>
-      <h2>보조 자료</h2>
-      <div class="note-row">
-        <a class="note" href="top_loop.md"><strong>Top loop note</strong>처음부터 끝까지 글로 따라가는 설명입니다.</a>
-        <a class="note" href="top_run_summary.md"><strong>Run summary</strong>top CSV에서 추출한 실행 요약입니다.</a>
-        <a class="note" href="top_numeric_analysis.md"><strong>Numeric table</strong>CP/DD는 unsigned, DIFF 계열은 signed로 해석한 표입니다.</a>
-      </div>
-    </section>
   </main>
-
-  <script>
-    const buttons = document.querySelectorAll(".tabs button");
-    const graphImage = document.getElementById("graphImage");
-    const graphLink = document.getElementById("graphLink");
-    const openGraph = document.getElementById("openGraph");
-    const graphCaption = document.getElementById("graphCaption");
-
-    buttons.forEach((button) => {
-      button.addEventListener("click", () => {
-        buttons.forEach((item) => item.classList.remove("active"));
-        button.classList.add("active");
-        const source = button.dataset.graph;
-        graphImage.src = source;
-        graphImage.alt = `${button.textContent} graph`;
-        graphLink.href = source;
-        openGraph.href = source;
-        graphCaption.textContent = button.dataset.label;
-      });
-    });
-  </script>
 </body>
 </html>
