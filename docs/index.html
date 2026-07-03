@@ -486,6 +486,32 @@
     </section>
 
     <section>
+      <h2>Schematic</h2>
+      <div class="visual-grid">
+        <figure class="visual wide">
+          <img src="assets/schematic_rc_network.png" alt="RC network oscillator schematic">
+          <figcaption>RC network, VRC/oref comparator path, output pulse and CLK_OSC generation path입니다.</figcaption>
+        </figure>
+        <figure class="visual wide">
+          <img src="assets/schematic_sample_hold_sar_adc.png" alt="Sample hold for SAR ADC schematic">
+          <figcaption>S/H for SAR ADC입니다. VRC phase outputs are sampled and passed to the SAR comparator path.</figcaption>
+        </figure>
+        <figure class="visual wide">
+          <img src="assets/schematic_clk_gen.png" alt="Clock generation schematic">
+          <figcaption>CLK GEN입니다. CLK_OSC에서 SAR timing, DATA sample, comparator clock, SW control clocks를 만듭니다.</figcaption>
+        </figure>
+        <figure class="visual wide">
+          <img src="assets/schematic_sar_logic.png" alt="SAR logic schematic">
+          <figcaption>SAR Logic입니다. comparator output과 SAR state가 CP/CN digital code로 이어집니다.</figcaption>
+        </figure>
+        <figure class="visual wide">
+          <img src="assets/schematic_sar_12b.png" alt="SAR 12-bit control schematic">
+          <figcaption>SAR 12b입니다. reset, EOC, DATA_OUT, CP/CN update timing을 구성합니다.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section>
       <h2>Simulation</h2>
       <div class="visual-grid">
         <div class="table-panel">
