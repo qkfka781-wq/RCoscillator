@@ -485,6 +485,8 @@ def main() -> int:
         return 1
 
     overview_rows = downsample(rows)
+    oref_zoom_rows = downsample(filter_window(rows, 0.0, 25.0), 1800)
+    oref_zoom_dlf_events = filter_window(dlf_events, 0.0, 25.0)
     zoom_rows = downsample(filter_window(rows, 170.0, 180.0), 1800)
 
     svg_plot(
@@ -590,6 +592,36 @@ def main() -> int:
             ]),
             Panel("ADC code from osc11 / osc22 path", "unsigned code", [
                 make_series(overview_rows, "t_us", "dd1", "DD1", 5),
+            ]),
+        ],
+        "time (us)",
+    )
+
+    svg_plot(
+        OUT_DIR / "top_oref_timing_zoom.svg",
+        "Oref Correction Timing Zoom: 0-25 us",
+        [
+            Panel("VRC outputs and corrected oref", "V", [
+                make_series(oref_zoom_rows, "t_us", "vrc1", "VRC1", 0),
+                make_series(oref_zoom_rows, "t_us", "vrc2", "VRC2", 1),
+                make_series(oref_zoom_rows, "t_us", "oref", "oref", 2),
+            ]),
+            Panel("Oscillator phase nodes", "V", [
+                make_series(oref_zoom_rows, "t_us", "osc1", "osc1", 0),
+                make_series(oref_zoom_rows, "t_us", "osc2", "osc2", 1),
+                make_series(oref_zoom_rows, "t_us", "osc11", "osc11", 2),
+                make_series(oref_zoom_rows, "t_us", "osc22", "osc22", 3),
+            ]),
+            Panel("Loop timing pulses", "logic", [
+                make_series(oref_zoom_rows, "t_us", "data_out", "DATA_OUT", 4),
+                make_series(oref_zoom_rows, "t_us", "clk_sample", "CLK_DATASAMPLE", 5),
+                make_series(oref_zoom_rows, "t_us", "clk_osc", "CLK_OSC", 6),
+            ], (-0.1, 1.1)),
+            Panel("DLF sampled error", "code", [
+                make_series(oref_zoom_dlf_events, "sample_t_us", "dd_delta", "DD2-DD1", 2),
+            ]),
+            Panel("oref at DLF update samples", "V", [
+                make_series(oref_zoom_dlf_events, "sample_t_us", "oref", "oref", 5),
             ]),
         ],
         "time (us)",

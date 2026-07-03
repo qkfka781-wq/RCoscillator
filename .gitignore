@@ -3,3 +3,4 @@ analoglib/
 std_fds/
 *.pdf
 work/
+__pycache__/

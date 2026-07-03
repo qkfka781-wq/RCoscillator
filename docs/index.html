@@ -65,7 +65,7 @@
     }
 
     .subtitle {
-      max-width: 830px;
+      max-width: 850px;
       margin: 12px 0 0;
       color: var(--muted);
       font-size: 16px;
@@ -115,7 +115,9 @@
     .dictionary,
     .step,
     .block,
-    .note {
+    .note,
+    .visual,
+    .viewer {
       background: var(--paper);
       border: 1px solid var(--line);
       border-radius: 8px;
@@ -191,9 +193,6 @@
 
     .visual {
       margin: 0;
-      background: var(--paper);
-      border: 1px solid var(--line);
-      border-radius: 8px;
       overflow: hidden;
       box-shadow: var(--shadow);
     }
@@ -283,9 +282,6 @@
 
     .viewer {
       padding: 14px;
-      background: var(--paper);
-      border: 1px solid var(--line);
-      border-radius: 8px;
       box-shadow: var(--shadow);
     }
 
@@ -392,7 +388,7 @@
       <div class="topline">
         <div>
           <h1>RC Oscillator Visual Dashboard</h1>
-          <p class="subtitle">처음 보는 사람이 “oref 보정이 oscillator 주파수와 CP hold code를 어떻게 바꾸는지”를 바로 따라갈 수 있게 만든 RC oscillator 검증 화면입니다.</p>
+          <p class="subtitle">`oref` 보정이 oscillator 주파수와 CP hold code를 어떻게 바꾸는지 회로 그림과 CSV 기반 파형으로 따라가는 검증 화면입니다.</p>
         </div>
         <nav class="nav" aria-label="Primary">
           <a href="https://github.com/qkfka781-wq/RCoscillator">README</a>
@@ -407,7 +403,7 @@
   <main class="shell">
     <section class="answer" aria-label="Plain explanation">
       <div class="plain">
-        <p class="headline">이 회로는 기준 전압 `oref`를 보정하며 oscillator 주파수를 조절합니다.</p>
+        <p class="headline">기준 전압 `oref`를 보정하며 oscillator 주파수를 조절합니다.</p>
         <p>두 phase에서 sample한 code 차이가 남아 있으면 DLF가 `oref`를 바꾸고, `oref`가 조정되면 `VRC`와 crossing timing이 바뀝니다. 그 결과 oscillator frequency와 다음 CP hold 값이 바뀌고, 이 과정이 반복되면서 error가 0으로 수렴합니다.</p>
       </div>
       <div class="dictionary">
@@ -416,7 +412,7 @@
           <dt>oref</dt><dd>VRC1과 비교되는 기준 전압</dd>
           <dt>CP1/CP2</dt><dd>해당 phase에서 ADC되는 VRC1-VRC2 hold 결과의 디지털 code</dd>
           <dt>DD1/DD2</dt><dd>두 phase에서 sample한 digital code</dd>
-          <dt>DLF</dt><dd>error를 보고 oref를 조절</dd>
+          <dt>DLF</dt><dd>error를 보고 oref 보정 방향을 결정</dd>
         </dl>
       </div>
     </section>
@@ -424,34 +420,69 @@
     <section>
       <h2>동작을 4단계로 보면</h2>
       <div class="steps">
-        <div class="step"><strong>1. 비교</strong><span>`VRC`가 `oref`를 지나가는 순간이 oscillator timing을 만듭니다.</span></div>
+        <div class="step"><strong>1. 비교</strong><span>`VRC`와 `oref`의 crossing timing이 oscillator timing을 만듭니다.</span></div>
         <div class="step"><strong>2. 샘플</strong><span>그 timing에서 아날로그 전압을 hold합니다.</span></div>
         <div class="step"><strong>3. 판단</strong><span>SAR ADC와 DLF가 두 phase의 차이 `DD2-DD1`을 봅니다.</span></div>
-        <div class="step"><strong>4. 보정</strong><span>차이가 있으면 `oref`를 움직여 다음 timing을 바꿉니다.</span></div>
+        <div class="step"><strong>4. 보정</strong><span>차이가 있으면 `oref`를 보정해 다음 timing과 frequency를 바꿉니다.</span></div>
       </div>
     </section>
 
     <section>
-      <h2>회로 흐름</h2>
+      <h2>1. Oscillator Core</h2>
+      <figure class="visual wide">
+        <a href="assets/oscillator_core.png">
+          <img src="assets/oscillator_core.png" alt="Oscillator core circuit diagram">
+        </a>
+        <figcaption>먼저 볼 그림입니다. Core 안에서는 `VRC`와 `oref`가 만나는 시간이 oscillator phase와 frequency를 결정합니다.</figcaption>
+      </figure>
+    </section>
+
+    <section>
+      <h2>2. Sample/Hold And SAR ADC</h2>
+      <figure class="visual wide">
+        <a href="assets/osc_to_sar_path.png">
+          <img src="assets/osc_to_sar_path.png" alt="Oscillator, sample hold, SAR ADC connection diagram">
+        </a>
+        <figcaption>그다음 볼 그림입니다. Oscillator core의 결과가 Sample/Hold를 거쳐 SAR ADC로 들어가고, phase별 hold 결과가 digital code가 됩니다.</figcaption>
+      </figure>
+    </section>
+
+    <section>
+      <h2>3. CSV 그래프</h2>
       <div class="visual-grid">
         <figure class="visual wide">
-          <a href="assets/oscillator_core.png">
-            <img src="assets/oscillator_core.png" alt="Oscillator core circuit diagram">
+          <a href="img/top_oref_timing_zoom.svg">
+            <img src="img/top_oref_timing_zoom.svg" alt="Oref correction timing zoom graph">
           </a>
-          <figcaption>먼저 볼 그림입니다. Core 안에서는 `VRC`와 `oref`가 만나는 시간이 oscillator phase와 frequency를 결정합니다.</figcaption>
+          <figcaption>`top/top_run.csv`에서 0-25 us 구간을 잘라 만든 그래프입니다. `oref` 변화폭이 보이는 구간에서 VRC, oscillator node, pulse, error를 같이 봅니다.</figcaption>
         </figure>
         <figure class="visual wide">
-          <a href="assets/osc_to_sar_path.png">
-            <img src="assets/osc_to_sar_path.png" alt="Oscillator, sample hold, SAR ADC connection diagram">
+          <a href="img/top_phase_adc_paths.svg">
+            <img src="img/top_phase_adc_paths.svg" alt="Oscillator phase nodes and ADC codes graph">
           </a>
-          <figcaption>그다음 볼 그림입니다. Oscillator core의 결과가 Sample/Hold를 거쳐 SAR ADC로 들어갑니다.</figcaption>
+          <figcaption>CSV에서 `osc1/osc2 -> DD2`, `osc11/osc22 -> DD1` 경로를 phase별로 그린 그래프입니다.</figcaption>
         </figure>
-        <figure class="visual">
-          <a href="assets/phase_error_waveform.png">
-            <img src="assets/phase_error_waveform.png" alt="Phase error and oref waveform">
-          </a>
-          <figcaption>phase A/B, DD code, oref가 함께 움직이는 모습을 보여주는 파형입니다.</figcaption>
-        </figure>
+      </div>
+    </section>
+
+    <section>
+      <h2>4. 파형 뷰어</h2>
+      <div class="tabs" role="tablist" aria-label="CSV waveform graphs">
+        <button class="active" type="button" data-graph="img/top_oref_timing_zoom.svg" data-label="CSV에서 0-25 us 구간을 잘라 만든 oref 보정 timing 파형입니다.">Oref timing</button>
+        <button type="button" data-graph="img/top_phase_adc_paths.svg" data-label="CSV에서 osc1/osc2와 DD2, osc11/osc22와 DD1을 함께 그린 그래프입니다.">Phase ADC paths</button>
+        <button type="button" data-graph="img/top_lock_summary.svg" data-label="CSV에서 뽑은 error convergence 요약입니다. error가 0으로 수렴하는지가 핵심입니다.">Error convergence</button>
+        <button type="button" data-graph="img/top_cp_hold_codes.svg" data-label="DATA_OUT edge 기준으로 복원한 CP hold digital code입니다.">CP hold</button>
+        <button type="button" data-graph="img/top_dlf_convergence.svg" data-label="DLF가 error를 줄여가며 oref를 보정하는 과정을 정리한 그래프입니다.">Oref convergence</button>
+        <button type="button" data-graph="img/top_late_loop_zoom.svg" data-label="후반부 170-180 us 구간에서 VRC, oref, oscillator node를 다시 확대해서 보는 CSV 그래프입니다.">Late zoom</button>
+      </div>
+      <div class="viewer">
+        <a id="graphLink" href="img/top_oref_timing_zoom.svg">
+          <img id="graphImage" src="img/top_oref_timing_zoom.svg" alt="Selected RC oscillator CSV graph">
+        </a>
+        <div class="caption">
+          <span id="graphCaption">CSV에서 0-25 us 구간을 잘라 만든 oref 보정 timing 파형입니다.</span>
+          <a id="openGraph" href="img/top_oref_timing_zoom.svg">원본 열기</a>
+        </div>
       </div>
     </section>
 
@@ -465,27 +496,6 @@
         <div class="loop-node"><strong>SAR ADC</strong><span>digital code 변환</span></div>
         <div class="loop-node"><strong>DLF</strong><span>DD2-DD1 error 판단</span></div>
         <div class="loop-node"><strong>CDAC_17b</strong><span>oref 보정</span></div>
-      </div>
-    </section>
-
-    <section>
-      <h2>파형 뷰어</h2>
-      <div class="tabs" role="tablist" aria-label="Visual graphs">
-        <button class="active" type="button" data-graph="img/top_phase_adc_paths.svg" data-label="CSV에서 osc1/osc2와 DD2, osc11/osc22와 DD1을 함께 그린 그래프입니다.">Phase ADC paths</button>
-        <button type="button" data-graph="assets/frequency_timing.png" data-label="VRC와 oref의 crossing timing이 CLK_OSC와 frequency를 바꾸는 모습을 보는 파형입니다.">Timing</button>
-        <button type="button" data-graph="assets/dlf_sample_waveform.png" data-label="sample 차이가 DLF로 들어가고 oref 조절로 이어지는 흐름을 보는 파형입니다.">DLF sample</button>
-        <button type="button" data-graph="img/top_lock_summary.svg" data-label="CSV에서 뽑은 error convergence 요약입니다. error가 0으로 수렴하는지가 핵심입니다.">Error convergence</button>
-        <button type="button" data-graph="img/top_cp_hold_codes.svg" data-label="DATA_OUT edge 기준으로 복원한 CP hold code입니다.">CP hold</button>
-        <button type="button" data-graph="img/top_dlf_convergence.svg" data-label="DLF가 error를 줄여가는 과정을 edge 기준으로 정리한 그래프입니다.">DLF convergence</button>
-      </div>
-      <div class="viewer">
-        <a id="graphLink" href="img/top_phase_adc_paths.svg">
-          <img id="graphImage" src="img/top_phase_adc_paths.svg" alt="Selected RC oscillator graph">
-        </a>
-        <div class="caption">
-          <span id="graphCaption">CSV에서 osc1/osc2와 DD2, osc11/osc22와 DD1을 함께 그린 그래프입니다.</span>
-          <a id="openGraph" href="img/top_phase_adc_paths.svg">원본 열기</a>
-        </div>
       </div>
     </section>
 

@@ -1,6 +1,6 @@
 # RC Distributed Oscillator Verification
 
-이 저장소는 **RC oscillator가 기준 전압 `oref`를 보정하면서 oscillator 주파수를 조절하는 과정**을 보여주는 검증 자료입니다. 처음 보는 사람도 흐름을 잡을 수 있도록 회로도, 파형, CSV 기반 그래프, 블록별 검증 문서를 한곳에 묶었습니다.
+이 저장소는 **RC oscillator가 기준 전압 `oref`를 보정하면서 oscillator 주파수를 조절하는 과정**을 보여주는 검증 자료입니다. 회로 그림과 `top/top_run.csv` 기반 그래프를 함께 정리했습니다.
 
 ## 먼저 보면 되는 것
 
@@ -9,10 +9,6 @@
 - top loop 설명: [docs/top_loop.md](docs/top_loop.md)
 
 ## 이 회로가 하는 일
-
-목표는 간단합니다.
-
-**두 phase에서 sample한 code 차이가 0으로 수렴하도록 `oref`를 보정하고, 그 결과 oscillator 주파수를 조절하는 것**입니다.
 
 두 phase에서 sample한 code 차이가 남아 있으면 DLF가 `oref`를 바꾸고, `oref`가 조정되면 `VRC`와 crossing timing이 바뀝니다. 그 결과 oscillator frequency와 다음 CP hold 값이 바뀌고, 이 과정이 반복되면서 error가 0으로 수렴합니다.
 
@@ -39,23 +35,21 @@ flowchart LR
 | DLF | `DD2-DD1`을 보고 `oref` 보정 방향을 결정하는 digital loop filter |
 | CDAC_17b | DLF code를 실제 `oref` 전압으로 바꾸는 DAC |
 
-## 회로와 파형
-
-이미지를 클릭하면 크게 열립니다. 먼저 oscillator core를 보고, 그다음 Sample/Hold와 SAR ADC 연결을 보면 됩니다.
+## 1. Oscillator Core
 
 [![Oscillator core](docs/assets/oscillator_core.png)](docs/assets/oscillator_core.png)
 
+## 2. Sample/Hold And SAR ADC
+
 [![Oscillator to SAR path](docs/assets/osc_to_sar_path.png)](docs/assets/osc_to_sar_path.png)
 
-[![Phase error waveform](docs/assets/phase_error_waveform.png)](docs/assets/phase_error_waveform.png)
+## 3. CSV 그래프
 
-## CSV에서 만든 확인 그래프
+[![Oref correction timing zoom](docs/img/top_oref_timing_zoom.svg)](docs/img/top_oref_timing_zoom.svg)
 
 [![Oscillator phase nodes and ADC codes](docs/img/top_phase_adc_paths.svg)](docs/img/top_phase_adc_paths.svg)
 
 [![Error convergence summary](docs/img/top_lock_summary.svg)](docs/img/top_lock_summary.svg)
-
-[![DLF convergence](docs/img/top_dlf_convergence.svg)](docs/img/top_dlf_convergence.svg)
 
 [![CP hold codes](docs/img/top_cp_hold_codes.svg)](docs/img/top_cp_hold_codes.svg)
 
@@ -70,8 +64,6 @@ flowchart LR
 | StrongARM comparator | [strongarm_test/20260701_sar_comparator_verify.md](strongarm_test/20260701_sar_comparator_verify.md) |
 
 ## 숫자 자료
-
-숫자 자료는 보조 자료입니다. 필요할 때만 보면 됩니다.
 
 - [docs/top_run_summary.md](docs/top_run_summary.md)
 - [docs/top_numeric_analysis.md](docs/top_numeric_analysis.md)
