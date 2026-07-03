@@ -1,26 +1,30 @@
 #!/usr/bin/env python3
-"""Generate GitHub-friendly SVG plots from top/top_run.csv.
+"""Analyze top/top_run.csv and generate GitHub-friendly SVG plots.
 
-The Custom WaveView export used here is whitespace-delimited and may contain
-multiple appended tables. This script parses all tables, reconstructs bus
-values, detects loop update edges, and writes static SVG plots under docs/img.
-It intentionally uses only the Python standard library so it can run in a
-minimal environment.
+The Custom WaveView export is whitespace-delimited and can contain appended
+tables. The important detail is timing:
+
+- DATA_OUT rising edge: CP1/CP2 hold codes are valid at the edge.
+- CLK_DATASAMPLE rising edge: DLF outputs need a short settle delay before
+  DIFF/oref are meaningful. This script samples DLF rows 20 ns after the edge.
+
+No third-party Python packages are required.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
+import csv
 import html
 import math
 import sys
-from typing import Iterable
 
 
 ROOT = Path(__file__).resolve().parents[1]
 CSV_PATH = ROOT / "top" / "top_run.csv"
 OUT_DIR = ROOT / "docs" / "img"
+DLF_SETTLE_NS = 20.0
 
 
 COLORS = [
@@ -41,7 +45,7 @@ class Series:
     x: list[float]
     y: list[float]
     color: str
-    width: float = 1.6
+    width: float = 1.7
 
 
 @dataclass
@@ -57,29 +61,60 @@ def clean_columns(header_line: str) -> list[str]:
 
 
 def signed(value: int, bits: int) -> int:
-    sign = 1 << (bits - 1)
-    full = 1 << bits
-    return value - full if value & sign else value
+    return value - (1 << bits) if value & (1 << (bits - 1)) else value
+
+
+def bus_value(cols: list[str], parts: list[str], prefix: str) -> int:
+    value = 0
+    for col, raw in zip(cols, parts):
+        if col.startswith(prefix + "<") and float(raw) > 0.5:
+            bit = int(col.split("<", 1)[1].split(">", 1)[0])
+            value |= 1 << bit
+    return value
+
+
+def row_from_parts(cols: list[str], index: dict[str, int], parts: list[str]) -> dict[str, float]:
+    dd1 = bus_value(cols, parts, "I3.DD1_SAMPLE")
+    dd2 = bus_value(cols, parts, "I3.DD2_SAMPLE")
+    cp1 = bus_value(cols, parts, "CP1")
+    cp2 = bus_value(cols, parts, "CP2")
+    vrc1 = float(parts[index["I0.VRC1"]])
+    vrc2 = float(parts[index["I0.VRC2"]])
+    return {
+        "t_us": float(parts[index["TIME"]]) * 1e6,
+        "cp1": cp1,
+        "cp2": cp2,
+        "cp_delta": cp2 - cp1,
+        "dd1": dd1,
+        "dd2": dd2,
+        "dd_delta": dd2 - dd1,
+        "diff_sample": signed(bus_value(cols, parts, "I3.DIFF_SAMPLE"), 12),
+        "diff": signed(bus_value(cols, parts, "I3.DIFF"), 12),
+        "diff_out": signed(bus_value(cols, parts, "I3.DIFF_OUT1"), 17),
+        "d_code": bus_value(cols, parts, "D"),
+        "oref": float(parts[index["oref"]]),
+        "osc1": float(parts[index["I0.osc1"]]),
+        "osc2": float(parts[index["I0.osc2"]]),
+        "osc11": float(parts[index["I0.osc11"]]),
+        "osc22": float(parts[index["I0.osc22"]]),
+        "vrc1": vrc1,
+        "vrc2": vrc2,
+        "vrc_diff": vrc1 - vrc2,
+        "data_out": float(parts[index["DATA_OUT"]]),
+        "clk_sample": float(parts[index["CLK_DATASAMPLE"]]),
+        "clk_osc": float(parts[index["CLK_OSC"]]),
+    }
 
 
 def parse_top_csv(path: Path) -> tuple[list[dict[str, float]], list[dict[str, float]], list[dict[str, float]]]:
     rows: list[dict[str, float]] = []
-    dlf_events: list[dict[str, float]] = []
-    hold_events: list[dict[str, float]] = []
+    hold_edge_indices: list[int] = []
+    dlf_edge_indices: list[int] = []
 
     cols: list[str] | None = None
     index: dict[str, int] = {}
-    prev_clk_sample = 0
     prev_data_out = 0
-
-    def bus_value(parts: list[str], prefix: str) -> int:
-        value = 0
-        for col, raw in zip(cols or [], parts):
-            if col.startswith(prefix + "<"):
-                bit = int(col.split("<", 1)[1].split(">", 1)[0])
-                if float(raw) > 0.5:
-                    value |= 1 << bit
-        return value
+    prev_clk_sample = 0
 
     with path.open("r", encoding="utf-8", errors="replace") as f:
         for raw_line in f:
@@ -87,16 +122,16 @@ def parse_top_csv(path: Path) -> tuple[list[dict[str, float]], list[dict[str, fl
             if line.startswith("#format"):
                 cols = None
                 index = {}
-                prev_clk_sample = 0
                 prev_data_out = 0
+                prev_clk_sample = 0
                 continue
             if line.startswith("#") or not line.strip():
                 continue
             if line.startswith("TIME"):
                 cols = clean_columns(line)
                 index = {name: i for i, name in enumerate(cols)}
-                prev_clk_sample = 0
                 prev_data_out = 0
+                prev_clk_sample = 0
                 continue
             if cols is None:
                 continue
@@ -105,63 +140,45 @@ def parse_top_csv(path: Path) -> tuple[list[dict[str, float]], list[dict[str, fl
             if len(parts) != len(cols):
                 continue
 
-            t_us = float(parts[index["TIME"]]) * 1e6
-            data_out = 1 if float(parts[index["DATA_OUT"]]) > 0.5 else 0
-            clk_sample = 1 if float(parts[index["CLK_DATASAMPLE"]]) > 0.5 else 0
-
-            row = {
-                "t_us": t_us,
-                "oref": float(parts[index["oref"]]),
-                "osc1": float(parts[index["I0.osc1"]]),
-                "osc2": float(parts[index["I0.osc2"]]),
-                "osc11": float(parts[index["I0.osc11"]]),
-                "osc22": float(parts[index["I0.osc22"]]),
-                "vrc1": float(parts[index["I0.VRC1"]]),
-                "vrc2": float(parts[index["I0.VRC2"]]),
-                "data_out": float(parts[index["DATA_OUT"]]),
-                "clk_sample": float(parts[index["CLK_DATASAMPLE"]]),
-                "clk_osc": float(parts[index["CLK_OSC"]]),
-            }
-            rows.append(row)
+            row = row_from_parts(cols, index, parts)
+            data_out = 1 if row["data_out"] > 0.5 else 0
+            clk_sample = 1 if row["clk_sample"] > 0.5 else 0
 
             if data_out and not prev_data_out:
-                cp1 = bus_value(parts, "CP1")
-                cp2 = bus_value(parts, "CP2")
-                hold_events.append(
-                    {
-                        "t_us": t_us,
-                        "cp1": cp1,
-                        "cp2": cp2,
-                        "cp_delta": cp2 - cp1,
-                        "oref": row["oref"],
-                        "vrc1": row["vrc1"],
-                        "vrc2": row["vrc2"],
-                    }
-                )
-
+                hold_edge_indices.append(len(rows))
             if clk_sample and not prev_clk_sample:
-                dd1 = bus_value(parts, "I3.DD1_SAMPLE")
-                dd2 = bus_value(parts, "I3.DD2_SAMPLE")
-                diff_sample = signed(bus_value(parts, "I3.DIFF_SAMPLE"), 12)
-                diff = signed(bus_value(parts, "I3.DIFF"), 12)
-                diff_out = signed(bus_value(parts, "I3.DIFF_OUT1"), 17)
-                d_code = bus_value(parts, "D")
-                dlf_events.append(
-                    {
-                        "t_us": t_us,
-                        "dd1": dd1,
-                        "dd2": dd2,
-                        "dd_delta": dd2 - dd1,
-                        "diff_sample": diff_sample,
-                        "diff": diff,
-                        "diff_out": diff_out,
-                        "d_code": d_code,
-                        "oref": row["oref"],
-                    }
-                )
+                dlf_edge_indices.append(len(rows))
 
+            rows.append(row)
             prev_data_out = data_out
             prev_clk_sample = clk_sample
+
+    hold_events: list[dict[str, float]] = []
+    for n, edge_index in enumerate(hold_edge_indices):
+        row = dict(rows[edge_index])
+        row["event"] = n
+        row["sample_t_us"] = row["t_us"]
+        if hold_events:
+            row["dt_us"] = row["t_us"] - hold_events[-1]["t_us"]
+            row["freq_khz"] = 1000.0 / row["dt_us"] if row["dt_us"] else math.nan
+        else:
+            row["dt_us"] = math.nan
+            row["freq_khz"] = math.nan
+        hold_events.append(row)
+
+    dlf_events: list[dict[str, float]] = []
+    for n, edge_index in enumerate(dlf_edge_indices):
+        edge_time = rows[edge_index]["t_us"]
+        target_time = edge_time + DLF_SETTLE_NS / 1000.0
+        sample_index = edge_index
+        while sample_index + 1 < len(rows) and rows[sample_index]["t_us"] < target_time:
+            sample_index += 1
+        row = dict(rows[sample_index])
+        row["event"] = n
+        row["edge_t_us"] = edge_time
+        row["sample_t_us"] = row["t_us"]
+        row["settle_ns"] = (row["t_us"] - edge_time) * 1000.0
+        dlf_events.append(row)
 
     return rows, dlf_events, hold_events
 
@@ -173,7 +190,7 @@ def downsample(rows: list[dict[str, float]], max_points: int = 1800) -> list[dic
     return rows[::step]
 
 
-def filter_window(rows: Iterable[dict[str, float]], start_us: float, stop_us: float) -> list[dict[str, float]]:
+def filter_window(rows: list[dict[str, float]], start_us: float, stop_us: float) -> list[dict[str, float]]:
     return [row for row in rows if start_us <= row["t_us"] <= stop_us]
 
 
@@ -181,14 +198,14 @@ def values(rows: list[dict[str, float]], key: str) -> list[float]:
     return [float(row[key]) for row in rows]
 
 
-def make_series(rows: list[dict[str, float]], key: str, label: str, color_index: int, width: float = 1.6) -> Series:
-    return Series(label, values(rows, "t_us"), values(rows, key), COLORS[color_index % len(COLORS)], width)
+def make_series(rows: list[dict[str, float]], xkey: str, ykey: str, label: str, color_index: int, width: float = 1.7) -> Series:
+    return Series(label, values(rows, xkey), values(rows, ykey), COLORS[color_index % len(COLORS)], width)
 
 
 def nice_range(series: list[Series], forced: tuple[float, float] | None) -> tuple[float, float]:
     if forced is not None:
         return forced
-    all_values = [v for s in series for v in s.y if math.isfinite(v)]
+    all_values = [v for item in series for v in item.y if math.isfinite(v)]
     if not all_values:
         return 0.0, 1.0
     low = min(all_values)
@@ -215,16 +232,16 @@ def points_for(series: Series, xmin: float, xmax: float, ymin: float, ymax: floa
     return " ".join(pts)
 
 
-def svg_plot(path: Path, title: str, panels: list[Panel], width: int = 1120, panel_height: int = 230) -> None:
-    margin_left = 82
-    margin_right = 26
-    margin_top = 74
-    gap = 56
+def svg_plot(path: Path, title: str, panels: list[Panel], xlabel: str, width: int = 1120, panel_height: int = 220) -> None:
+    margin_left = 86
+    margin_right = 28
+    margin_top = 76
+    gap = 55
     margin_bottom = 58
     plot_width = width - margin_left - margin_right
     total_height = margin_top + len(panels) * panel_height + (len(panels) - 1) * gap + margin_bottom
 
-    all_x = [x for panel in panels for s in panel.series for x in s.x if math.isfinite(x)]
+    all_x = [x for panel in panels for series in panel.series for x in series.x if math.isfinite(x)]
     xmin = min(all_x) if all_x else 0.0
     xmax = max(all_x) if all_x else 1.0
 
@@ -238,7 +255,7 @@ def svg_plot(path: Path, title: str, panels: list[Panel], width: int = 1120, pan
     for panel_index, panel in enumerate(panels):
         y_top = margin_top + panel_index * (panel_height + gap)
         ymin, ymax = nice_range(panel.series, panel.yrange)
-        parts.append(f'<text x="{margin_left}" y="{y_top - 15}" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#202124">{html.escape(panel.title)}</text>')
+        parts.append(f'<text x="{margin_left}" y="{y_top - 14}" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#202124">{html.escape(panel.title)}</text>')
         parts.append(f'<rect x="{margin_left}" y="{y_top}" width="{plot_width}" height="{panel_height}" fill="#ffffff" stroke="#dadce0" stroke-width="1"/>')
 
         for frac in (0.0, 0.25, 0.5, 0.75, 1.0):
@@ -251,13 +268,25 @@ def svg_plot(path: Path, title: str, panels: list[Panel], width: int = 1120, pan
             x = margin_left + frac * plot_width
             value = xmin + frac * (xmax - xmin)
             parts.append(f'<line x1="{x:.2f}" y1="{y_top}" x2="{x:.2f}" y2="{y_top + panel_height}" stroke="#f1f3f4" stroke-width="1"/>')
-            parts.append(f'<text x="{x:.2f}" y="{y_top + panel_height + 22}" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#6b7280">{value:.1f}</text>')
+            parts.append(f'<text x="{x:.2f}" y="{y_top + panel_height + 21}" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#6b7280">{value:.1f}</text>')
 
-        parts.append(f'<text x="{margin_left - 58}" y="{y_top + panel_height / 2:.2f}" transform="rotate(-90 {margin_left - 58},{y_top + panel_height / 2:.2f})" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#5f6368">{html.escape(panel.ylabel)}</text>')
+        zero_y = None
+        if ymin < 0 < ymax:
+            zero_y = y_top + panel_height - (0 - ymin) / (ymax - ymin) * panel_height
+            parts.append(f'<line x1="{margin_left}" y1="{zero_y:.2f}" x2="{margin_left + plot_width}" y2="{zero_y:.2f}" stroke="#9aa0a6" stroke-width="1.2" stroke-dasharray="5,5"/>')
+
+        parts.append(f'<text x="{margin_left - 60}" y="{y_top + panel_height / 2:.2f}" transform="rotate(-90 {margin_left - 60},{y_top + panel_height / 2:.2f})" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#5f6368">{html.escape(panel.ylabel)}</text>')
 
         for series in panel.series:
             pts = points_for(series, xmin, xmax, ymin, ymax, margin_left, y_top, plot_width, panel_height)
             parts.append(f'<polyline fill="none" stroke="{series.color}" stroke-width="{series.width}" stroke-linejoin="round" stroke-linecap="round" points="{pts}"/>')
+            for x, y in zip(series.x, series.y):
+                if not (math.isfinite(x) and math.isfinite(y)):
+                    continue
+                px = margin_left + (x - xmin) / (xmax - xmin or 1.0) * plot_width
+                py = y_top + panel_height - (y - ymin) / (ymax - ymin or 1.0) * panel_height
+                if len(series.x) <= 120:
+                    parts.append(f'<circle cx="{px:.2f}" cy="{py:.2f}" r="2.5" fill="{series.color}"/>')
 
         legend_x = margin_left + 8
         legend_y = y_top + 18
@@ -266,38 +295,58 @@ def svg_plot(path: Path, title: str, panels: list[Panel], width: int = 1120, pan
             parts.append(f'<text x="{legend_x + 31}" y="{legend_y + 4}" font-family="Arial, sans-serif" font-size="12" fill="#374151">{html.escape(series.name)}</text>')
             legend_x += 98 + len(series.name) * 6
 
-    parts.append(f'<text x="{margin_left + plot_width / 2:.2f}" y="{total_height - 20}" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#5f6368">time (us)</text>')
+    parts.append(f'<text x="{margin_left + plot_width / 2:.2f}" y="{total_height - 20}" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#5f6368">{html.escape(xlabel)}</text>')
     parts.append("</svg>")
     path.write_text("\n".join(parts), encoding="utf-8")
 
 
-def write_markdown_summary(path: Path, rows: list[dict[str, float]], dlf_events: list[dict[str, float]], hold_events: list[dict[str, float]]) -> None:
-    def fmt(value: float, digits: int = 3) -> str:
-        return f"{value:.{digits}f}"
+def write_event_csv(path: Path, dlf_events: list[dict[str, float]], hold_events: list[dict[str, float]]) -> None:
+    with path.open("w", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+        writer.writerow(["type", "event", "t_us", "dd1", "dd2", "dd2_minus_dd1", "diff", "d_code", "oref", "cp1", "cp2", "cp2_minus_cp1", "dt_us", "freq_khz"])
+        for row in dlf_events:
+            writer.writerow(["dlf", int(row["event"]), f"{row['sample_t_us']:.3f}", int(row["dd1"]), int(row["dd2"]), int(row["dd_delta"]), int(row["diff"]), int(row["d_code"]), f"{row['oref']:.7f}", "", "", "", "", ""])
+        for row in hold_events:
+            writer.writerow(["hold", int(row["event"]), f"{row['t_us']:.3f}", "", "", "", "", "", f"{row['oref']:.7f}", int(row["cp1"]), int(row["cp2"]), int(row["cp_delta"]), "" if math.isnan(row["dt_us"]) else f"{row['dt_us']:.3f}", "" if math.isnan(row["freq_khz"]) else f"{row['freq_khz']:.3f}"])
 
-    last_dlf = dlf_events[-1] if dlf_events else {}
-    last_hold = hold_events[-1] if hold_events else {}
+
+def write_markdown_summary(path: Path, rows: list[dict[str, float]], dlf_events: list[dict[str, float]], hold_events: list[dict[str, float]]) -> None:
+    last_dlf = dlf_events[-1]
+    late_dlf = dlf_events[-12:]
+    last_hold = hold_events[-1]
+    late_hold = [row for row in hold_events[-20:] if math.isfinite(row["freq_khz"])]
     oref_values = values(rows, "oref")
+    late_abs_error = sum(abs(row["dd_delta"]) for row in late_dlf) / len(late_dlf)
+    late_max_error = max(abs(row["dd_delta"]) for row in late_dlf)
+    avg_freq = sum(row["freq_khz"] for row in late_hold) / len(late_hold)
+    avg_period = sum(row["dt_us"] for row in late_hold) / len(late_hold)
+
     lines = [
         "# Top Closed-Loop Run Summary",
         "",
         "Generated by `scripts/generate_top_graphs.py` from `top/top_run.csv`.",
         "",
+        "DLF values are sampled 20 ns after `CLK_DATASAMPLE` rising edges. CP values are sampled exactly at `DATA_OUT` rising edges because CP buses reset shortly after the hold event.",
+        "",
         "| Item | Value |",
         "|------|------:|",
         f"| Samples | {len(rows)} |",
-        f"| Time span | {fmt(rows[0]['t_us'])} us to {fmt(rows[-1]['t_us'])} us |" if rows else "| Time span | n/a |",
+        f"| Time span | {rows[0]['t_us']:.3f} us to {rows[-1]['t_us']:.3f} us |",
         f"| DATA_OUT hold events | {len(hold_events)} |",
         f"| DLF update events | {len(dlf_events)} |",
-        f"| oref min / max | {min(oref_values):.6f} V / {max(oref_values):.6f} V |" if oref_values else "| oref min / max | n/a |",
-        f"| Last DD2-DD1 | {last_dlf.get('dd_delta', 'n/a')} code |",
-        f"| Last DLF diff bus | {last_dlf.get('diff', 'n/a')} code |",
-        f"| Last D code | {last_dlf.get('d_code', 'n/a')} |",
-        f"| Last oref | {last_dlf.get('oref', float('nan')):.6f} V |" if last_dlf else "| Last oref | n/a |",
-        f"| Last CP2-CP1 at hold | {last_hold.get('cp_delta', 'n/a')} code |",
+        f"| DLF settle sample offset | {DLF_SETTLE_NS:.0f} ns |",
+        f"| oref min / max | {min(oref_values):.6f} V / {max(oref_values):.6f} V |",
+        f"| Last DD2-DD1 | {int(last_dlf['dd_delta'])} code |",
+        f"| Last DIFF | {int(last_dlf['diff'])} code |",
+        f"| Last D code | {int(last_dlf['d_code'])} |",
+        f"| Last oref | {last_dlf['oref']:.6f} V |",
+        f"| Last CP2-CP1 at hold | {int(last_hold['cp_delta'])} code |",
+        f"| Late 12-update average abs error | {late_abs_error:.2f} code |",
+        f"| Late 12-update max abs error | {late_max_error:.0f} code |",
+        f"| Late 20-hold average period | {avg_period:.4f} us |",
+        f"| Late 20-hold average frequency | {avg_freq:.2f} kHz |",
         "",
-        "The exported waveform contains the startup transient and the later low-error region. "
-        "Use the SVG plots in `docs/img/` for visual inspection.",
+        "Key result: the sampled DLF error converges from hundreds of codes to a few codes and ends at zero. The remaining hold-code ripple alternates around zero, which is the expected closed-loop behavior.",
         "",
     ]
     path.write_text("\n".join(lines), encoding="utf-8")
@@ -310,8 +359,8 @@ def main() -> int:
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     rows, dlf_events, hold_events = parse_top_csv(CSV_PATH)
-    if not rows:
-        print("no rows parsed", file=sys.stderr)
+    if not rows or not dlf_events or not hold_events:
+        print("missing parsed waveform/events", file=sys.stderr)
         return 1
 
     overview_rows = downsample(rows)
@@ -319,92 +368,120 @@ def main() -> int:
 
     svg_plot(
         OUT_DIR / "top_loop_overview.svg",
-        "Top Loop Overview",
+        "Top Loop Raw Waveform Overview",
         [
             Panel("RC ramp and oref", "V", [
-                make_series(overview_rows, "vrc1", "VRC1", 0),
-                make_series(overview_rows, "vrc2", "VRC2", 1),
-                make_series(overview_rows, "oref", "oref", 2),
+                make_series(overview_rows, "t_us", "vrc1", "VRC1", 0),
+                make_series(overview_rows, "t_us", "vrc2", "VRC2", 1),
+                make_series(overview_rows, "t_us", "oref", "oref", 2),
             ]),
             Panel("Comparator-facing oscillator nodes", "V", [
-                make_series(overview_rows, "osc1", "osc1", 0),
-                make_series(overview_rows, "osc2", "osc2", 1),
-                make_series(overview_rows, "osc11", "osc11", 2),
-                make_series(overview_rows, "osc22", "osc22", 3),
+                make_series(overview_rows, "t_us", "osc1", "osc1", 0),
+                make_series(overview_rows, "t_us", "osc2", "osc2", 1),
+                make_series(overview_rows, "t_us", "osc11", "osc11", 2),
+                make_series(overview_rows, "t_us", "osc22", "osc22", 3),
             ]),
             Panel("Loop timing controls", "logic", [
-                make_series(overview_rows, "data_out", "DATA_OUT", 4),
-                make_series(overview_rows, "clk_sample", "CLK_DATASAMPLE", 5),
-                make_series(overview_rows, "clk_osc", "CLK_OSC", 6),
+                make_series(overview_rows, "t_us", "data_out", "DATA_OUT", 4),
+                make_series(overview_rows, "t_us", "clk_sample", "CLK_DATASAMPLE", 5),
+                make_series(overview_rows, "t_us", "clk_osc", "CLK_OSC", 6),
             ], (-0.1, 1.1)),
         ],
+        "time (us)",
     )
 
     svg_plot(
         OUT_DIR / "top_dlf_convergence.svg",
-        "DLF Convergence at CLK_DATASAMPLE Edges",
+        "Corrected DLF Event Analysis",
         [
-            Panel("Sampled SAR codes", "code", [
-                make_series(dlf_events, "dd1", "DD1", 0),
-                make_series(dlf_events, "dd2", "DD2", 1),
+            Panel(f"Sampled SAR codes ({DLF_SETTLE_NS:.0f} ns after update edge)", "code", [
+                make_series(dlf_events, "event", "dd1", "DD1", 0),
+                make_series(dlf_events, "event", "dd2", "DD2", 1),
             ]),
-            Panel("Error toward zero", "code", [
-                make_series(dlf_events, "dd_delta", "DD2-DD1", 2),
-                make_series(dlf_events, "diff", "DIFF", 3),
+            Panel("Loop error converging to zero", "code", [
+                make_series(dlf_events, "event", "dd_delta", "DD2-DD1", 2),
+                make_series(dlf_events, "event", "diff", "DIFF = -(DD2-DD1)", 3),
             ]),
-            Panel("DLF DAC drive", "code", [
-                make_series(dlf_events, "d_code", "D<16:0>", 4),
+            Panel("DLF/CDAC drive", "code", [
+                make_series(dlf_events, "event", "d_code", "D<16:0>", 4),
             ]),
-            Panel("oref actuator voltage", "V", [
-                make_series(dlf_events, "oref", "oref", 5),
+            Panel("oref actuator", "V", [
+                make_series(dlf_events, "event", "oref", "oref", 5),
             ]),
         ],
+        "DLF update index",
     )
 
     svg_plot(
         OUT_DIR / "top_cp_hold_codes.svg",
-        "CP Code Captured at DATA_OUT Hold Edges",
+        "DATA_OUT Hold Event Analysis",
         [
-            Panel("Hold-time CP codes", "code", [
-                make_series(hold_events, "cp1", "CP1", 0),
-                make_series(hold_events, "cp2", "CP2", 1),
+            Panel("CP code captured at hold edge", "code", [
+                make_series(hold_events, "event", "cp1", "CP1", 0),
+                make_series(hold_events, "event", "cp2", "CP2", 1),
             ]),
-            Panel("Hold-time CP difference", "code", [
-                make_series(hold_events, "cp_delta", "CP2-CP1", 2),
+            Panel("Hold-code balance around zero", "code", [
+                make_series(hold_events, "event", "cp_delta", "CP2-CP1", 2),
             ]),
-            Panel("oref and held ramp voltages", "V", [
-                make_series(hold_events, "vrc1", "VRC1", 0),
-                make_series(hold_events, "vrc2", "VRC2", 1),
-                make_series(hold_events, "oref", "oref", 2),
+            Panel("Held analog state and oref", "V", [
+                make_series(hold_events, "event", "vrc1", "VRC1", 0),
+                make_series(hold_events, "event", "vrc2", "VRC2", 1),
+                make_series(hold_events, "event", "oref", "oref", 2),
             ]),
         ],
+        "DATA_OUT hold index",
+    )
+
+    svg_plot(
+        OUT_DIR / "top_lock_summary.svg",
+        "Closed-Loop Lock Summary",
+        [
+            Panel("DLF sampled error", "code", [
+                make_series(dlf_events, "sample_t_us", "dd_delta", "DD2-DD1", 2),
+            ]),
+            Panel("oref settles while error collapses", "V", [
+                make_series(dlf_events, "sample_t_us", "oref", "oref", 5),
+            ]),
+            Panel("Hold interval", "us", [
+                make_series(hold_events[1:], "t_us", "dt_us", "hold interval (us)", 0),
+            ]),
+            Panel("Equivalent hold frequency", "kHz", [
+                make_series(hold_events[1:], "t_us", "freq_khz", "freq (kHz)", 1),
+            ]),
+        ],
+        "time (us)",
     )
 
     svg_plot(
         OUT_DIR / "top_late_loop_zoom.svg",
-        "Late Loop Zoom: Comparator Timing Window",
+        "Late Loop Zoom: 170-180 us",
         [
             Panel("Late RC ramp and oref", "V", [
-                make_series(zoom_rows, "vrc1", "VRC1", 0),
-                make_series(zoom_rows, "vrc2", "VRC2", 1),
-                make_series(zoom_rows, "oref", "oref", 2),
+                make_series(zoom_rows, "t_us", "vrc1", "VRC1", 0),
+                make_series(zoom_rows, "t_us", "vrc2", "VRC2", 1),
+                make_series(zoom_rows, "t_us", "oref", "oref", 2),
             ]),
-            Panel("170-180 us oscillator crossing detail", "V", [
-                make_series(zoom_rows, "osc1", "osc1", 0),
-                make_series(zoom_rows, "osc2", "osc2", 1),
-                make_series(zoom_rows, "osc11", "osc11", 2),
-                make_series(zoom_rows, "osc22", "osc22", 3),
+            Panel("Oscillator crossing detail", "V", [
+                make_series(zoom_rows, "t_us", "osc1", "osc1", 0),
+                make_series(zoom_rows, "t_us", "osc2", "osc2", 1),
+                make_series(zoom_rows, "t_us", "osc11", "osc11", 2),
+                make_series(zoom_rows, "t_us", "osc22", "osc22", 3),
             ]),
             Panel("Hold/update pulses", "logic", [
-                make_series(zoom_rows, "data_out", "DATA_OUT", 4),
-                make_series(zoom_rows, "clk_sample", "CLK_DATASAMPLE", 5),
-                make_series(zoom_rows, "clk_osc", "CLK_OSC", 6),
+                make_series(zoom_rows, "t_us", "data_out", "DATA_OUT", 4),
+                make_series(zoom_rows, "t_us", "clk_sample", "CLK_DATASAMPLE", 5),
+                make_series(zoom_rows, "t_us", "clk_osc", "CLK_OSC", 6),
             ], (-0.1, 1.1)),
         ],
+        "time (us)",
     )
 
+    write_event_csv(ROOT / "docs" / "top_event_analysis.csv", dlf_events, hold_events)
     write_markdown_summary(ROOT / "docs" / "top_run_summary.md", rows, dlf_events, hold_events)
-    print(f"parsed {len(rows)} rows, {len(hold_events)} hold events, {len(dlf_events)} DLF updates")
+    print(f"parsed {len(rows)} rows")
+    print(f"hold events: {len(hold_events)} at DATA_OUT rising edges")
+    print(f"DLF events: {len(dlf_events)} sampled {DLF_SETTLE_NS:.0f} ns after CLK_DATASAMPLE rising edges")
+    print(f"final DLF error: {int(dlf_events[-1]['dd_delta'])} code")
     print(f"wrote SVG plots to {OUT_DIR}")
     return 0
 

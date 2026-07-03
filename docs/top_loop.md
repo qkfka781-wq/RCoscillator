@@ -45,6 +45,17 @@ GitHub can show SVGs inline, and each thumbnail below is clickable. The SVGs are
 python scripts/generate_top_graphs.py
 ```
 
+The analysis uses two different sampling points:
+
+- `DATA_OUT` rising edge: CP hold code is valid at the edge, then resets shortly after.
+- `CLK_DATASAMPLE` rising edge + 20 ns: DLF buses and `oref` are sampled after digital/analog settling.
+
+### Lock Summary
+
+[![Lock summary](img/top_lock_summary.svg)](img/top_lock_summary.svg)
+
+This is the main result plot. It shows the DLF sampled error collapsing from hundreds of codes to a few codes and finally reaching zero.
+
 ### Loop Overview
 
 [![Top loop overview](img/top_loop_overview.svg)](img/top_loop_overview.svg)
@@ -53,7 +64,7 @@ python scripts/generate_top_graphs.py
 
 [![DLF convergence](img/top_dlf_convergence.svg)](img/top_dlf_convergence.svg)
 
-The important trace is the sampled code error. The run starts with a large startup transient, then the sampled `DD2-DD1` term settles around zero-code error in the late part of the simulation.
+The important trace is the sampled code error. The run starts with a large startup transient, then the sampled `DD2-DD1` term settles around zero-code error in the late part of the simulation. This plot is sampled 20 ns after `CLK_DATASAMPLE` edges.
 
 ### CP Hold Codes
 
@@ -80,3 +91,4 @@ The late-window zoom is useful for checking how the changed `oref` shifts RC com
 - Static graph thumbnails are the safest GitHub option. Markdown can link images, so clicking a thumbnail opens the full SVG.
 - Fully interactive graphs with hover/zoom need HTML/JavaScript. GitHub will store those files, but it will not execute the JavaScript inside README. If interactive plots become important, use GitHub Pages or attach exported HTML files as downloadable artifacts.
 - Keep `top/top_run.csv` as the source of truth and regenerate `docs/img/*.svg` whenever the top simulation is rerun.
+- `docs/top_event_analysis.csv` contains the extracted event table used for the event-based plots.

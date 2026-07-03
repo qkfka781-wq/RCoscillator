@@ -340,7 +340,7 @@
       </div>
       <div class="metric">
         <div class="label">Last oref</div>
-        <div class="value">0.491865 V</div>
+        <div class="value">0.491870 V</div>
         <div class="note">DLF actuator output</div>
       </div>
       <div class="metric">
@@ -364,20 +364,21 @@
     </section>
 
     <section>
-      <h2>Waveform Viewer</h2>
+      <h2>Event-Based Waveform Viewer</h2>
       <div class="graph-tabs" role="tablist" aria-label="Graphs">
-        <button class="active" type="button" data-graph="img/top_loop_overview.svg" data-caption="VRC, oref, oscillator nodes, and timing controls over the full top run.">Overview</button>
-        <button type="button" data-graph="img/top_dlf_convergence.svg" data-caption="DLF sampled codes and error convergence at CLK_DATASAMPLE edges.">DLF convergence</button>
-        <button type="button" data-graph="img/top_cp_hold_codes.svg" data-caption="CP1 and CP2 codes reconstructed at DATA_OUT hold edges.">CP hold</button>
+        <button class="active" type="button" data-graph="img/top_lock_summary.svg" data-caption="Main result: DLF error collapses to zero while oref and hold frequency settle.">Lock summary</button>
+        <button type="button" data-graph="img/top_dlf_convergence.svg" data-caption="DLF buses sampled 20 ns after CLK_DATASAMPLE rising edges, after settling.">DLF convergence</button>
+        <button type="button" data-graph="img/top_cp_hold_codes.svg" data-caption="CP1 and CP2 codes sampled exactly at DATA_OUT hold edges before CP reset.">CP hold</button>
+        <button type="button" data-graph="img/top_loop_overview.svg" data-caption="Raw VRC, oref, oscillator nodes, and timing controls over the full top run.">Raw overview</button>
         <button type="button" data-graph="img/top_late_loop_zoom.svg" data-caption="Late loop timing window once the loop is near balance.">Late zoom</button>
       </div>
       <div class="panel">
-        <a id="graphLink" href="img/top_loop_overview.svg">
-          <img id="graphImage" src="img/top_loop_overview.svg" alt="Top loop overview graph">
+        <a id="graphLink" href="img/top_lock_summary.svg">
+          <img id="graphImage" src="img/top_lock_summary.svg" alt="Closed-loop lock summary graph">
         </a>
         <div class="caption">
-          <span id="graphCaption">VRC, oref, oscillator nodes, and timing controls over the full top run.</span>
-          <a id="openGraph" href="img/top_loop_overview.svg">Open SVG</a>
+          <span id="graphCaption">Main result: DLF error collapses to zero while oref and hold frequency settle.</span>
+          <a id="openGraph" href="img/top_lock_summary.svg">Open SVG</a>
         </div>
       </div>
     </section>
@@ -424,6 +425,7 @@
         <ul>
           <li><a href="https://github.com/qkfka781-wq/RCoscillator/blob/main/docs/top_loop.md">Top closed-loop note</a>: 전체 feedback 구조와 lock 의미.</li>
           <li><a href="https://github.com/qkfka781-wq/RCoscillator/blob/main/docs/top_run_summary.md">Run summary</a>: top CSV에서 뽑은 핵심 숫자.</li>
+          <li><a href="https://github.com/qkfka781-wq/RCoscillator/blob/main/docs/top_event_analysis.csv">Event CSV</a>: edge 기준으로 추출한 DLF/hold 이벤트 테이블.</li>
           <li><a href="https://github.com/qkfka781-wq/RCoscillator/blob/main/sar_test/20260702_sar_integration_verify.md">SAR integration</a>: CP analog value가 code로 바뀌는 과정.</li>
         </ul>
       </div>

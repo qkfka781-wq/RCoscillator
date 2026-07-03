@@ -31,6 +31,7 @@ flowchart LR
 | Visual dashboard | [docs/index.html](docs/index.html) |
 | Top closed-loop explanation and plots | [docs/top_loop.md](docs/top_loop.md) |
 | Generated top-run summary | [docs/top_run_summary.md](docs/top_run_summary.md) |
+| Event analysis CSV | [docs/top_event_analysis.csv](docs/top_event_analysis.csv) |
 | SAR integration verification | [sar_test/20260702_sar_integration_verify.md](sar_test/20260702_sar_integration_verify.md) |
 | DLF verification | [dlf_test/20260702_dlf_verify.md](dlf_test/20260702_dlf_verify.md) |
 | oref CDAC_17b verification | [cdac17_test/20260702_cdac17_verify.md](cdac17_test/20260702_cdac17_verify.md) |
@@ -40,6 +41,8 @@ flowchart LR
 ## Main Graphs
 
 Click each plot to open the full SVG.
+
+[![Closed-loop lock summary](docs/img/top_lock_summary.svg)](docs/img/top_lock_summary.svg)
 
 [![Top loop overview](docs/img/top_loop_overview.svg)](docs/img/top_loop_overview.svg)
 
@@ -54,4 +57,3 @@ After updating `top/top_run.csv`, regenerate GitHub-renderable SVG plots with:
 ```powershell
 python scripts/generate_top_graphs.py
 ```
-
