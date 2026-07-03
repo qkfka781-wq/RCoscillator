@@ -555,7 +555,7 @@ def main() -> int:
 
     svg_plot(
         OUT_DIR / "top_lock_summary.svg",
-        "Closed-Loop Lock Summary",
+        "Closed-Loop Error Convergence Summary",
         [
             Panel("DLF sampled error", "code", [
                 make_series(dlf_events, "sample_t_us", "dd_delta", "DD2-DD1", 2),
@@ -568,6 +568,28 @@ def main() -> int:
             ]),
             Panel("Equivalent hold frequency", "kHz", [
                 make_series(hold_events[1:], "t_us", "freq_khz", "freq (kHz)", 1),
+            ]),
+        ],
+        "time (us)",
+    )
+
+    svg_plot(
+        OUT_DIR / "top_phase_adc_paths.svg",
+        "Oscillator Phase Nodes and ADC Codes",
+        [
+            Panel("Phase path: osc1 / osc2", "V", [
+                make_series(overview_rows, "t_us", "osc1", "osc1", 0),
+                make_series(overview_rows, "t_us", "osc2", "osc2", 1),
+            ]),
+            Panel("ADC code from osc1 / osc2 path", "unsigned code", [
+                make_series(overview_rows, "t_us", "dd2", "DD2", 2),
+            ]),
+            Panel("Phase path: osc11 / osc22", "V", [
+                make_series(overview_rows, "t_us", "osc11", "osc11", 3),
+                make_series(overview_rows, "t_us", "osc22", "osc22", 4),
+            ]),
+            Panel("ADC code from osc11 / osc22 path", "unsigned code", [
+                make_series(overview_rows, "t_us", "dd1", "DD1", 5),
             ]),
         ],
         "time (us)",
