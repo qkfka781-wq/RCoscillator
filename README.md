@@ -37,11 +37,11 @@ flowchart LR
 
 ## 1. Oscillator Core
 
-[![Oscillator core](docs/assets/oscillator_core.png)](docs/assets/oscillator_core.png)
+[![Oscillator core](docs/assets/01_oscillator_core.png)](docs/assets/01_oscillator_core.png)
 
 ## 2. Sample/Hold And SAR ADC
 
-[![Oscillator to SAR path](docs/assets/osc_to_sar_path.png)](docs/assets/osc_to_sar_path.png)
+[![Sample hold and SAR ADC](docs/assets/02_sample_hold_sar.png)](docs/assets/02_sample_hold_sar.png)
 
 ## 3. CSV 그래프
 

@@ -35,13 +35,13 @@ flowchart LR
 
 ## 1. Oscillator Core
 
-[![Oscillator core](assets/oscillator_core.png)](assets/oscillator_core.png)
+[![Oscillator core](assets/01_oscillator_core.png)](assets/01_oscillator_core.png)
 
 먼저 볼 그림입니다. Core 안에서는 `VRC`와 `oref`가 만나는 시간이 oscillator phase와 frequency를 결정합니다.
 
 ## 2. Sample/Hold And SAR ADC
 
-[![Oscillator to SAR path](assets/osc_to_sar_path.png)](assets/osc_to_sar_path.png)
+[![Sample hold and SAR ADC](assets/02_sample_hold_sar.png)](assets/02_sample_hold_sar.png)
 
 그다음 볼 그림입니다. Oscillator core의 결과가 Sample/Hold를 거쳐 SAR ADC로 들어갑니다. 여기서 phase별 hold 결과가 digital code가 되고, DLF 판단의 입력이 됩니다.
 
